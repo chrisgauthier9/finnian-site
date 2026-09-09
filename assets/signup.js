@@ -1,9 +1,14 @@
-/* Mailing-list signup.
-   Set SIGNUP_ENDPOINT to the provider's form action once the account exists
-   (MailerLite embedded form -> "Form action URL"). Until then the form falls
-   back to a pre-filled email to contact@finnian.ca, so it is never a dead end. */
+/* Mailing-list signup, posting straight to MailerLite.
 
-const SIGNUP_ENDPOINT = ""; // e.g. "https://assets.mailerlite.com/jsonp/000000/forms/000000/subscribe"
+   The endpoint is MailerLite's JSONP form handler, which sends no CORS headers,
+   so the response cannot be read from the browser. The request itself still goes
+   through, so this posts with mode "no-cors" and treats completion as success.
+   That means a duplicate or rejected address looks the same as a good one here;
+   the truth is in the MailerLite dashboard.
+
+   Account 2626131, form "finnian.ca signup", group "Website signups". */
+
+const SIGNUP_ENDPOINT = "https://assets.mailerlite.com/jsonp/2626131/forms/198162648361075997/subscribe";
 const FALLBACK_ADDRESS = "contact@finnian.ca";
 
 document.querySelectorAll("[data-signup]").forEach((form) => {
@@ -24,7 +29,6 @@ document.querySelectorAll("[data-signup]").forEach((form) => {
     }
 
     if (!SIGNUP_ENDPOINT) {
-      // No provider wired up yet: open the reader's mail client instead of failing silently.
       const subject = encodeURIComponent("Add me to the list");
       const body = encodeURIComponent(`Please add ${email} to the Finnian mailing list.`);
       window.location.href = `mailto:${FALLBACK_ADDRESS}?subject=${subject}&body=${body}`;
@@ -35,13 +39,15 @@ document.querySelectorAll("[data-signup]").forEach((form) => {
     button.disabled = true;
     say("One moment.");
 
+    const body = new FormData();
+    body.append("fields[email]", email);
+    body.append("ml-submit", "1");
+    body.append("anticsrf", "true");
+
     try {
-      const body = new FormData();
-      body.append("fields[email]", email);
-      const response = await fetch(SIGNUP_ENDPOINT, { method: "POST", body });
-      if (!response.ok) throw new Error(String(response.status));
+      await fetch(SIGNUP_ENDPOINT, { method: "POST", mode: "no-cors", body });
       form.reset();
-      say("You are on the list. Check your inbox for the remixes.");
+      say("You are on the list. Check your inbox.");
     } catch (error) {
       say(`Something went wrong. Email ${FALLBACK_ADDRESS} and I will add you.`);
       button.disabled = false;
