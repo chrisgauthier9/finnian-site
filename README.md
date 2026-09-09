@@ -19,10 +19,16 @@ CNAME             finnian.ca, for GitHub Pages
 
 1. **`assets/hero.jpg`** and **`assets/avatar.jpg`**. Until they exist the page falls back to a dark
    gradient and a plain disc, so it is shippable without them. Laleh picks the frame.
-2. **The links.** Every URL in `index.html` and `links/index.html` is a guess and is marked `TODO`.
-3. **`SIGNUP_ENDPOINT`** in `assets/signup.js`. Empty means the form opens a pre-filled email to
-   contact@finnian.ca instead of failing, so it is never a dead end.
-4. **The pre-save link**, once DistroKid has delivered (around Sept 15). Two places, both `TODO`.
+2. **`SIGNUP_ENDPOINT`** in `assets/signup.js`. Empty means the form opens a pre-filled email to
+   contact@finnian.ca instead of failing, so it is never a dead end. MailerLite is the pick: its free
+   tier includes automations, which is what delivers the three remixes on signup.
+3. **The pre-save link**, once DistroKid has delivered (around Sept 15). Marked `TODO` in
+   `links/index.html`; on `index.html` the Pre-save button currently drops to the signup form.
+
+The links themselves are done, lifted from `linktr.ee/finnian.music` on 2026-09-08: Instagram
+`@finnian.music`, SoundCloud `@finnian_music`, TikTok `@finnian_music`, the YouTube channel, and the
+three featured items (baianà, Mimosa 2000, the IF YOU FANCY radio set). **Retire the Linktree once
+this is live**; owning `/links` is the whole point.
 
 ## Deploying (GitHub Pages, keeps Google Workspace mail untouched)
 
