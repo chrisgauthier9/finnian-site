@@ -59,3 +59,17 @@ At GoDaddy DNS, **replace the existing A records** (they point at the Website Bu
 
 Nothing is tracking yet, which is the point of hosting `/links` here rather than on Linktree.
 Cloudflare Web Analytics is a free one-line beacon and needs no DNS change; add it before Sept 19.
+
+## Cloudflare caches `/assets/` for four hours
+
+Cloudflare sits in front of GitHub Pages and caches `/assets/*` with `max-age=14400`, while HTML is
+not cached at all (`cf-cache-status: DYNAMIC`). So a CSS or JS change can be live at the origin and
+still invisible to visitors for hours.
+
+**Fix, and the rule for every future change: bump the `?v=` on the asset links in `index.html` and
+`links/index.html` whenever `style.css` or `signup.js` changes.** The HTML is always fresh, so a new
+version string pulls the new asset immediately. Purging in the Cloudflare dashboard also works but
+needs a human click.
+
+Caught 2026-09-09: the MailerLite endpoint was live at the origin while Cloudflare kept serving the
+old placeholder to visitors.
