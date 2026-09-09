@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://finnian.ca/sitemap.xml

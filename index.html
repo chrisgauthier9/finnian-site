@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finnian</title>
+<meta name="description" content="Finnian. Trance and speed garage out of Toronto. New single You Got Me, out 24 September.">
+<link rel="canonical" href="https://finnian.ca/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Finnian">
+<meta property="og:description" content="Trance and speed garage out of Toronto. New single You Got Me, out 24 September.">
+<meta property="og:url" content="https://finnian.ca/">
+<meta property="og:image" content="https://finnian.ca/assets/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero__media" role="img" aria-label="Finnian"></div>
+  <div class="hero__inner wrap">
+    <h1 class="wordmark">finnian</h1>
+    <p class="tagline">Trance and speed garage out of Toronto.</p>
+  </div>
+</header>
+
+<main>
+
+  <section id="release" class="wrap">
+    <p class="eyebrow">New single</p>
+    <h2>You Got Me</h2>
+    <p class="muted">Out 24 September on all platforms.</p>
+    <!-- TODO: swap href for the DistroKid pre-save link once the release is delivered (approx. 15 Sept). -->
+    <a class="btn btn--solid" href="#list" data-presave>Pre-save</a>
+  </section>
+
+  <section id="list" class="wrap">
+    <p class="eyebrow">Mailing list</p>
+    <h2>Three remixes, free</h2>
+    <p class="muted">Join the list and they land in your inbox straight away. Releases and shows after that, nothing else.</p>
+    <form class="signup" data-signup novalidate>
+      <label class="visually-hidden" for="email" hidden>Email address</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+      <button class="btn btn--solid" type="submit">Send me the remixes</button>
+      <p class="signup__note">No spam. Unsubscribe whenever.</p>
+      <p class="form-status" data-status role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section id="links" class="wrap">
+    <p class="eyebrow">Listen and follow</p>
+    <div class="stack">
+      <!-- TODO: confirm every URL below before this goes live. -->
+      <a class="btn" href="https://www.instagram.com/finnian.music/"><span class="link-row"><span>Instagram</span><span>@finnian.music</span></span></a>
+      <a class="btn" href="https://soundcloud.com/finnian"><span class="link-row"><span>SoundCloud</span><span>Full catalogue</span></span></a>
+      <a class="btn" href="https://www.youtube.com/@finnian"><span class="link-row"><span>YouTube</span><span>Sets and videos</span></span></a>
+      <a class="btn" href="mailto:contact@finnian.ca?subject=Booking%20enquiry"><span class="link-row"><span>Bookings</span><span>contact@finnian.ca</span></span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>Bookings and everything else: <a href="mailto:contact@finnian.ca">contact@finnian.ca</a>. Toronto.</p>
+  <p>&copy; 2026 Finnian</p>
+</footer>
+
+<script src="/assets/signup.js"></script>
+</body>
+</html>
