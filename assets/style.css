@@ -1,15 +1,22 @@
 /* finnian.ca – site and links page.
-   Neutral and dark on purpose: Laleh owns creative direction and her brand deck
-   has not landed yet. When it does, most of it should be swappable in :root. */
+
+   First pass at Laleh's brand direction (vault `projects/finnian-brand.md`),
+   applied 2026-09-09: outside in nature, soft digicam, amber lowercase display
+   type set over photography, an asterisk as the mark. No hex values exist on the
+   Pinterest board, so these are interpretations of observed colour, not spec.
+   Chris's branding deck supersedes all of it; when it lands, start here. */
 
 :root {
-  --ink: #f4f2ee;
-  --ink-dim: #9d9a93;
-  --ground: #0a0a0b;
-  --ground-2: #121214;
-  --line: rgba(244, 242, 238, 0.13);
-  --line-strong: rgba(244, 242, 238, 0.34);
-  --accent: #f4f2ee;
+  --ink: #f2efe7;
+  --ink-dim: #a39c8d;
+  --ground: #0b0a09;
+  --ground-2: #16140f;
+  --line: rgba(242, 239, 231, 0.14);
+  --line-strong: rgba(242, 239, 231, 0.32);
+
+  --amber: #e8a83d;   /* lead */
+  --cobalt: #2f4fd0;  /* second lead, used sparingly */
+  --accent: var(--amber);
 
   --measure: 720px;
   --gutter: 24px;
@@ -24,6 +31,7 @@
   --s6: 48px;
 
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --display: "Instrument Serif", Georgia, "Times New Roman", serif;
 }
 
 @media (max-width: 700px) {
@@ -59,7 +67,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(10, 10, 11, 0.82);
+  background: rgba(11, 10, 9, 0.84);
   backdrop-filter: saturate(140%) blur(10px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
@@ -76,9 +84,11 @@ a { color: inherit; }
 }
 
 .nav__mark {
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
   text-decoration: none;
+  color: var(--amber);
 }
 
 .nav__links { display: flex; gap: 22px; }
@@ -123,14 +133,14 @@ a { color: inherit; }
   background-size: cover;
   background-position: center 40%;
   background-repeat: no-repeat;
-  filter: grayscale(1) contrast(1.06);
+  filter: saturate(0.82) contrast(1.02);
 }
 
 .hero__media::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.12) 35%, rgba(10,10,11,0.94) 100%);
+  background: linear-gradient(180deg, rgba(11,10,9,0.42) 0%, rgba(11,10,9,0.05) 30%, rgba(11,10,9,0.86) 78%, rgba(11,10,9,0.97) 100%);
 }
 
 .hero__inner { position: relative; }
@@ -140,17 +150,22 @@ a { color: inherit; }
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink-dim);
+  color: var(--amber);
 }
 
 .wordmark {
   margin: 0;
-  font-size: clamp(3.5rem, 15vw, 6.5rem);
-  line-height: 0.88;
-  letter-spacing: -0.05em;
-  font-weight: 700;
+  font-family: var(--display);
+  font-size: clamp(4rem, 17vw, 7.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  font-weight: 400;
   text-transform: lowercase;
+  color: var(--amber);
 }
+
+/* The asterisk is the mark. Small, amber, never competing with the wordmark. */
+.star { color: var(--amber); font-family: var(--display); }
 
 .hero .tagline {
   margin: var(--s4) 0 0;
@@ -181,6 +196,7 @@ a { color: inherit; }
 }
 
 .section__num {
+  color: var(--amber);
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   color: var(--ink-dim);
@@ -189,10 +205,12 @@ a { color: inherit; }
 
 h2 {
   margin: 0;
-  font-size: clamp(1.5rem, 4vw, 1.875rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  font-weight: 600;
+  font-family: var(--display);
+  font-size: clamp(1.875rem, 5vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  text-transform: lowercase;
 }
 
 .lede {
@@ -224,10 +242,10 @@ h2 {
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.btn:hover, .btn:focus-visible { background: rgba(244, 242, 238, 0.1); }
+.btn:hover, .btn:focus-visible { background: rgba(232, 168, 61, 0.14); border-color: var(--amber); }
 
-.btn--solid { background: var(--accent); border-color: var(--accent); color: var(--ground); }
-.btn--solid:hover, .btn--solid:focus-visible { background: #fff; border-color: #fff; }
+.btn--solid { background: var(--amber); border-color: var(--amber); color: #17130a; font-weight: 600; }
+.btn--solid:hover, .btn--solid:focus-visible { background: #f4bb59; border-color: #f4bb59; }
 
 .stack { display: grid; gap: 10px; }
 
@@ -305,10 +323,10 @@ h2 {
   background-image: url("avatar.jpg");
   background-size: cover;
   background-position: center;
-  filter: grayscale(1);
+  filter: saturate(0.82);
 }
 
-.links-page .wordmark { font-size: clamp(2.5rem, 12vw, 3.25rem); text-align: center; }
+.links-page .wordmark { font-size: clamp(3rem, 13vw, 3.75rem); text-align: center; }
 .links-page .tagline { margin: 14px auto 34px; text-align: center; max-width: 32ch; color: var(--ink-dim); }
 .links-page .stack { max-width: 420px; margin: 0 auto; }
 .links-page .foot { margin: 30px 0 0; text-align: center; font-size: 0.8125rem; color: var(--ink-dim); }
