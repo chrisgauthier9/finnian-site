@@ -1,10 +1,9 @@
 /* Mailing-list signup, posting straight to MailerLite.
 
-   The endpoint is MailerLite's JSONP form handler, which sends no CORS headers,
-   so the response cannot be read from the browser. The request itself still goes
-   through, so this posts with mode "no-cors" and treats completion as success.
-   That means a duplicate or rejected address looks the same as a good one here;
-   the truth is in the MailerLite dashboard.
+   The endpoint sends `access-control-allow-origin: *`, so this is an ordinary
+   CORS fetch and the JSON response can be read. That matters: MailerLite answers
+   {"success":false,"errors":{...}} for a rejected address, and without reading it
+   the form would claim success for everything.
 
    Account 2626131, form "finnian.ca signup", group "Website signups". */
 
@@ -28,14 +27,6 @@ document.querySelectorAll("[data-signup]").forEach((form) => {
       return;
     }
 
-    if (!SIGNUP_ENDPOINT) {
-      const subject = encodeURIComponent("Add me to the list");
-      const body = encodeURIComponent(`Please add ${email} to the Finnian mailing list.`);
-      window.location.href = `mailto:${FALLBACK_ADDRESS}?subject=${subject}&body=${body}`;
-      say("Opening your mail app.");
-      return;
-    }
-
     button.disabled = true;
     say("One moment.");
 
@@ -45,9 +36,20 @@ document.querySelectorAll("[data-signup]").forEach((form) => {
     body.append("anticsrf", "true");
 
     try {
-      await fetch(SIGNUP_ENDPOINT, { method: "POST", mode: "no-cors", body });
-      form.reset();
-      say("You are on the list. Check your inbox.");
+      const response = await fetch(SIGNUP_ENDPOINT, { method: "POST", body });
+      const result = await response.json();
+
+      if (result && result.success) {
+        form.reset();
+        say("You are on the list. Check your inbox.");
+        return;
+      }
+
+      // Surface MailerLite's own wording rather than a generic failure.
+      const fields = (result && result.errors && result.errors.fields) || {};
+      const first = Object.values(fields).flat()[0];
+      say(first || `Something went wrong. Email ${FALLBACK_ADDRESS} and I will add you.`);
+      button.disabled = false;
     } catch (error) {
       say(`Something went wrong. Email ${FALLBACK_ADDRESS} and I will add you.`);
       button.disabled = false;
