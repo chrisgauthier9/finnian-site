@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=6">
+<link rel="stylesheet" href="/assets/style.css?v=7">
 </head>
 <body>
 
@@ -54,8 +54,10 @@
       <div class="release">
         <p class="release__title">You Got Me</p>
         <p class="release__meta">Out 24 September, everywhere.</p>
-        <!-- TODO: swap href for the DistroKid pre-save link once the release is delivered, approx. 15 Sept. -->
-        <a class="btn btn--solid" href="#list">Pre-save</a>
+        <!-- No pre-save link exists until DistroKid delivers, approx. 15 Sept.
+             Until then this points at the list rather than promising something that does not work.
+             When the link exists: change the href and the label back to "Pre-save". -->
+        <a class="btn btn--solid" href="#list">Get it on release day</a>
       </div>
     </div>
   </section>
@@ -122,6 +124,6 @@
   onScroll();
   addEventListener("scroll", onScroll, { passive: true });
 </script>
-<script src="/assets/signup.js?v=6"></script>
+<script src="/assets/signup.js?v=7"></script>
 </body>
 </html>
