@@ -365,7 +365,7 @@ h2 {
   border-radius: 50%; display: block;
   border: 1px solid var(--line);
   background-color: var(--ground-2);
-  background-image: url("avatar.jpg?v=2");
+  background-image: url("avatar.jpg?v=3");
   background-size: cover;
   background-position: center;
   filter: saturate(0.82);
