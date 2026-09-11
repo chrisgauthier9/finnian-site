@@ -85,3 +85,10 @@ a reCAPTCHA token, so enabling it rejects every submission. The honeypot is the 
 **EmailOctopus's contact search lags several minutes behind reality**, and so does the contact
 count on the Contacts page. A new signup is live immediately at its own contact URL but will not
 appear in the search box yet. Do not read that as a broken form.
+
+**Do not curl the new `?v=` URL while the deploy is still running.** Cloudflare caches whatever
+the origin returns at that moment, so polling `?v=9` during a deploy pins the OLD file to the NEW
+version string for four hours and the bump silently does nothing. This happened on 2026-09-11.
+Check the origin instead - `https://chrisgauthier9.github.io/finnian-site/assets/style.css` - and
+only request the Cloudflare URL once the origin is serving the new bytes. If a version does get
+poisoned, bump again rather than waiting it out.
