@@ -216,11 +216,13 @@ a { color: inherit; }
   margin-bottom: var(--s5);
 }
 
+/* The section number is the guide's eyebrow header, so it takes the accent.
+   In dim grey against a bold 40px headline it simply disappeared. */
 .section__num {
   font-family: var(--mono);
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
-  color: var(--ink-dim);
+  color: var(--yellow);
   font-variant-numeric: tabular-nums;
 }
 
