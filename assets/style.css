@@ -11,10 +11,20 @@
 
    Two deliberate departures, both noted for whoever picks this up:
 
-   1. **NHG is a licensed Monotype face and cannot be served from here yet.** The
-      stack below puts Helvetica Neue first, which Apple devices have and which is
-      the face NHG descends from, then Inter for everything else. When a web licence
-      exists, `--font` is the only line that changes.
+   1. **NHG is a licensed face and is not served from here.** The stack below puts
+      Helvetica Neue first, which Apple devices have and which is the face NHG
+      descends from, then Inter for everything else.
+
+      **To switch to the real thing, two lines change and nothing else.** Add the
+      Adobe Fonts kit `<link>` to the `<head>` of `index.html` and `links/index.html`,
+      then set `--font: "neue-haas-grotesk-display", "Helvetica Neue", Helvetica, Arial, sans-serif;`
+      The kit comes from a Creative Cloud account: fonts.adobe.com, find the family,
+      use the `</>` button to make a web project.
+
+      **Do not self-host font files downloaded from a free-font site.** A set turned up
+      on 2026-09-11 from cufonfonts with no licence, no receipt and one truncated
+      filename, and the EULA embedded in the files opens "Upon payment in full".
+      Desktop licences do not cover websites either; web use is a separate licence.
    2. **The deck is white-ground; this site is black-ground.** The guide uses black
       only for section dividers, so this is a choice it does not make for us. Dark
       plus Sunshine Yellow is the reading of "electric and impossible to forget".
@@ -67,6 +77,8 @@ body {
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.6;
+  /* Brand Guide V1 specifies tracking 10 for NHG. 10/1000 em = 0.01em. */
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
 }
 
