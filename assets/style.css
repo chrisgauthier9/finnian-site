@@ -147,7 +147,7 @@ a { color: inherit; }
   /* hero.jpg paints when present; the gradients stand in when it is not,
      so a missing photo reads as a choice rather than a broken page. */
   background-image:
-    url("hero.jpg"),
+    url("hero.jpg?v=2"),
     radial-gradient(120% 80% at 70% 15%, rgba(120, 118, 130, 0.34) 0%, rgba(10, 10, 11, 0) 60%),
     linear-gradient(180deg, #17171a 0%, #000 100%);
   background-size: cover;
@@ -234,6 +234,19 @@ h2 {
   letter-spacing: -0.02em;
   font-weight: 700;
   text-transform: lowercase;
+}
+
+/* The one photograph with a face in it. The hero is atmosphere; this is the person. */
+.portrait {
+  margin: 0 0 var(--s5);
+  max-width: 520px;
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .lede {
@@ -346,7 +359,7 @@ h2 {
   border-radius: 50%; display: block;
   border: 1px solid var(--line);
   background-color: var(--ground-2);
-  background-image: url("avatar.jpg");
+  background-image: url("avatar.jpg?v=2");
   background-size: cover;
   background-position: center;
   filter: saturate(0.82);
