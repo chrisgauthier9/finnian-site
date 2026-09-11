@@ -19,11 +19,8 @@ CNAME             finnian.ca, for GitHub Pages
 
 1. **`assets/hero.jpg`** and **`assets/avatar.jpg`**. Until they exist the page falls back to a dark
    gradient and a plain disc, so it is shippable without them. Laleh picks the frame.
-2. **`SIGNUP_ENDPOINT`** in `assets/signup.js`. Empty means the form opens a pre-filled email to
-   contact@finnian.ca instead of failing, so it is never a dead end. MailerLite is the pick: its free
-   tier includes automations, which is what delivers the three remixes on signup.
-3. **The pre-save link**, once DistroKid has delivered (around Sept 15). Marked `TODO` in
-   `links/index.html`; on `index.html` the Pre-save button currently drops to the signup form.
+2. **The pre-save link**, once DistroKid has delivered (around Sept 15). Two marked places:
+   `links/index.html` and a comment in `index.html`. Neither page promises a pre-save until then.
 
 The links themselves are done, lifted from `linktr.ee/finnian.music` on 2026-09-08: Instagram
 `@finnian.music`, SoundCloud `@finnian_music`, TikTok `@finnian_music`, the YouTube channel, and the
@@ -73,3 +70,18 @@ needs a human click.
 
 Caught 2026-09-09: the MailerLite endpoint was live at the origin while Cloudflare kept serving the
 old placeholder to visitors.
+
+## The signup form
+
+`assets/signup.js` posts to EmailOctopus, form "finnian.ca signup":
+`https://eomail5.com/form/61b0d18c-ad9e-11f1-9638-2b2cb9b136b2`, FormData with `field_0` for the
+address and the long `hp...` honeypot sent empty. It reads the JSON reply instead of assuming
+success, which matters: under MailerLite a `no-cors` fetch made the form claim success for
+everything, including addresses that were rejected.
+
+**Do not turn the form's hidden reCAPTCHA back on in EmailOctopus.** Our own markup cannot produce
+a reCAPTCHA token, so enabling it rejects every submission. The honeypot is the protection.
+
+**EmailOctopus's contact search lags several minutes behind reality**, and so does the contact
+count on the Contacts page. A new signup is live immediately at its own contact URL but will not
+appear in the search box yet. Do not read that as a broken form.
