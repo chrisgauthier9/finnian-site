@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Finnian</title>
+<link rel="canonical" href="https://finnian.ca/links/">
+<!-- Vanity entry point for the TikTok bio link.
+
+     The bio shows finnian.ca/tt, which is short enough to read, and the hit
+     lands in Cloudflare Web Analytics as its own path, so TikTok traffic is
+     countable without a utm_ string hanging off the end of the URL.
+
+     The redirect waits ~150ms on purpose. Cloudflare injects its beacon into
+     this page and the beacon needs a moment to report before we navigate away;
+     an instant redirect would make the page invisible to the analytics that are
+     the entire reason it exists. The delay is imperceptible.
+
+     To add another source, copy this folder and change the label. -->
+<style>
+  html { background: #000; }
+  body { margin: 0; }
+</style>
+</head>
+<body>
+<noscript><meta http-equiv="refresh" content="0; url=/links/"></noscript>
+<script>
+  setTimeout(function () { location.replace("/links/"); }, 150);
+</script>
+</body>
+</html>

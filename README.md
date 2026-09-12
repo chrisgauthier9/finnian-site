@@ -92,3 +92,21 @@ version string for four hours and the bump silently does nothing. This happened 
 Check the origin instead - `https://chrisgauthier9.github.io/finnian-site/assets/style.css` - and
 only request the Cloudflare URL once the origin is serving the new bytes. If a version does get
 poisoned, bump again rather than waiting it out.
+
+## Bio links: finnian.ca/ig and finnian.ca/tt
+
+Each is a one-file folder that reports itself to Cloudflare Web Analytics and then sends the
+visitor to `/links/`. The point is that Instagram and TikTok strip referrers, so without separate
+entry paths their traffic is indistinguishable, and a `?utm_source=` string on the end of a bio
+link is ugly enough that Chris asked for something better.
+
+**The 150ms delay in those files is deliberate.** Cloudflare injects its analytics beacon into the
+page and the beacon needs a moment to report before the redirect fires. Remove the delay and the
+page stops being counted, which defeats the whole thing.
+
+To add a source, copy the folder and change the label. Keep the paths short; they are read off a
+phone screen.
+
+**Web Analytics is already on**, set up automatically when the zone moved to Cloudflare, so there
+is no snippet to install. It is currently set to **"Enable, excluding visitor data in the EU"**,
+which means EU visitors are not counted at all.
