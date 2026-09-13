@@ -357,7 +357,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   position: relative;
   margin: 0 0 var(--s5);
   border: 1px solid var(--black);
-  background: #cfcfd3 url("tile.jpg?v=2") center / cover no-repeat;
+  background: #cfcfd3 url("tile.jpg?v=3") center / cover no-repeat;
   aspect-ratio: 4 / 3;
 }
 .links-page .avatar {
