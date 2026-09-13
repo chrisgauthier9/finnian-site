@@ -10,16 +10,31 @@
 <meta property="og:title" content="Finnian">
 <meta property="og:description" content="Trance and speed garage out of Toronto. First single You Got Me, out 24 September.">
 <meta property="og:url" content="https://finnian.ca/">
-<meta property="og:image" content="https://finnian.ca/assets/hero.jpg">
+<meta property="og:image" content="https://finnian.ca/assets/og.jpg?v=1">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f1f1f3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=16">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=17">
 </head>
 <body>
 
-<nav class="nav" data-nav>
+<!-- Hand-drawn marks, used by reference below. Wobbly on purpose. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ring" viewBox="0 0 200 200">
+    <path d="M42,112 C28,62 88,22 140,38 C192,54 194,138 132,166 C80,188 24,152 44,96 C56,64 92,52 122,56" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="spiral" viewBox="0 0 200 200">
+    <path d="M104,102 c6,-4 14,-2 14,6 c1,12 -16,18 -26,10 c-16,-12 -8,-38 14,-42 c30,-6 50,24 36,52 c-16,32 -64,34 -84,6 c-24,-34 4,-84 50,-80 c50,4 74,62 46,102 c-30,44 -100,38 -122,-8" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="star" viewBox="0 0 200 200">
+    <path d="M100,18 L119,76 L182,79 L131,116 L150,178 L100,143 L50,180 L69,117 L18,80 L81,77 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M103,26 L120,80 L176,84 L134,118 L146,172" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  </symbol>
+</svg>
+
+<nav class="nav">
   <div class="nav__inner wrap">
     <a class="nav__mark" href="/">finnian<span class="star">*</span></a>
     <div class="nav__links">
@@ -30,12 +45,15 @@
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero__media" role="img" aria-label="Finnian at the water"></div>
-  <div class="hero__inner wrap">
-    <p class="eyebrow">Toronto</p>
-    <h1 class="wordmark">finnian<span class="star">*</span></h1>
-    <p class="tagline">trance and speed garage, built to be played loud.</p>
+<header class="hero band" data-tone="paper">
+  <div class="hero__plate" role="img" aria-label="A figure on a clifftop above the sea, cut out and filled flat yellow">
+    <p class="hero__caption mono">Newfoundland, July</p>
+  </div>
+  <div class="hero__copy">
+    <svg class="hero__ring" aria-hidden="true"><use href="#ring"/></svg>
+    <p class="eyebrow"><b>Toronto</b></p>
+    <h1 class="display wordmark">finnian<span class="star">*</span></h1>
+    <p class="typed">trance and speed garage, built to be played loud.</p>
     <div class="hero__actions">
       <a class="btn btn--solid" href="#release">You Got Me, 24 Sept</a>
       <a class="btn" href="#list">Join the list</a>
@@ -45,29 +63,32 @@
 
 <main>
 
-  <section class="section" id="release">
-    <div class="section__inner wrap">
-      <div class="section__head">
-        <span class="section__num">01</span>
-        <h2>The first release</h2>
-      </div>
-      <div class="release">
-        <p class="release__title">You Got Me</p>
+  <section class="band release" id="release" data-tone="yellow">
+    <div class="band__inner wrap cols">
+      <div>
+        <p class="eyebrow"><b>01</b> &nbsp;The first release</p>
+        <h2 class="display display--stop">You Got Me</h2>
         <p class="release__meta">Out 24 September, everywhere.</p>
         <!-- No pre-save link exists until DistroKid delivers, approx. 15 Sept.
              Until then this points at the list rather than promising something that does not work.
              When the link exists: change the href and the label back to "Pre-save". -->
         <a class="btn btn--solid" href="#list">Get it on release day</a>
       </div>
+      <svg class="release__mark" aria-hidden="true"><use href="#spiral"/></svg>
     </div>
   </section>
 
-  <section class="section" id="listen">
-    <div class="section__inner wrap">
-      <div class="section__head">
-        <span class="section__num">02</span>
-        <h2>Listen and follow</h2>
-      </div>
+  <section class="band" id="listen" data-tone="paper">
+    <div class="band__inner wrap">
+      <p class="eyebrow"><b>02</b> &nbsp;Listen and follow</p>
+      <ul class="sheet">
+        <li><figure><img src="/assets/sheet-1.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">St John's</figcaption></figure></li>
+        <li><figure><img src="/assets/sheet-2.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">Beach</figcaption></figure></li>
+        <li><figure><img src="/assets/sheet-3.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">Fog</figcaption></figure></li>
+        <li><figure><img src="/assets/sheet-4.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">Summit</figcaption></figure></li>
+        <li><figure><img src="/assets/sheet-5.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">Field</figcaption></figure></li>
+        <li><figure><img src="/assets/sheet-6.jpg?v=1" alt="" loading="lazy" width="600" height="450"><figcaption class="caption">Sea wall</figcaption></figure></li>
+      </ul>
       <p class="lede">Everything so far lives on SoundCloud. The rest starts on 24 September.</p>
       <div class="grid-links">
         <a class="btn" href="https://soundcloud.com/finnian_music">SoundCloud</a>
@@ -78,55 +99,52 @@
     </div>
   </section>
 
-  <section class="section" id="about">
-    <div class="section__inner wrap">
-      <div class="section__head">
-        <span class="section__num">03</span>
-        <h2>About</h2>
-      </div>
+  <section class="band" id="about" data-tone="black">
+    <div class="band__inner wrap cols">
       <figure class="portrait">
         <img src="/assets/about.jpg?v=1" alt="Finnian playing at Camp Actualize, August 2026" width="1400" height="934" loading="lazy" decoding="async">
+        <figcaption class="caption">Camp Actualize, August</figcaption>
       </figure>
-      <div class="prose">
-        <p>Finnian is a producer and DJ based in Toronto, making trance and speed garage: M1 pianos, Reese bass, and records built for a loud room rather than a pair of headphones.</p>
-        <p>You Got Me, out 24 September, is the first proper release. New music lands here first, and everything else goes out through the mailing list.</p>
+      <div>
+        <p class="eyebrow"><b>03</b> &nbsp;About</p>
+        <h2 class="display display--stop">About</h2>
+        <div class="prose" style="margin-top: var(--s4)">
+          <p>Finnian is a producer and DJ based in Toronto, making trance and speed garage: M1 pianos, Reese bass, and records built for a loud room rather than a pair of headphones.</p>
+          <p>You Got Me, out 24 September, is the first proper release. New music lands here first, and everything else goes out through the mailing list.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="list">
-    <div class="section__inner wrap">
-      <div class="section__head">
-        <span class="section__num">04</span>
-        <h2>Free download</h2>
+  <section class="band download" id="list" data-tone="paper">
+    <div class="band__inner wrap cols">
+      <figure class="figure">
+        <img src="/assets/figure.png?v=1" alt="" width="520" height="780" loading="lazy" decoding="async">
+      </figure>
+      <div>
+        <p class="eyebrow"><b>04</b> &nbsp;Free download</p>
+        <h2 class="display display--stop">baianà</h2>
+        <p class="lede"><strong>baianà (speed garage edit).</strong> Join the list and it lands in your inbox. New music first after that, nothing else.</p>
+        <form class="signup" data-signup novalidate>
+          <label for="email" hidden>Email address</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+          <button class="btn btn--solid" type="submit">Send me the track</button>
+          <p class="form-status" data-status role="status" aria-live="polite"></p>
+          <p class="signup__note caption">No spam. Unsubscribe whenever.</p>
+        </form>
       </div>
-      <p class="lede"><strong>baianà (speed garage edit).</strong> Join the list and it lands in your inbox. New music first after that, nothing else.</p>
-      <form class="signup" data-signup novalidate>
-        <label for="email" hidden>Email address</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
-        <button class="btn btn--solid" type="submit">Send me the track</button>
-        <p class="form-status" data-status role="status" aria-live="polite"></p>
-        <p class="signup__note">No spam. Unsubscribe whenever.</p>
-      </form>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="footer__inner wrap">
+<footer class="band footer" data-tone="black">
+  <div class="footer__inner wrap mono">
     <span>&copy; 2026 Finnian</span>
     <span>Bookings: <a href="mailto:contact@finnian.ca?subject=Booking%20enquiry">contact@finnian.ca</a></span>
   </div>
 </footer>
 
-<script>
-  // Hairline under the nav only once the page has moved, so the hero stays clean.
-  const nav = document.querySelector("[data-nav]");
-  const onScroll = () => nav.classList.toggle("nav--scrolled", window.scrollY > 24);
-  onScroll();
-  addEventListener("scroll", onScroll, { passive: true });
-</script>
 <script src="/assets/signup.js?v=8"></script>
 </body>
 </html>

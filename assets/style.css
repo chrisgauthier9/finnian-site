@@ -1,70 +1,57 @@
-/* finnian.ca – site and links page.
+/* finnian.ca – site and links page. Design v2, 2026-09-12.
 
-   Brand Guide V1 (Laleh, 2026-09-11), applied the same day. Slides are in
-   `Projects/Finnian/brand/`. What the guide actually specifies:
+   Built from two sources, both in `Projects/Finnian/brand/` and the vault:
 
-   - Sunshine Yellow #FEDC00 is the root colour, with black and off-white #F1F1F3.
-     Accents green #8BC43F, blue #4060AB, red #DE3731. Hexes sampled from the deck.
-   - Neue Haas Grotesk Display Pro is the primary face, Space Mono Regular the
-     secondary, used for eyebrow headers and CTA labels in full caps at tracking 200.
-   - Archetype Explorer. Far away but familiar; electric and impossible to forget.
+   - Brand Guide V1 (Laleh): Sunshine Yellow #FEDC00 as the root colour, black and
+     off-white #F1F1F3, accents blue #4060AB / green #8BC43F / red #DE3731. Neue Haas
+     Grotesk Display for everything, Space Mono for eyebrows, captions and CTAs in
+     full caps with wide tracking. Archetype Explorer: far away but familiar.
+   - The Pinterest board (62 pins, read 2026-09-09): the collage technique. A
+     desaturated photograph as the base; human figures cut out and filled as flat
+     single-colour silhouettes; flat colour fields as panels and frames; hand-drawn
+     scribbles over the top; typewriter text blocks; contact-sheet grids of small
+     frames as a layout device; display type lowercase, often ending in a full stop,
+     always laid over an image.
 
-   Two deliberate departures, both noted for whoever picks this up:
+   So the page is paper, not black. The deck is white-ground and the collage pins
+   are paper-ground; v1's black ground was a reading of "electric" that the board
+   does not actually make. Black is used the way the deck uses it: as bands.
 
-   1. **NHG is a licensed face and is not served from here.** The stack below puts
-      Helvetica Neue first, which Apple devices have and which is the face NHG
-      descends from, then Inter for everything else.
+   Neue Haas Grotesk is licensed and not served from here; the stack leads with
+   Helvetica Neue, which it descends from. When an Adobe Fonts kit exists, add the
+   <link> to both pages and change `--font`. Nothing else moves.
 
-      **To switch to the real thing, two lines change and nothing else.** Add the
-      Adobe Fonts kit `<link>` to the `<head>` of `index.html` and `links/index.html`,
-      then set `--font: "neue-haas-grotesk-display", "Helvetica Neue", Helvetica, Arial, sans-serif;`
-      The kit comes from a Creative Cloud account: fonts.adobe.com, find the family,
-      use the `</>` button to make a web project.
-
-      **Do not self-host font files downloaded from a free-font site.** A set turned up
-      on 2026-09-11 from cufonfonts with no licence, no receipt and one truncated
-      filename, and the EULA embedded in the files opens "Upon payment in full".
-      Desktop licences do not cover websites either; web use is a separate licence.
-   2. **The deck is white-ground; this site is black-ground.** The guide uses black
-      only for section dividers, so this is a choice it does not make for us. Dark
-      plus Sunshine Yellow is the reading of "electric and impossible to forget".
-      Flip `--ground` and `--ink` to invert it. */
+   The figures in the photographs are flat shapes on purpose. Whose figure it was
+   does not matter once it is a silhouette; that rule is Chris's, 2026-09-09. */
 
 :root {
-  --ink: #f1f1f3;
-  --ink-dim: #8d8d92;
-  --ground: #000000;
-  --ground-2: #101012;
-  --line: rgba(241, 241, 243, 0.14);
-  --line-strong: rgba(241, 241, 243, 0.32);
+  --paper: #f1f1f3;
+  --black: #000000;
+  --yellow: #fedc00;
+  --blue: #4060ab;
+  --green: #8bc43f;
+  --red: #de3731;
 
-  --yellow: #fedc00;  /* Sunshine Yellow, the root colour */
-  --blue: #4060ab;    /* accent, used sparingly */
-  --green: #8bc43f;   /* accent, unused so far */
-  --red: #de3731;     /* accent, unused so far */
+  /* Every band sets these three. Components read only these. */
+  --bg: var(--paper);
+  --fg: var(--black);
   --accent: var(--yellow);
+  --fg-dim: rgba(0, 0, 0, 0.56);
+  --rule: rgba(0, 0, 0, 0.16);
 
-  --measure: 720px;
-  --gutter: 24px;
-  --section-y: 96px;
+  --wide: 1180px;
+  --measure: 620px;
+  --gutter: 28px;
+  --band-y: clamp(80px, 12vw, 140px);
 
-  /* One spacing scale. Every vertical gap below comes from these. */
-  --s1: 8px;
-  --s2: 12px;
-  --s3: 16px;
-  --s4: 24px;
-  --s5: 32px;
-  --s6: 48px;
+  --s1: 8px; --s2: 12px; --s3: 16px; --s4: 24px; --s5: 32px; --s6: 48px; --s7: 72px;
 
-  /* Helvetica Neue first: it is what NHG descends from and Apple devices have it.
-     Inter carries everyone else. One line to swap when NHG is licensed. */
   --font: "Helvetica Neue", Helvetica, "Inter", Arial, sans-serif;
-  --display: var(--font);
   --mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-@media (max-width: 700px) {
-  :root { --section-y: 64px; --gutter: 20px; }
+@media (max-width: 720px) {
+  :root { --gutter: 20px; }
 }
 
 * { box-sizing: border-box; }
@@ -72,24 +59,84 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--ground);
-  color: var(--ink);
+  background: var(--paper);
+  color: var(--black);
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.6;
-  /* Brand Guide V1 specifies tracking 10 for NHG. 10/1000 em = 0.01em. */
-  letter-spacing: 0.01em;
+  letter-spacing: 0.01em; /* the guide's tracking 10 */
   -webkit-font-smoothing: antialiased;
 }
 
 a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
 
 .wrap {
   width: 100%;
-  max-width: var(--measure);
+  max-width: var(--wide);
   margin: 0 auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
+}
+
+/* ---------- tones: every band is paper, yellow or black ---------- */
+
+[data-tone="paper"]  { --bg: var(--paper);  --fg: var(--black); --accent: var(--yellow); --fg-dim: rgba(0,0,0,0.56);        --rule: rgba(0,0,0,0.16); }
+[data-tone="yellow"] { --bg: var(--yellow); --fg: var(--black); --accent: var(--black);  --fg-dim: rgba(0,0,0,0.62);        --rule: rgba(0,0,0,0.22); }
+[data-tone="black"]  { --bg: var(--black);  --fg: var(--paper); --accent: var(--yellow); --fg-dim: rgba(241,241,243,0.62);  --rule: rgba(241,241,243,0.18); }
+
+.band { background: var(--bg); color: var(--fg); }
+
+/* ---------- type ---------- */
+
+.mono, .eyebrow, .caption, .btn, .nav__links a {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.eyebrow { margin: 0 0 var(--s4); color: var(--fg); }
+.eyebrow b { font-weight: 400; color: var(--accent); }
+[data-tone="yellow"] .eyebrow b { color: var(--black); }
+
+.display {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+}
+
+/* The full stop is the Aftersun pin. It is a design mark, not copy, so it is
+   drawn here and takes the accent colour. */
+.display--stop::after { content: "."; color: var(--accent); }
+[data-tone="yellow"] .display--stop::after { color: var(--black); }
+
+.wordmark {
+  font-size: clamp(4.75rem, 13vw, 11rem);
+  line-height: 0.82;
+}
+.wordmark .star { color: var(--accent); font-weight: 700; }
+
+h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
+
+.lede { margin: 0 0 var(--s5); max-width: 42ch; font-size: 1.125rem; line-height: 1.5; }
+.prose p { margin: 0 0 var(--s3); max-width: 58ch; color: var(--fg); }
+.prose p:last-child { margin-bottom: 0; }
+
+/* A typewriter block: mono, sentence case, ragged, the way the collage pins
+   carry their captions. */
+.typed {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  max-width: 34ch;
+  margin: 0;
 }
 
 /* ---------- nav ---------- */
@@ -98,260 +145,255 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.84);
-  backdrop-filter: saturate(140%) blur(10px);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  background: var(--paper);
+  border-bottom: 1px solid var(--black);
 }
-
-.nav--scrolled { border-bottom-color: var(--line); }
 
 .nav__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  height: 56px;
+  height: 60px;
 }
 
 .nav__mark {
-  font-family: var(--display);
-  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 1.375rem;
+  letter-spacing: -0.03em;
   text-decoration: none;
-  color: var(--yellow);
+  text-transform: lowercase;
 }
+.nav__mark .star { color: var(--yellow); }
 
-.nav__links { display: flex; gap: 22px; }
+.nav__links { display: flex; gap: 26px; }
+.nav__links a { text-decoration: none; color: var(--black); }
+.nav__links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-.nav__links a {
-  font-size: 0.875rem;
-  color: var(--ink-dim);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.nav__links a:hover, .nav__links a:focus-visible { color: var(--ink); }
-
-@media (max-width: 520px) {
+@media (max-width: 560px) {
   .nav__links a:not(.nav__cta) { display: none; }
 }
 
-.nav__cta { color: var(--ink) !important; }
-
-/* ---------- hero ---------- */
+/* ---------- hero: photograph left, paper right ---------- */
 
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+  min-height: calc(100svh - 60px);
+  border-bottom: 1px solid var(--black);
+}
+
+.hero__plate {
   position: relative;
-  min-height: calc(100svh - 56px);
+  min-height: 62svh;
+  background: #cfcfd3 url("hero.jpg?v=4") center 60% / cover no-repeat;
+  border-right: 1px solid var(--black);
+}
+
+/* The caption sits on the photograph the way a pin does: a small mono label
+   in a paper tab, bottom left. */
+.hero__caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--paper);
+  border-top: 1px solid var(--black);
+  border-right: 1px solid var(--black);
+}
+
+.hero__copy {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 72px;
+  padding: var(--s7) var(--gutter) var(--s7) clamp(28px, 5vw, 72px);
   overflow: hidden;
 }
 
-.hero__media {
+.hero__copy .wordmark { position: relative; }
+
+/* A loose hand-drawn ring behind the asterisk. */
+.hero__ring {
   position: absolute;
-  inset: 0;
-  background-color: var(--ground-2);
-  /* hero.jpg paints when present; the gradients stand in when it is not,
-     so a missing photo reads as a choice rather than a broken page. */
-  background-image:
-    url("hero.jpg?v=3"),
-    radial-gradient(120% 80% at 70% 15%, rgba(120, 118, 130, 0.34) 0%, rgba(10, 10, 11, 0) 60%),
-    linear-gradient(180deg, #17171a 0%, #000 100%);
-  background-size: cover;
-  background-position: center 55%;
-  background-repeat: no-repeat;
-  filter: saturate(0.82) contrast(1.02);
-}
-
-/* Two scrims, not one. The vertical gradient seats the page in the black
-   below; the horizontal one darkens the left third, where the wordmark lives,
-   so a bright passage in the photograph cannot eat the type. The current hero
-   puts a white blowout right behind "finn" and needed it. */
-.hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 32%, rgba(0,0,0,0) 62%),
-    linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.86) 78%, rgba(0,0,0,0.98) 100%);
-}
-
-.hero__inner { position: relative; }
-
-.eyebrow {
-  margin: 0 0 var(--s2);
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  width: clamp(120px, 20vw, 260px);
+  height: auto;
+  right: clamp(-20px, -2vw, 0px);
+  top: 4%;
   color: var(--yellow);
+  pointer-events: none;
 }
 
-.wordmark {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(4rem, 17vw, 7.5rem);
-  line-height: 0.86;
-  letter-spacing: -0.035em;
-  font-weight: 700;
-  text-transform: lowercase;
-  color: var(--yellow);
+.hero__copy .typed { margin-top: var(--s5); }
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s5); }
+.hero__actions .btn { width: auto; min-width: 200px; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero__plate { border-right: 0; border-bottom: 1px solid var(--black); min-height: 60svh; }
+  .hero__copy { padding: var(--s6) var(--gutter); }
+  .hero__ring { top: -6%; right: -6%; }
 }
 
-/* The asterisk is the mark. Small, yellow, never competing with the wordmark. */
-.star { color: var(--yellow); font-family: var(--display); }
+/* ---------- bands ---------- */
 
-.hero .tagline {
-  margin: var(--s4) 0 0;
-  max-width: 26ch;
-  font-size: 1.125rem;
-  color: rgba(241, 241, 243, 0.86);
+.band__inner { padding-top: var(--band-y); padding-bottom: var(--band-y); }
+.band + .band { border-top: 1px solid var(--black); }
+[data-tone="black"] + [data-tone="black"] { border-top-color: var(--rule); }
+
+/* Two columns, headline left and content right, collapsing on phones. */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s6) clamp(32px, 6vw, 96px);
+  align-items: start;
 }
+@media (max-width: 860px) { .cols { grid-template-columns: 1fr; gap: var(--s5); } }
 
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
+/* ---------- release band ---------- */
+
+.release .display { margin-bottom: var(--s4); }
+.release__meta { margin: 0 0 var(--s5); font-size: 1.125rem; }
+.release .btn { max-width: 300px; }
+
+/* A big black scribble sits in the right column of the yellow band. */
+.release__mark {
+  width: min(100%, 420px);
+  height: auto;
+  color: var(--black);
+  justify-self: end;
+}
+@media (max-width: 860px) { .release__mark { width: 200px; justify-self: start; } }
+
+/* ---------- contact sheet ---------- */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
-  margin-top: var(--s5);
+  margin: 0 0 var(--s6);
+  padding: 0;
+  list-style: none;
 }
 
-.hero__actions .btn { width: auto; min-width: 180px; }
+.sheet li { margin: 0; }
+.sheet figure { margin: 0; }
+.sheet img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--black);
+  filter: grayscale(1) contrast(1.05);
+}
+.sheet figcaption { margin-top: 8px; }
 
-/* ---------- sections ---------- */
-
-.section { border-top: 1px solid var(--line); }
-.section__inner { padding-top: var(--section-y); padding-bottom: var(--section-y); }
-
-.section__head {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: var(--s5);
+@media (max-width: 860px) {
+  .sheet {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter));
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+  .sheet li { scroll-snap-align: start; }
 }
 
-/* The section number is the guide's eyebrow header, so it takes the accent.
-   In dim grey against a bold 40px headline it simply disappeared. */
-.section__num {
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  color: var(--yellow);
-  font-variant-numeric: tabular-nums;
+/* Platform links as a row of pills. */
+.grid-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
 }
+@media (max-width: 860px) { .grid-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-h2 {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(1.875rem, 5vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  text-transform: lowercase;
-}
+/* ---------- about: colour photograph on the black band ---------- */
 
-/* The one photograph with a face in it. The hero is atmosphere; this is the person. */
 .portrait {
-  margin: 0 0 var(--s5);
+  position: relative;
+  margin: 0;
   max-width: 520px;
 }
+/* A flat yellow panel behind and offset from the photograph. */
+.portrait::before {
+  content: "";
+  position: absolute;
+  inset: 18px -18px -18px 18px;
+  background: var(--yellow);
+}
+.portrait img { position: relative; border: 1px solid var(--paper); }
+.portrait figcaption { position: relative; margin-top: calc(18px + var(--s3)); }
 
-.portrait img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
+/* ---------- download: silhouette beside the form ---------- */
+
+.figure {
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 340px;
+  padding: var(--s5);
+  background: var(--yellow);
+  border: 1px solid var(--black);
+}
+.figure img { width: auto; max-height: 460px; }
+@media (max-width: 860px) {
+  .figure { min-height: 0; padding: var(--s4); }
+  .figure img { max-height: 300px; }
 }
 
-.lede {
-  margin: 0 0 var(--s5);
-  max-width: 46ch;
-  color: var(--ink-dim);
-  font-size: 1.0625rem;
-}
+.download .display { margin-bottom: var(--s4); }
 
-.prose p { margin: 0 0 var(--s3); max-width: 60ch; color: rgba(241, 241, 243, 0.82); }
-.prose p:last-child { margin-bottom: 0; }
-
-/* ---------- buttons and link rows ---------- */
+/* ---------- buttons ---------- */
 
 .btn {
   display: block;
   width: 100%;
-  padding: 15px 20px;
-  border: 1px solid var(--line-strong);
+  padding: 16px 22px;
+  border: 1px solid var(--fg);
   border-radius: 999px;
   background: transparent;
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.8125rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  line-height: 1.3;
+  color: var(--fg);
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
+.btn:hover, .btn:focus-visible { background: var(--fg); color: var(--bg); }
 
-.btn:hover, .btn:focus-visible { background: rgba(254, 220, 0, 0.14); border-color: var(--yellow); }
-
-.btn--solid { background: var(--yellow); border-color: var(--yellow); color: #000; font-weight: 700; }
-.btn--solid:hover, .btn--solid:focus-visible { background: #ffe740; border-color: #ffe740; }
+.btn--solid { background: var(--fg); color: var(--bg); }
+.btn--solid:hover, .btn--solid:focus-visible { background: var(--accent); color: var(--black); border-color: var(--accent); }
+[data-tone="yellow"] .btn--solid:hover, [data-tone="yellow"] .btn--solid:focus-visible { background: var(--paper); border-color: var(--black); }
 
 .stack { display: grid; gap: 10px; }
 
-/* Platform links: buttons, two up on desktop, stacked on mobile. */
-.grid-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-@media (max-width: 560px) { .grid-links { grid-template-columns: 1fr; } }
-
-/* ---------- release card ---------- */
-
-.release__title {
-  margin: 0 0 var(--s1);
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-.release__meta { margin: 0 0 var(--s4); color: var(--ink-dim); }
-.release .btn { max-width: 260px; }
-
 /* ---------- signup ---------- */
 
-.signup { display: grid; gap: 10px; max-width: 420px; }
+.signup { display: grid; gap: 10px; max-width: 440px; }
 
 .signup input[type="email"] {
   width: 100%;
-  padding: 15px 20px;
-  border: 1px solid var(--line-strong);
+  padding: 16px 22px;
+  border: 1px solid var(--black);
   border-radius: 999px;
-  background: var(--ground-2);
-  color: var(--ink);
+  background: #fff;
+  color: var(--black);
   font: inherit;
 }
+.signup input::placeholder { color: rgba(0,0,0,0.42); }
+.signup input:focus-visible { outline: 3px solid var(--yellow); outline-offset: 1px; }
 
-.signup input::placeholder { color: #6d6d72; }
-.signup input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-.signup__note { margin: var(--s1) 0 0; font-size: 0.8125rem; color: var(--ink-dim); }
-.form-status { margin: 0; font-size: 0.875rem; color: var(--ink-dim); }
-/* No reserved gap before the form has said anything. */
+.signup__note { margin: var(--s1) 0 0; }
+.form-status { margin: 0; font-size: 0.875rem; }
 .form-status:empty { display: none; }
 
 /* ---------- footer ---------- */
-
-.footer { border-top: 1px solid var(--line); }
 
 .footer__inner {
   display: flex;
@@ -359,33 +401,38 @@ h2 {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px 28px;
-  padding-top: 40px;
+  padding-top: 44px;
   padding-bottom: 56px;
-  color: var(--ink-dim);
-  font-size: 0.875rem;
 }
-
 .footer a { text-decoration: none; }
-.footer a:hover { color: var(--ink); }
+.footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- links page ---------- */
 
-.links-page { min-height: 100svh; display: flex; align-items: center; padding: 56px 0; }
+.links-page { min-height: 100svh; padding: 48px 0 64px; }
+.links-page .wrap { max-width: 460px; }
 
+.links-page .tile {
+  position: relative;
+  margin: 0 0 var(--s5);
+  border: 1px solid var(--black);
+  background: #cfcfd3 url("tile.jpg?v=1") center / cover no-repeat;
+  aspect-ratio: 4 / 3;
+}
 .links-page .avatar {
-  width: 92px; height: 92px; margin: 0 auto 22px;
-  border-radius: 50%; display: block;
-  border: 1px solid var(--line);
-  background-color: var(--ground-2);
-  background-image: url("avatar.jpg?v=3");
-  background-size: cover;
-  background-position: center;
-  filter: saturate(0.82);
+  position: absolute;
+  left: 16px;
+  bottom: -28px;
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  border: 1px solid var(--black);
+  background: var(--paper) url("avatar.jpg?v=3") center / cover no-repeat;
 }
 
-.links-page .wordmark { font-size: clamp(3rem, 13vw, 3.75rem); text-align: center; }
-.links-page .tagline { margin: 14px auto 34px; text-align: center; max-width: 32ch; color: var(--ink-dim); }
-.links-page .stack { max-width: 420px; margin: 0 auto; }
-.links-page .foot { margin: 30px 0 0; text-align: center; font-size: 0.8125rem; color: var(--ink-dim); }
+.links-page .wordmark { font-size: clamp(3.25rem, 15vw, 4.5rem); margin-top: var(--s6); }
+.links-page .typed { margin: var(--s3) 0 var(--s5); }
+.links-page .foot { margin: 30px 0 0; }
+
+/* ---------- motion ---------- */
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
