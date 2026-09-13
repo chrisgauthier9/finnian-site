@@ -192,7 +192,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .hero__plate {
   position: relative;
   min-height: 62svh;
-  background: #cfcfd3 url("hero.jpg?v=6") center 42% / cover no-repeat;
+  background: #cfcfd3 url("hero.jpg?v=7") center 42% / cover no-repeat;
   border-right: 1px solid var(--black);
 }
 
@@ -357,7 +357,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   position: relative;
   margin: 0 0 var(--s5);
   border: 1px solid var(--black);
-  background: #cfcfd3 url("tile.jpg?v=4") center / cover no-repeat;
+  background: #cfcfd3 url("tile.jpg?v=5") center / cover no-repeat;
   aspect-ratio: 4 / 3;
 }
 .links-page .avatar {
