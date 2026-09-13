@@ -286,7 +286,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   inset: 18px -18px -18px 18px;
   background: var(--yellow);
 }
-.portrait img { position: relative; border: 1px solid var(--fg); }
+.portrait img { position: relative; z-index: 1; border: 1px solid var(--fg); } /* explicit: the ::before panel painted over it on the paper band */
 .portrait figcaption { position: relative; margin-top: calc(18px + var(--s4)); } /* clears the offset panel */
 
 .download .display { margin-bottom: var(--s4); }
