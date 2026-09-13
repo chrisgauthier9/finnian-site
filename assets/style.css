@@ -210,6 +210,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__copy {
   position: relative;
+  isolation: isolate; /* so the ring's z-index:-1 stays above the band, behind the type */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
