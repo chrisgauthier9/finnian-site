@@ -21,8 +21,9 @@
    Helvetica Neue, which it descends from. When an Adobe Fonts kit exists, add the
    <link> to both pages and change `--font`. Nothing else moves.
 
-   The figures in the photographs are flat shapes on purpose. Whose figure it was
-   does not matter once it is a silhouette; that rule is Chris's, 2026-09-09. */
+   Photographs are plain monochrome, no cutouts: Chris looked at the flat-fill
+   silhouettes on 2026-09-12 and asked for regular photography instead. Nobody
+   identifiable appears in them. */
 
 :root {
   --paper: #f1f1f3;
@@ -191,20 +192,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .hero__plate {
   position: relative;
   min-height: 62svh;
-  background: #cfcfd3 url("hero.jpg?v=4") center 60% / cover no-repeat;
-  border-right: 1px solid var(--black);
-}
-
-/* The caption sits on the photograph the way a pin does: a small mono label
-   in a paper tab, bottom left. */
-.hero__caption {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 10px 14px;
-  background: var(--paper);
-  border-top: 1px solid var(--black);
+  background: #cfcfd3 url("hero.jpg?v=5") center 60% / cover no-repeat;
   border-right: 1px solid var(--black);
 }
 
@@ -276,44 +264,6 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 }
 @media (max-width: 860px) { .release__mark { width: 200px; justify-self: start; } }
 
-/* ---------- contact sheet ---------- */
-
-.sheet {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0 0 var(--s6);
-  padding: 0;
-  list-style: none;
-}
-
-.sheet li { margin: 0; }
-.sheet figure { margin: 0; }
-.sheet img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 1px solid var(--black);
-  filter: grayscale(1) contrast(1.05);
-}
-.sheet figcaption { margin-top: 8px; }
-
-@media (max-width: 860px) {
-  .sheet {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: 46%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 6px;
-    margin-left: calc(-1 * var(--gutter));
-    margin-right: calc(-1 * var(--gutter));
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
-  }
-  .sheet li { scroll-snap-align: start; }
-}
-
 /* Platform links as a row of pills. */
 .grid-links {
   display: grid;
@@ -336,26 +286,8 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   inset: 18px -18px -18px 18px;
   background: var(--yellow);
 }
-.portrait img { position: relative; border: 1px solid var(--paper); }
+.portrait img { position: relative; border: 1px solid var(--fg); }
 .portrait figcaption { position: relative; margin-top: calc(18px + var(--s4)); } /* clears the offset panel */
-
-/* ---------- download: silhouette beside the form ---------- */
-
-.figure {
-  margin: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 340px;
-  padding: var(--s5);
-  background: var(--yellow);
-  border: 1px solid var(--black);
-}
-.figure img { width: auto; max-height: 460px; }
-@media (max-width: 860px) {
-  .figure { min-height: 280px; padding: var(--s4); }
-  .figure img { max-height: 300px; }
-}
 
 .download .display { margin-bottom: var(--s4); }
 
@@ -425,7 +357,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   position: relative;
   margin: 0 0 var(--s5);
   border: 1px solid var(--black);
-  background: #cfcfd3 url("tile.jpg?v=1") center / cover no-repeat;
+  background: #cfcfd3 url("tile.jpg?v=2") center / cover no-repeat;
   aspect-ratio: 4 / 3;
 }
 .links-page .avatar {
