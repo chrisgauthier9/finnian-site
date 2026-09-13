@@ -116,10 +116,15 @@ img { display: block; max-width: 100%; height: auto; }
 [data-tone="yellow"] .display--stop::after { color: var(--black); }
 
 .wordmark {
-  font-size: clamp(4.75rem, 13vw, 11rem);
+  font-size: clamp(4.5rem, 13vw, 11rem);
   line-height: 0.82;
 }
-.wordmark .star { color: var(--accent); font-weight: 700; }
+.wordmark .star { position: relative; color: var(--accent); font-weight: 700; }
+
+/* The split hero's right column is 45% of the page, so the wordmark there is
+   sized to the column, not the viewport, or the asterisk falls off the edge. */
+.hero__copy .wordmark { font-size: clamp(4rem, 8.4vw, 9.25rem); }
+@media (max-width: 860px) { .hero__copy .wordmark { font-size: clamp(4rem, 15vw, 7rem); } }
 
 h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
@@ -214,15 +219,17 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__copy .wordmark { position: relative; }
 
-/* A loose hand-drawn ring behind the asterisk. */
+/* A loose hand-drawn ring around the asterisk, sized to the letter. */
 .hero__ring {
   position: absolute;
-  width: clamp(120px, 20vw, 260px);
-  height: auto;
-  right: clamp(-20px, -2vw, 0px);
-  top: 4%;
+  width: 2.1em;
+  height: 2.1em;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
   color: var(--yellow);
   pointer-events: none;
+  z-index: -1;
 }
 
 .hero__copy .typed { margin-top: var(--s5); }
@@ -234,7 +241,6 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero__plate { border-right: 0; border-bottom: 1px solid var(--black); min-height: 60svh; }
   .hero__copy { padding: var(--s6) var(--gutter); }
-  .hero__ring { top: -6%; right: -6%; }
 }
 
 /* ---------- bands ---------- */
