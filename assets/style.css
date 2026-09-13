@@ -367,7 +367,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   width: 84px; height: 84px;
   border-radius: 50%;
   border: 1px solid var(--black);
-  background: var(--paper) url("avatar.jpg?v=3") center / cover no-repeat;
+  background: var(--paper) url("avatar.jpg?v=4") center / cover no-repeat;
 }
 
 .links-page .wordmark { font-size: clamp(3.25rem, 15vw, 4.5rem); margin-top: var(--s6); }
