@@ -353,7 +353,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 }
 .figure img { width: auto; max-height: 460px; }
 @media (max-width: 860px) {
-  .figure { min-height: 0; padding: var(--s4); }
+  .figure { min-height: 280px; padding: var(--s4); }
   .figure img { max-height: 300px; }
 }
 
