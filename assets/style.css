@@ -225,6 +225,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   position: absolute;
   width: 2.1em;
   height: 2.1em;
+  aspect-ratio: 1;
   left: 50%;
   top: 46%;
   transform: translate(-50%, -50%);
@@ -268,6 +269,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 /* A big black scribble sits in the right column of the yellow band. */
 .release__mark {
   width: min(100%, 420px);
+  aspect-ratio: 1;
   height: auto;
   color: var(--black);
   justify-self: end;
