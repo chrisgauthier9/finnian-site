@@ -110,3 +110,24 @@ phone screen.
 **Web Analytics is already on**, set up automatically when the zone moved to Cloudflare, so there
 is no snippet to install. It is currently set to **"Enable, excluding visitor data in the EU"**,
 which means EU visitors are not counted at all.
+
+## Design v2, 12 September 2026
+
+The visual layer was rebuilt from Brand Guide V1 and the Pinterest board. Paper ground with
+black and yellow bands, B&W photographs with figures cut out and filled flat yellow (hero, links
+tile) or blue (the download section), hand-drawn SVG marks in a sprite at the top of `index.html`,
+typewriter captions in Space Mono, a contact-sheet strip, and display type ending in a yellow full
+stop that is drawn by CSS (`.display--stop::after`), not typed into the copy.
+
+**Making a silhouette.** `rembg i photo.jpg cut.png` (installed for python3.11 at
+`/opt/homebrew/bin/rembg`), then extract the alpha and fill it flat:
+
+    magick cut.png -alpha extract -level 40%,60% mask.png
+    magick plate.jpg -colorspace Gray ... -colorspace sRGB -type TrueColor PNG24:plate.png
+    magick PNG24:plate.png \( -size WxH xc:'#fedc00' mask.png -compose CopyOpacity -composite \) -composite -type TrueColor out.jpg
+
+**The `PNG24:` and `-type TrueColor` are load-bearing.** A desaturated plate is re-detected as
+grayscale and the yellow layer collapses to white on write. It shipped white twice before this was
+found; check a pixel on the figure with `-format "%[fx:int(255*p{x,y}.g)]"` and expect 220.
+
+Copy did not change in v2. The release-day checklist's line numbers did and were updated.
