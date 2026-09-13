@@ -337,7 +337,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   background: var(--yellow);
 }
 .portrait img { position: relative; border: 1px solid var(--paper); }
-.portrait figcaption { position: relative; margin-top: calc(18px + var(--s3)); }
+.portrait figcaption { position: relative; margin-top: calc(18px + var(--s4)); } /* clears the offset panel */
 
 /* ---------- download: silhouette beside the form ---------- */
 
