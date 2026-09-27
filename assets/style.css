@@ -356,6 +356,21 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .links-page .typed { margin: var(--s3) 0 var(--s5); }
 .links-page .foot { margin: 30px 0 0; }
 
+.social { display: flex; justify-content: center; gap: 14px; margin: var(--s4) 0; }
+.social__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  color: var(--fg);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.social__link:hover, .social__link:focus-visible { background: var(--fg); color: var(--bg); }
+.social__link svg { width: 22px; height: 22px; }
+
 /* ---------- release page: /you-got-me/ ---------- */
 
 .release-page { min-height: calc(100svh - 60px); }
