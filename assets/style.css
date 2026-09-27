@@ -374,6 +374,16 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .links-page .typed { margin: var(--s3) 0 var(--s5); }
 .links-page .foot { margin: 30px 0 0; }
 
+/* ---------- release page: /you-got-me/ ---------- */
+
+.release-page { min-height: calc(100svh - 60px); }
+.release-page .display { font-size: clamp(3.25rem, 8vw, 6.5rem); margin-bottom: var(--s4); }
+.release-page__art { max-width: 480px; }
+.release-page__art::before { background: var(--black); } /* the offset panel, black on the yellow band */
+.release-page__actions { max-width: 440px; }
+.release-page__or { margin: var(--s6) 0 var(--s3); }
+@media (max-width: 860px) { .release-page__art { max-width: 360px; } }
+
 /* ---------- motion ---------- */
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }

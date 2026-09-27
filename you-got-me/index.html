@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>you got me – finnian</title>
+<meta name="description" content="you got me, the first finnian single. out 15 october. pre-save it on spotify.">
+<link rel="canonical" href="https://finnian.ca/you-got-me/">
+<meta property="og:type" content="music.song">
+<meta property="og:title" content="you got me – finnian">
+<meta property="og:description" content="the first single. out 15 october. pre-save it on spotify.">
+<meta property="og:url" content="https://finnian.ca/you-got-me/">
+<meta property="og:image" content="https://finnian.ca/assets/you-got-me.jpg?v=1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fedc00">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=31">
+</head>
+<body>
+
+<!-- The release page: the one link to share for You Got Me.
+
+     Spotify pre-save cannot be built here. It needs a Spotify app with extended
+     API access, which Spotify only grants to large companies (a small app caps at
+     25 users), so the tap hands off to DistroKid's HyperFollow, which has it.
+     Everything the fan sees before that tap is ours.
+
+     Release day (15 Oct): swap the pre-save block for listen buttons, one per
+     platform. Steps are in release-day-checklist.md. -->
+
+<nav class="nav">
+  <div class="nav__inner wrap">
+    <a class="nav__mark" href="/">finnian<span class="star">*</span></a>
+    <div class="nav__links">
+      <a class="nav__cta" href="/links/">All links</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="band release-page" data-tone="yellow">
+    <div class="band__inner wrap cols">
+      <figure class="portrait release-page__art">
+        <img src="/assets/you-got-me.jpg?v=1" alt="You Got Me cover art" width="1200" height="1200" decoding="async">
+      </figure>
+      <div>
+        <p class="eyebrow"><b>01</b> &nbsp;Out 15 October</p>
+        <h1 class="display display--stop">you got me</h1>
+        <p class="release__meta">the first finnian single. out 15 october, everywhere.</p>
+
+        <div class="stack release-page__actions">
+          <a class="btn btn--solid" href="https://distrokid.com/hyperfollow/finnian5/you-got-me">Pre-save on Spotify</a>
+          <!-- Apple Music pre-add: add a second button here once Apple lists the release. -->
+        </div>
+
+        <p class="release-page__or typed">on another platform? get an email the day it's out.</p>
+        <form class="signup" data-signup novalidate>
+          <label for="email" hidden>Email address</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+          <button class="btn" type="submit">Tell me when it's out</button>
+          <p class="form-status" data-status role="status" aria-live="polite"></p>
+          <p class="signup__note caption">No spam. Unsubscribe whenever.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="band footer" data-tone="black">
+  <div class="footer__inner wrap mono">
+    <span>&copy; 2026 Finnian</span>
+    <span>Bookings: <a href="mailto:contact@finnian.ca?subject=Booking%20enquiry">contact@finnian.ca</a></span>
+  </div>
+</footer>
+
+<script src="/assets/signup.js?v=8"></script>
+</body>
+</html>
