@@ -102,6 +102,8 @@ img { display: block; max-width: 100%; height: auto; }
 .eyebrow b { font-weight: 400; color: var(--accent); }
 [data-tone="yellow"] .eyebrow b { color: var(--black); }
 .hero .eyebrow b { color: var(--black); }
+.eyebrow--yellow, .eyebrow--yellow b { color: var(--yellow); }
+.eyebrow--black, .eyebrow--black b { color: var(--black); }
 
 .display {
   margin: 0;
@@ -235,7 +237,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .release .display { margin-bottom: var(--s4); }
 .release__meta { margin: 0 0 var(--s5); font-size: 1.125rem; }
-.release .btn { max-width: 300px; }
+.release .btn { max-width: 240px; }
 
 /* A big black scribble sits in the right column of the yellow band. */
 .release__mark {
@@ -244,6 +246,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   height: auto;
   color: var(--black);
   justify-self: end;
+  mix-blend-mode: multiply; /* drops the image's white ground onto the yellow band */
 }
 @media (max-width: 860px) { .release__mark { width: 200px; justify-self: start; } }
 
@@ -270,6 +273,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   background: var(--yellow);
 }
 .portrait img { position: relative; z-index: 1; border: 1px solid var(--fg); } /* explicit: the ::before panel painted over it on the paper band */
+#about .portrait img { border: 0; }
 .portrait figcaption { position: relative; margin-top: calc(18px + var(--s4)); } /* clears the offset panel */
 
 .download .display { margin-bottom: var(--s4); }
@@ -385,3 +389,17 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 /* ---------- motion ---------- */
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+
+/* ---------- fixed social bar ---------- */
+
+.social-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; justify-content: center; gap: clamp(20px, 5vw, 40px);
+  padding: 10px var(--s3) calc(10px + env(safe-area-inset-bottom));
+  background: rgba(241, 241, 243, 0.55); border-top: 1px solid var(--rule);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.social-bar a { display: flex; padding: 6px; color: var(--black); }
+.social-bar a:hover { opacity: 0.6; }
+.social-bar svg { width: 22px; height: 22px; fill: currentColor; }
+body:has(.social-bar) { padding-bottom: 58px; }
