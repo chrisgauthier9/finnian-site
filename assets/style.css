@@ -101,6 +101,7 @@ img { display: block; max-width: 100%; height: auto; }
 .eyebrow { margin: 0 0 var(--s4); color: var(--fg); }
 .eyebrow b { font-weight: 400; color: var(--accent); }
 [data-tone="yellow"] .eyebrow b { color: var(--black); }
+.hero .eyebrow b { color: var(--black); }
 
 .display {
   margin: 0;
