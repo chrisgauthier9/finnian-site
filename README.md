@@ -1,31 +1,17 @@
 # finnian.ca
 
-One-page site plus a `/links` page, built 2026-09-08 for the **You Got Me** release on 2026-09-24.
-Deadline in the release sequence: **live by Sept 19**.
-
-Static HTML and CSS, no build step. Open `index.html` or run `python3 -m http.server 8787`.
+One-page site plus a `/links` page. Static HTML and CSS, no build step. Preview with
+`python3 -m http.server 8787` and open http://localhost:8787.
 
 ```
-index.html        hero, release, mailing list, links
+index.html        home: hero, release, mailing list, links
 links/index.html  the Instagram-bio page (finnian.ca/links)
+ig/, tt/          bio-link redirects that count Instagram and TikTok traffic
 assets/style.css  all styling; brand tokens at the top
-assets/signup.js  mailing-list form; set SIGNUP_ENDPOINT
-assets/hero.jpg   NOT PRESENT YET. Drop it in and it paints itself.
-assets/avatar.jpg NOT PRESENT YET. Same.
+assets/signup.js  mailing-list form (EmailOctopus)
+assets/email/     images used by the EmailOctopus emails; do not rename
 CNAME             finnian.ca, for GitHub Pages
 ```
-
-## What still has to be filled in
-
-1. **`assets/hero.jpg`** and **`assets/avatar.jpg`**. Until they exist the page falls back to a dark
-   gradient and a plain disc, so it is shippable without them. Laleh picks the frame.
-2. **The pre-save link**, once DistroKid has delivered (around Sept 15). Two marked places:
-   `links/index.html` and a comment in `index.html`. Neither page promises a pre-save until then.
-
-The links themselves are done, lifted from `linktr.ee/finnian.music` on 2026-09-08: Instagram
-`@finnian.music`, SoundCloud `@finnian_music`, TikTok `@finnian_music`, the YouTube channel, and the
-three featured items (baianà, Mimosa 2000, the IF YOU FANCY radio set). **Retire the Linktree once
-this is live**; owning `/links` is the whole point.
 
 ## Deploying (GitHub Pages, keeps Google Workspace mail untouched)
 
