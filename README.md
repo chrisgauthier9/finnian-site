@@ -60,7 +60,7 @@ old placeholder to visitors.
 ## The signup form
 
 `assets/signup.js` posts to EmailOctopus, form "finnian.ca signup":
-`https://eomail5.com/form/61b0d18c-ad9e-11f1-9638-2b2cb9b136b2`, FormData with `field_0` for the
+`https://eomail5.com/form/e8ba5ea6-bbad-11f1-9ef5-ab546f8d3526` (account on contact@finnian.ca since 2026-09-29), FormData with `field_0` for the
 address and the long `hp...` honeypot sent empty. It reads the JSON reply instead of assuming
 success, which matters: under MailerLite a `no-cors` fetch made the form claim success for
 everything, including addresses that were rejected.
