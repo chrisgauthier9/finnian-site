@@ -6,13 +6,13 @@
    without reading it the form would claim success for everything. It did exactly
    that once already, under MailerLite.
 
-   Account "Finnian", list 105c4204-ac94-11f1-823e-83f2f4d0cb84, form "finnian.ca signup".
+   Account "finnian" (contact@finnian.ca, since 2026-09-29), list 0335df82-bbac-11f1-98e6-1b2bd70a4e23, form "finnian.ca signup".
    `field_0` is EmailOctopus's name for the email input. The long `hp...` field is
    their honeypot and must be sent empty: it is the only bot protection on this form,
    because the hidden reCAPTCHA is off (it cannot work from our own markup).
    Contacts land as SUBSCRIBED immediately; there is no double opt-in step. */
 
-const SIGNUP_ENDPOINT = "https://eomail5.com/form/61b0d18c-ad9e-11f1-9638-2b2cb9b136b2";
+const SIGNUP_ENDPOINT = "https://eomail5.com/form/e8ba5ea6-bbad-11f1-9ef5-ab546f8d3526";
 const HONEYPOT_FIELD = "hpc4b27b6e-eb38-11e9-be00-06b4694bee2a";
 const FALLBACK_ADDRESS = "contact@finnian.ca";
 
