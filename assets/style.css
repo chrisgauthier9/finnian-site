@@ -194,7 +194,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__plate {
   position: relative;
-  background: #cfcfd3 url("hero-field.webp?v=1") center / cover no-repeat;
+  background: #cfcfd3 url("hero-release.webp?v=1") center / cover no-repeat;
 }
 
 .hero__copy {
@@ -209,6 +209,11 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__copy .wordmark-img { margin-bottom: -0.14em; } /* PNG has empty space under the letters */
 .hero__copy .typed { margin-top: var(--s4); }
+
+/* release day: one line in the display face with a single button beside it */
+.hero__out { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s4); margin-top: var(--s4); }
+.hero__out-line { margin: 0; font-family: var(--font); font-weight: 700; font-size: clamp(1.4rem, 2.4vw, 2.1rem); line-height: 1.1; letter-spacing: -0.01em; text-transform: lowercase; }
+.hero__out .btn { width: auto; padding-left: 28px; padding-right: 28px; }
 
 .hero__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s5); }
 .hero__actions .btn { width: auto; padding-left: 28px; padding-right: 28px; }
