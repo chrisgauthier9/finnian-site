@@ -1,0 +1,41 @@
+# Publishes the "you got me out now" version of the site at midnight Toronto time on 15 Oct 2026,
+# by merging the `release-day` branch into `main` (GitHub Pages then serves it).
+# Laleh approved this version on 14 Oct. Delete this file once it has run.
+name: Release day - publish the out-now site
+
+on:
+  schedule:
+    - cron: "0 4 15 10 *"   # 04:00 UTC = 00:00 EDT (Toronto), 15 Oct. GitHub may start it a few minutes late.
+  workflow_dispatch:         # "Run workflow" button, to publish by hand
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Merge release-day into main and push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(date -u +%Y)" != "2026" ]; then
+            echo "Only meant for 2026; skipping."; exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin release-day
+          if git merge-base --is-ancestor origin/release-day HEAD; then
+            echo "release-day is already on main; nothing to do."; exit 0
+          fi
+          git merge --no-edit origin/release-day -m "Release day: publish the out-now site"
+          git push origin main
+          # Pushes made by this workflow's token may not start a Pages build on their own, so ask for one.
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "Pages build request failed; the push may still trigger one."
