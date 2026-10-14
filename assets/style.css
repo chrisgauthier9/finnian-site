@@ -185,15 +185,16 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
-  border-bottom: 1px solid var(--black);
+  /* exactly one screen: below the sticky nav (61px), above the logo bar (55px), so About starts at the fold */
+  --hero-h: max(420px, calc(100svh - 61px - 55px - env(safe-area-inset-bottom)));
+  height: var(--hero-h);
+  /* photo column as wide as the hero is tall (capped at half the page), so the square photo shows whole */
+  grid-template-columns: min(var(--hero-h), 50vw) minmax(0, 1fr);
 }
 
 .hero__plate {
   position: relative;
-  min-height: 420px; /* hero row follows the copy column; the photo crops to fill it */
   background: #cfcfd3 url("hero-field.webp?v=1") center / cover no-repeat;
-  border-right: 1px solid var(--black);
 }
 
 .hero__copy {
@@ -201,7 +202,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   isolation: isolate; /* so the ring's z-index:-1 stays above the band, behind the type */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   padding: var(--s7) var(--gutter) var(--s7) clamp(28px, 5vw, 72px);
   overflow: hidden;
 }
@@ -213,8 +214,9 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .hero__actions .btn { width: auto; padding-left: 28px; padding-right: 28px; }
 
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; min-height: 0; }
-  .hero__plate { border-right: 0; border-bottom: 1px solid var(--black); min-height: 0; aspect-ratio: 1; } /* full square photo on phones */
+  .hero { grid-template-columns: 1fr; min-height: 0; height: auto; }
+  .hero__plate { aspect-ratio: 1; background-position: center; } /* full square photo on phones */
+   
   .hero__copy { padding: var(--s6) var(--gutter); }
 }
 
@@ -273,7 +275,10 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   background: var(--yellow);
 }
 .portrait img { position: relative; z-index: 1; border: 1px solid var(--fg); } /* explicit: the ::before panel painted over it on the paper band */
-#about .portrait img { border: 0; }
+#about .portrait img, #list .portrait img { border: 0; }
+#list .portrait img { aspect-ratio: 1; object-fit: cover; object-position: 30% center; } /* keeps the cut-out figure in frame */
+#about .portrait img { aspect-ratio: 1; object-fit: cover; } /* square, to match the subscribe photo */
+#about .cols, #list .cols { align-items: center; } /* text sits level with the middle of the photo */
 .portrait figcaption { position: relative; margin-top: calc(18px + var(--s4)); } /* clears the offset panel */
 
 .download .display { margin-bottom: var(--s4); }
