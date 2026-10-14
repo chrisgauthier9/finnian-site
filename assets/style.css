@@ -191,8 +191,8 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__plate {
   position: relative;
-  min-height: 420px; /* hero row follows the copy column; the wide collage crops only slightly */
-  background: #cfcfd3 url("hero-collage.webp?v=1") center / cover no-repeat;
+  min-height: 420px; /* hero row follows the copy column; the photo crops to fill it */
+  background: #cfcfd3 url("hero-field.webp?v=1") center / cover no-repeat;
   border-right: 1px solid var(--black);
 }
 
@@ -206,14 +206,15 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   overflow: hidden;
 }
 
-.hero__copy .typed { margin-top: var(--s5); }
+.hero__copy .wordmark-img { margin-bottom: -0.14em; } /* PNG has empty space under the letters */
+.hero__copy .typed { margin-top: var(--s4); }
 
 .hero__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s5); }
-.hero__actions .btn { width: auto; min-width: 200px; }
+.hero__actions .btn { width: auto; padding-left: 28px; padding-right: 28px; }
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; min-height: 0; }
-  .hero__plate { border-right: 0; border-bottom: 1px solid var(--black); min-height: 0; aspect-ratio: 2000 / 1521; } /* full collage on phones */
+  .hero__plate { border-right: 0; border-bottom: 1px solid var(--black); min-height: 0; aspect-ratio: 1; } /* full square photo on phones */
   .hero__copy { padding: var(--s6) var(--gutter); }
 }
 
