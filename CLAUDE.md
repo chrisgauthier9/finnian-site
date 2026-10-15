@@ -26,6 +26,6 @@ well as desktop. That preview is the only one; nothing on a branch is visible on
   `links/index.html`. Otherwise Cloudflare serves the old file for four hours.
 - **Keep `sitemap.xml` in sync** with the pages that exist.
 - **Never assume who is in a photo** before putting it on the site. Ask.
-- **Links to the release always point at the Hypeddit link**, `hypeddit.com/finnian/<slug>`.
+- **Before release, the release button points at the Hypeddit pre-save**, `hypeddit.com/finnian/<slug>`. **From release day it points at our own `/<slug>/` listen page** with every platform (Chris, 2026-10-15; first one `you-got-me/`). Hypeddit reverts to Pre-Save if anyone re-saves it after release.
 - **Don't touch `assets/email/`** without saying so in a handoff. The live emails load those images.
 - After a push, load the live page and check the change is there. Don't trust the diff.
