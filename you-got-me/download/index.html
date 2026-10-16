@@ -51,6 +51,15 @@
   .gate__err { margin-top: var(--s4); max-width: none; border: 1px solid var(--black); background: var(--yellow); padding: var(--s3); }
   .gate__foot { margin-top: var(--s6); }
 
+  .gate__form { margin-top: var(--s5); display: grid; gap: var(--s3); }
+  .gate__form label { display: grid; gap: 6px; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+  .gate__form input, .gate__form textarea { font: 1rem var(--font); padding: 12px 14px; border: 1px solid var(--black); background: #fff; color: var(--black); border-radius: 0; }
+  .gate__form textarea { min-height: 64px; resize: vertical; }
+  .gate__form small { font-family: var(--font); text-transform: none; letter-spacing: 0; color: var(--fg-dim); font-size: 0.8rem; }
+  .gate__form .gate__cta { margin-top: var(--s2); }
+  .gate__done { margin-top: var(--s5); display: grid; gap: var(--s3); }
+  .gate__done .btn { padding: 20px 22px; font-size: 0.75rem; text-align: center; }
+
   @media (max-width: 900px) {
     .gate { grid-template-columns: 1fr; min-height: 0; }
     .gate__stage { padding: 72px 20px 32px; }
@@ -77,15 +86,37 @@
         src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/you-got-me-radio-edit&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
     </div>
 
-    <ol class="gate__steps">
-      <li><span>1</span>connect to SoundCloud</li>
-      <li><span>2</span>download</li>
-    </ol>
+    <div id="locked">
+      <ol class="gate__steps">
+        <li><span>1</span>your email + a comment</li>
+        <li><span>2</span>connect to SoundCloud</li>
+        <li><span>3</span>download</li>
+      </ol>
 
-    <p class="typed gate__err" id="err" hidden></p>
+      <p class="typed gate__err" id="err" hidden></p>
 
-    <a class="btn btn--solid gate__cta" id="gate" href="https://finnian-gate.food-log.workers.dev/start?t=you-got-me">Follow + like on SoundCloud to download</a>
-    <p class="typed gate__note">one click and an Allow. nothing else is done with your SoundCloud.</p>
+      <form class="gate__form" id="form" novalidate>
+        <label>email
+          <input type="email" name="email" id="email" autocomplete="email" required placeholder="you@email.com">
+          <small>you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</small>
+        </label>
+        <label>comment on the track
+          <textarea name="comment" id="comment" maxlength="500" required placeholder="what do you think of it?"></textarea>
+          <small>posted on SoundCloud from your account.</small>
+        </label>
+        <button class="btn btn--solid gate__cta" id="gate" type="submit">Follow, like, repost + comment on SoundCloud</button>
+      </form>
+      <p class="typed gate__note">one click and an Allow. nothing else is done with your SoundCloud.</p>
+    </div>
+
+    <div class="gate__done" id="unlocked" hidden>
+      <ol class="gate__steps">
+        <li><span>&#10003;</span>unlocked. thank you</li>
+      </ol>
+      <a class="btn btn--solid" href="https://finnian-ca.bandcamp.com/album/you-got-me">download you got me</a>
+      <a class="btn" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
+      <p class="typed gate__note">the playlist is where finnian puts the songs he's playing, his own included.</p>
+    </div>
 
     <p class="typed gate__foot"><a href="/you-got-me/">listen everywhere</a> · <a href="/">finnian.ca</a></p>
   </section>
@@ -101,22 +132,44 @@
   var e = new URLSearchParams(location.search).get('e');
   if (msgs[e]) { var el = document.getElementById('err'); el.textContent = msgs[e]; el.hidden = false; }
 
-  // SoundCloud sign-in in a small popup; the page follows the result. Full-tab flow if popups are blocked.
-  document.getElementById('gate').addEventListener('click', function (ev) {
+  var GATE = 'https://finnian-gate.food-log.workers.dev';
+  if (new URLSearchParams(location.search).get('unlocked')) {
+    document.getElementById('locked').hidden = true;
+    document.getElementById('unlocked').hidden = false;
+  }
+  function showErr(t) { var el = document.getElementById('err'); el.textContent = t; el.hidden = false; }
+
+  // Email and comment go to the Worker first, keyed by sid; then SoundCloud sign-in in a small popup
+  // and the page follows the result. Full-tab flow if popups are blocked.
+  document.getElementById('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    var comment = document.getElementById('comment').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showErr('add your email first.');
+    if (comment.length < 2) return showErr('leave a comment on the track first.');
     var a = new Uint8Array(18); crypto.getRandomValues(a);
     var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    var start = GATE + '/start?t=you-got-me&sid=' + sid;
+    var prep = fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sid: sid, email: email, comment: comment }) });
     var w = 520, h = 720;
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
-    var pop = window.open(this.href + '&sid=' + sid, 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    if (!pop) return;
-    ev.preventDefault();
-    var tries = 0;
-    var timer = setInterval(function () {
-      if (++tries > 600) return clearInterval(timer);
-      fetch('https://finnian-gate.food-log.workers.dev/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
-        if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} location.href = d.url; }
-      }).catch(function () {});
-    }, 1000);
+    var pop = window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    prep.then(function (r) {
+      if (!r.ok) throw new Error('prep');
+      if (!pop) { location.href = start; return; }
+      pop.location.href = start;
+      var tries = 0;
+      var timer = setInterval(function () {
+        if (++tries > 600) return clearInterval(timer);
+        fetch(GATE + '/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
+          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} location.href = d.url; }
+        }).catch(function () {});
+      }, 1000);
+    }).catch(function () {
+      try { pop && pop.close(); } catch (x) {}
+      showErr("that didn't go through. check your email and try again.");
+    });
   });
 </script>
 </body>
