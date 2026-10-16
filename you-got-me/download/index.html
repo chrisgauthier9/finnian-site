@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>you got me, free download – finnian</title>
+<meta name="description" content="Free download of you got me by finnian.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://finnian.ca/you-got-me/download/">
+<meta property="og:title" content="you got me, free download – finnian">
+<meta property="og:image" content="https://finnian.ca/assets/you-got-me.jpg">
+<meta name="theme-color" content="#f1f1f3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=44">
+</head>
+<body>
+
+<main class="links-page band" data-tone="paper">
+  <div class="wrap">
+    <img src="/assets/you-got-me.jpg" alt="you got me cover: a yellow silhouette lying in a field under yellow stars" width="1200" height="1200" style="display:block;width:100%;height:auto;border:1px solid var(--black)">
+    <h1 class="display" style="font-size:clamp(2.75rem,12vw,4rem);margin-top:var(--s5)">you got me</h1>
+    <p class="typed">free download. follow finnian and like the track on SoundCloud, then grab it from Bandcamp.</p>
+
+    <p class="typed" id="err" hidden style="border:1px solid var(--black);padding:var(--s3)"></p>
+
+    <div class="stack">
+      <a class="btn btn--solid" href="https://finnian-gate.food-log.workers.dev/start?t=you-got-me">Follow + like on SoundCloud to download</a>
+    </div>
+
+    <p class="typed" style="margin-top:var(--s4)">you sign in to SoundCloud, it follows finnian and likes you got me, and the download opens. nothing else.</p>
+    <p class="typed" style="margin-top:var(--s5)"><a href="/you-got-me/">listen everywhere</a> · <a href="/">finnian.ca</a></p>
+  </div>
+</main>
+
+<script>
+  var msgs = {
+    cancelled: "you cancelled the SoundCloud sign-in. try again when you're ready.",
+    expired: "that took too long. try again.",
+    signin: "the SoundCloud sign-in didn't work. try again.",
+    follow: "SoundCloud didn't let the follow through. try again."
+  };
+  var e = new URLSearchParams(location.search).get('e');
+  if (msgs[e]) { var el = document.getElementById('err'); el.textContent = msgs[e]; el.hidden = false; }
+</script>
+</body>
+</html>
