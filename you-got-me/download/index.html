@@ -28,7 +28,7 @@
     <p class="typed" id="err" hidden style="border:1px solid var(--black);padding:var(--s3)"></p>
 
     <div class="stack">
-      <a class="btn btn--solid" href="https://finnian-gate.food-log.workers.dev/start?t=you-got-me">Follow + like on SoundCloud to download</a>
+      <a class="btn btn--solid" id="gate" href="https://finnian-gate.food-log.workers.dev/start?t=you-got-me">Follow + like on SoundCloud to download</a>
     </div>
 
     <p class="typed" style="margin-top:var(--s4)">you sign in to SoundCloud, it follows finnian and likes you got me, and the download opens. nothing else.</p>
@@ -45,6 +45,24 @@
   };
   var e = new URLSearchParams(location.search).get('e');
   if (msgs[e]) { var el = document.getElementById('err'); el.textContent = msgs[e]; el.hidden = false; }
+
+  // SoundCloud sign-in in a small popup; the page follows the result. Full-tab flow if popups are blocked.
+  document.getElementById('gate').addEventListener('click', function (ev) {
+    var a = new Uint8Array(18); crypto.getRandomValues(a);
+    var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    var w = 520, h = 720;
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    var pop = window.open(this.href + '&sid=' + sid, 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    if (!pop) return;
+    ev.preventDefault();
+    var tries = 0;
+    var timer = setInterval(function () {
+      if (++tries > 600) return clearInterval(timer);
+      fetch('https://finnian-gate.food-log.workers.dev/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} location.href = d.url; }
+      }).catch(function () {});
+    }, 1000);
+  });
 </script>
 </body>
 </html>
