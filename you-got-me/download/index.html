@@ -99,7 +99,7 @@
       <p class="typed gate__err" id="err" hidden></p>
 
       <div id="s1">
-        <label class="gate__field">leave a comment <small>(optional)</small>
+        <label class="gate__field">leave a comment
           <textarea id="comment" maxlength="500" placeholder="what do you think of it?"></textarea>
         </label>
         <button class="btn btn--solid gate__cta gate__sc" id="connect" type="button">connect</button>
@@ -150,9 +150,10 @@
   if (key) step(2);
   if (q.get('unlocked')) step(3);
 
-  // Step 1: the optional comment goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
+  // Step 1: the comment (required) goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
   // small popup while the page polls for the result. Full-tab flow if popups are blocked.
   $('connect').addEventListener('click', function () {
+    if ($('comment').value.trim().length < 2) { $('comment').focus(); return err('leave a comment on the track first.'); }
     err('');
     var a = new Uint8Array(18); crypto.getRandomValues(a);
     var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
