@@ -39,26 +39,23 @@
   .gate__player { margin-top: var(--s5); border: 1px solid var(--black); background: #fff; }
   .gate__player iframe { display: block; width: 100%; height: 120px; border: 0; }
 
-  .gate__steps { list-style: none; margin: var(--s5) 0 0; padding: 0; border-top: 1px solid var(--rule); }
-  .gate__steps li { display: flex; align-items: center; gap: var(--s3); padding: 14px 0; border-bottom: 1px solid var(--rule); font-family: var(--font); font-size: 1.05rem; }
-  .gate__steps span { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--black); color: var(--paper); font-family: var(--mono); font-size: 0.75rem; }
-  .gate__steps li:last-child span { background: var(--yellow); color: var(--black); }
-
-  .gate__cta { margin-top: var(--s5); padding: 20px 22px; font-size: 0.75rem; }
-  .gate__cta::before { content: ""; display: inline-block; width: 22px; height: 12px; margin-right: 12px; vertical-align: -1px;
+  .gate__cta { display: block; width: 100%; margin-top: var(--s4); padding: 20px 22px; font-size: 0.8rem; text-align: center; }
+  .gate__go { margin-top: var(--s5); }
+  .gate__sc::before { content: ""; display: inline-block; width: 22px; height: 12px; margin-right: 12px; vertical-align: -1px;
     background: currentColor; -webkit-mask: url(/assets/soundcloud.svg) center / contain no-repeat; mask: url(/assets/soundcloud.svg) center / contain no-repeat; }
-  .gate__note { margin-top: var(--s3); max-width: 52ch; color: var(--fg-dim); }
+
+  .gate__card { margin-top: var(--s5); padding: clamp(20px, 2.4vw, 32px); border: 1px solid var(--black); background: #fff; box-shadow: 6px 6px 0 var(--black); }
+  .gate__dots { display: flex; gap: 8px; }
+  .gate__dots i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--black); }
+  .gate__dots i.on { background: var(--black); }
+  .gate__ask { margin: var(--s4) 0 0; font-family: var(--mono); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4; }
+  .gate__field { display: grid; gap: 6px; margin-top: var(--s4); font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+  .gate__field small { text-transform: none; letter-spacing: 0; color: var(--fg-dim); font-size: 0.75rem; }
+  .gate__field input, .gate__field textarea { font: 1rem var(--font); padding: 12px 14px; border: 1px solid var(--black); background: #fff; color: var(--black); border-radius: 0; text-transform: none; letter-spacing: 0; }
+  .gate__field textarea { min-height: 64px; resize: vertical; }
+  .gate__fine { margin: var(--s3) 0 0; font-family: var(--font); font-size: 0.8rem; color: var(--fg-dim); }
   .gate__err { margin-top: var(--s4); max-width: none; border: 1px solid var(--black); background: var(--yellow); padding: var(--s3); }
   .gate__foot { margin-top: var(--s6); }
-
-  .gate__form { margin-top: var(--s5); display: grid; gap: var(--s3); }
-  .gate__form label { display: grid; gap: 6px; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
-  .gate__form input, .gate__form textarea { font: 1rem var(--font); padding: 12px 14px; border: 1px solid var(--black); background: #fff; color: var(--black); border-radius: 0; }
-  .gate__form textarea { min-height: 64px; resize: vertical; }
-  .gate__form small { font-family: var(--font); text-transform: none; letter-spacing: 0; color: var(--fg-dim); font-size: 0.8rem; }
-  .gate__form .gate__cta { margin-top: var(--s2); }
-  .gate__done { margin-top: var(--s5); display: grid; gap: var(--s3); }
-  .gate__done .btn { padding: 20px 22px; font-size: 0.75rem; text-align: center; }
 
   @media (max-width: 900px) {
     .gate { grid-template-columns: 1fr; min-height: 0; }
@@ -86,36 +83,34 @@
         src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/you-got-me-radio-edit&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
     </div>
 
-    <div id="locked">
-      <ol class="gate__steps">
-        <li><span>1</span>your email + a comment</li>
-        <li><span>2</span>connect to SoundCloud</li>
-        <li><span>3</span>download</li>
-      </ol>
+    <button class="btn btn--solid gate__cta gate__go" id="go" type="button">download</button>
 
+    <div class="gate__card" id="card" hidden>
+      <div class="gate__dots"><i class="on"></i><i></i><i></i></div>
+      <p class="gate__ask">support finnian to unlock your download</p>
       <p class="typed gate__err" id="err" hidden></p>
 
-      <form class="gate__form" id="form" novalidate>
-        <label>email
-          <input type="email" name="email" id="email" autocomplete="email" required placeholder="you@email.com">
-          <small>you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</small>
+      <div id="s1">
+        <label class="gate__field">leave a comment <small>(optional)</small>
+          <textarea id="comment" maxlength="500" placeholder="what do you think of it?"></textarea>
         </label>
-        <label>comment on the track
-          <textarea name="comment" id="comment" maxlength="500" required placeholder="what do you think of it?"></textarea>
-          <small>posted on SoundCloud from your account.</small>
-        </label>
-        <button class="btn btn--solid gate__cta" id="gate" type="submit">Follow, like, repost + comment on SoundCloud</button>
-      </form>
-      <p class="typed gate__note">one click and an Allow. nothing else is done with your SoundCloud.</p>
-    </div>
+        <button class="btn btn--solid gate__cta gate__sc" id="connect" type="button">connect</button>
+        <p class="gate__fine">Connect with SoundCloud to follow finnian, like and repost you got me, and post your comment.</p>
+      </div>
 
-    <div class="gate__done" id="unlocked" hidden>
-      <ol class="gate__steps">
-        <li><span>&#10003;</span>unlocked. thank you</li>
-      </ol>
-      <a class="btn btn--solid" href="https://finnian-ca.bandcamp.com/album/you-got-me">download you got me</a>
-      <a class="btn" id="spotify" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
-      <p class="typed gate__note">the playlist is where finnian puts the songs he's playing, his own included.</p>
+      <div id="s2" hidden>
+        <label class="gate__field">your email
+          <input type="email" id="email" autocomplete="email" placeholder="you@email.com">
+        </label>
+        <button class="btn btn--solid gate__cta" id="unlock" type="button">unlock download</button>
+        <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
+      </div>
+
+      <div id="s3" hidden>
+        <a class="btn btn--solid gate__cta" id="dl" href="https://finnian-ca.bandcamp.com/album/you-got-me">download you got me</a>
+        <a class="btn gate__cta" id="spotify" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
+        <p class="gate__fine">the playlist is where finnian puts the songs he's playing, his own included.</p>
+      </div>
     </div>
 
     <p class="typed gate__foot"><a href="/you-got-me/">listen everywhere</a> · <a href="/">finnian.ca</a></p>
@@ -123,47 +118,42 @@
 </main>
 
 <script>
+  var GATE = 'https://finnian-gate.food-log.workers.dev';
+  var q = new URLSearchParams(location.search);
+  var $ = function (id) { return document.getElementById(id); };
   var msgs = {
     cancelled: "you cancelled the SoundCloud sign-in. try again when you're ready.",
     expired: "that took too long. try again.",
     signin: "the SoundCloud sign-in didn't work. try again.",
     follow: "SoundCloud didn't let the follow through. try again."
   };
-  var e = new URLSearchParams(location.search).get('e');
-  if (msgs[e]) { var el = document.getElementById('err'); el.textContent = msgs[e]; el.hidden = false; }
-
-  var GATE = 'https://finnian-gate.food-log.workers.dev';
-  if (new URLSearchParams(location.search).get('unlocked')) {
-    document.getElementById('locked').hidden = true;
-    document.getElementById('unlocked').hidden = false;
+  function err(t) { $('err').textContent = t; $('err').hidden = !t; }
+  // Hypeddit-style card: one step at a time, dots show progress. 1 SoundCloud, 2 email, 3 download.
+  function step(n) {
+    $('go').hidden = true; $('card').hidden = false;
+    ['s1', 's2', 's3'].forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
+    [].forEach.call(document.querySelectorAll('.gate__dots i'), function (d, i) { d.className = i < n ? 'on' : ''; });
+    if (n === 3) document.querySelector('.gate__ask').textContent = 'unlocked. thank you';
   }
-  // Spotify playlist opens in a small window over the page, like the SoundCloud sign-in; new tab if popups are blocked.
-  document.getElementById('spotify').addEventListener('click', function (ev) {
-    var w = 480, h = 720;
-    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
-    var pop = window.open(this.href, 'finnian-spotify', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    if (pop) ev.preventDefault();
-  });
-  function showErr(t) { var el = document.getElementById('err'); el.textContent = t; el.hidden = false; }
 
-  // Email and comment go to the Worker first, keyed by sid; then SoundCloud sign-in in a small popup
-  // and the page follows the result. Full-tab flow if popups are blocked.
-  document.getElementById('form').addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var email = document.getElementById('email').value.trim();
-    var comment = document.getElementById('comment').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showErr('add your email first.');
-    if (comment.length < 2) return showErr('leave a comment on the track first.');
+  $('go').addEventListener('click', function () { step(1); });
+  if (msgs[q.get('e')]) { step(1); err(msgs[q.get('e')]); }
+  var key = q.get('k');
+  if (key) step(2);
+  if (q.get('unlocked')) step(3);
+
+  // Step 1: the optional comment goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
+  // small popup while the page polls for the result. Full-tab flow if popups are blocked.
+  $('connect').addEventListener('click', function () {
+    err('');
     var a = new Uint8Array(18); crypto.getRandomValues(a);
     var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     var start = GATE + '/start?t=you-got-me&sid=' + sid;
-    var prep = fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sid: sid, email: email, comment: comment }) });
     var w = 520, h = 720;
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
     var pop = window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    prep.then(function (r) {
-      if (!r.ok) throw new Error('prep');
+    fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sid: sid, comment: $('comment').value.trim() }) }).catch(function () {}).then(function () {
       if (!pop) { location.href = start; return; }
       pop.location.href = start;
       var tries = 0;
@@ -173,10 +163,27 @@
           if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} location.href = d.url; }
         }).catch(function () {});
       }, 1000);
-    }).catch(function () {
-      try { pop && pop.close(); } catch (x) {}
-      showErr("that didn't go through. check your email and try again.");
     });
+  });
+
+  // Step 2: email, checked against the key the SoundCloud step left; the Worker answers with the download.
+  $('unlock').addEventListener('click', function () {
+    var email = $('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
+    err('');
+    fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.download) throw new Error('email');
+      $('dl').href = d.download; step(3);
+    }).catch(function () { err("that didn't go through. check your email and try again."); });
+  });
+
+  // Spotify playlist opens in a small window over the page; new tab if popups are blocked.
+  $('spotify').addEventListener('click', function (ev) {
+    var w = 480, h = 720;
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    var pop = window.open(this.href, 'finnian-spotify', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    if (pop) ev.preventDefault();
   });
 </script>
 </body>
