@@ -114,7 +114,7 @@
         <li><span>&#10003;</span>unlocked. thank you</li>
       </ol>
       <a class="btn btn--solid" href="https://finnian-ca.bandcamp.com/album/you-got-me">download you got me</a>
-      <a class="btn" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
+      <a class="btn" id="spotify" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
       <p class="typed gate__note">the playlist is where finnian puts the songs he's playing, his own included.</p>
     </div>
 
@@ -137,6 +137,13 @@
     document.getElementById('locked').hidden = true;
     document.getElementById('unlocked').hidden = false;
   }
+  // Spotify playlist opens in a small window over the page, like the SoundCloud sign-in; new tab if popups are blocked.
+  document.getElementById('spotify').addEventListener('click', function (ev) {
+    var w = 480, h = 720;
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    var pop = window.open(this.href, 'finnian-spotify', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    if (pop) ev.preventDefault();
+  });
   function showErr(t) { var el = document.getElementById('err'); el.textContent = t; el.hidden = false; }
 
   // Email and comment go to the Worker first, keyed by sid; then SoundCloud sign-in in a small popup
