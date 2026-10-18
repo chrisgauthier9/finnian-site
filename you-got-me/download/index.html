@@ -218,7 +218,8 @@
   function spDone() { if (spStarted) { spStarted = 0; step(LAST); } }
   $('spconnect').addEventListener('click', function () {
     spStarted = Date.now();
-    var w = 520, h = 720;
+    // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
+    var w = 480, h = Math.min(screen.availHeight - 40, 1000);
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
     var pop = window.open(SPOTIFY_GATE, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
     if (!pop) location.href = SPOTIFY_GATE;
