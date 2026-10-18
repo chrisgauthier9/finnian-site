@@ -194,7 +194,10 @@
   function scDone(url) {
     if (key) return;
     var ok = /[?&]k=/.test(url);
-    if (SP && ok && scPop && !scPop.closed) { spStarted = Date.now(); scPop.location.href = SPOTIFY_GATE; watchSp(scPop); }
+    if (SP && ok && scPop && !scPop.closed) {
+      try { scPop.postMessage('finnian-stay', new URL(GATE).origin); } catch (x) {}
+      spStarted = Date.now(); scPop.location.href = SPOTIFY_GATE; watchSp(scPop);
+    }
     else { try { scPop && scPop.close(); } catch (x) {} }
     landed(url);
   }
@@ -241,9 +244,10 @@
     var started = false;
     w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { if (e.currentPosition > 500) started = true; });
     w.bind(SC.Widget.Events.READY, function () { w.play(); });
-    document.addEventListener('pointerdown', function (e) {
+    // On click, not pointerdown: a play() sent from pointerdown was still blocked in Chrome.
+    document.addEventListener('click', function (e) {
       if (!started && !e.target.closest('#play')) w.play();
-    }, { once: true });
+    }, { once: true, capture: true });
   };
   document.head.appendChild(sc);
 
