@@ -115,8 +115,8 @@
       </div>
 
       <div id="ssp" hidden>
-        <button class="btn btn--solid gate__cta" id="spconnect" type="button">connect Spotify</button>
-        <p class="gate__fine">Connect with Spotify to follow finnian and save you got me. Opens Hypeddit in a small window.</p>
+        <p class="gate__fine">finish the Spotify step in the small window: it follows finnian and saves you got me, then closes by itself.</p>
+        <button class="btn gate__cta" id="spconnect" type="button">reopen Spotify window</button>
       </div>
 
       <div id="s3" hidden>
@@ -149,7 +149,7 @@
   try { if (q.get('test') === 'spotify') sessionStorage.setItem('finnian-sp', '1'); SP = sessionStorage.getItem('finnian-sp') === '1'; } catch (x) {}
   var STEPS = SP ? ['s1', 's2', 'ssp', 's3'] : ['s1', 's2', 's3'];
   document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
-  if (SP) $('spotify').hidden = true;
+  if (SP) { $('spotify').hidden = true; $('unlock').textContent = 'next: Spotify'; }
   function step(n) {
     $('go').hidden = true; $('card').hidden = false;
     STEPS.forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
@@ -194,12 +194,22 @@
     var email = $('email').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
     err('');
+    // With the Spotify step on, this same click opens the Hypeddit pop-up, so the fan clicks once, not twice.
+    var pop = SP ? openSpotify('about:blank') : null;
     fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d.download) throw new Error('email');
-      $('dl').href = d.download; step(SP ? 3 : LAST);
-    }).catch(function () { err("that didn't go through. check your email and try again."); });
+      $('dl').href = d.download;
+      if (SP) { spStarted = Date.now(); if (pop) pop.location.href = SPOTIFY_GATE; else location.href = SPOTIFY_GATE; }
+      step(SP ? 3 : LAST);
+    }).catch(function () { try { pop && pop.close(); } catch (x) {} err("that didn't go through. check your email and try again."); });
   });
+  // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
+  function openSpotify(url) {
+    var w = 480, h = Math.min(screen.availHeight - 40, 1000);
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    return window.open(url, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+  }
 
   // Play button on the cover drives a hidden SoundCloud widget, like Hypeddit's.
   var sc = document.createElement('script'); sc.src = 'https://w.soundcloud.com/player/api.js';
@@ -218,11 +228,7 @@
   function spDone() { if (spStarted) { spStarted = 0; step(LAST); } }
   $('spconnect').addEventListener('click', function () {
     spStarted = Date.now();
-    // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
-    var w = 480, h = Math.min(screen.availHeight - 40, 1000);
-    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
-    var pop = window.open(SPOTIFY_GATE, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    if (!pop) location.href = SPOTIFY_GATE;
+    if (!openSpotify(SPOTIFY_GATE)) location.href = SPOTIFY_GATE;
   });
   window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data && e.data.finnianGate === 'spotify') spDone(); });
   window.addEventListener('storage', function (e) { if (e.key === 'finnian-gate-spotify' && +e.newValue >= spStarted) spDone(); });
