@@ -109,14 +109,6 @@
         <p class="gate__fine">Connect with SoundCloud to follow finnian, like and repost you got me, and post your comment.</p>
       </div>
 
-      <div id="s2" hidden>
-        <label class="gate__field">your email
-          <input type="email" id="email" autocomplete="email" placeholder="you@email.com">
-        </label>
-        <button class="btn btn--solid gate__cta" id="unlock" type="button">unlock download</button>
-        <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
-      </div>
-
       <div id="ssp" hidden>
         <p class="gate__wait"><i class="gate__spin" aria-hidden="true"></i>finish the Spotify step in the small window</p>
         <button class="btn gate__cta" id="spconnect" type="button">reopen Spotify window</button>
@@ -154,9 +146,9 @@
     if (q.get('test') === 'off') localStorage.removeItem('finnian-sp');
     SP = Date.now() - (+localStorage.getItem('finnian-sp') || 0) < 3600e3;
   } catch (x) {}
-  var STEPS = SP ? ['s1', 's2', 'ssp', 's3'] : ['s1', 's2', 's3'];
+  var STEPS = SP ? ['s1', 'ssp', 's3'] : ['s1', 's3'];
   document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
-  if (SP) { $('spotify').hidden = true; $('unlock').textContent = 'next: Spotify'; }
+  if (SP) $('spotify').hidden = true;
   function step(n) {
     $('go').hidden = true; $('card').hidden = false;
     STEPS.forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
@@ -181,7 +173,7 @@
     var start = GATE + '/start?t=you-got-me&sid=' + sid;
     var w = 520, h = 720;
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
-    var pop = window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    var pop = scPop = SP ? openSpotify('about:blank') : window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
     fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sid: sid, comment: $('comment').value.trim() }) }).catch(function () {}).then(function () {
       if (!pop) { location.href = start; return; }
@@ -190,11 +182,22 @@
       var timer = setInterval(function () {
         if (++tries > 600) return clearInterval(timer);
         fetch(GATE + '/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
-          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} if (!key) landed(d.url); }
+          if (d.url) { clearInterval(timer); scDone(d.url); }
         }).catch(function () {});
       }, 1000);
     });
   });
+
+  // SoundCloud finished. With Spotify on, the same small window goes straight on to the Hypeddit step,
+  // so the fan never clicks again; otherwise it closes and the download shows.
+  var scPop = null;
+  function scDone(url) {
+    if (key) return;
+    var ok = /[?&]k=/.test(url);
+    if (SP && ok && scPop && !scPop.closed) { spStarted = Date.now(); scPop.location.href = SPOTIFY_GATE; watchSp(scPop); }
+    else { try { scPop && scPop.close(); } catch (x) {} }
+    landed(url);
+  }
 
   // The result comes back as a link to this page (?k= or ?e=): apply it in place, so the track keeps playing.
   function landed(url) {
@@ -208,23 +211,12 @@
 
   // The SoundCloud pop-up posts its result here instead of reloading this page (the /status poll is the backup).
   window.addEventListener('message', function (e) {
-    if (e.origin === new URL(GATE).origin && e.data && e.data.finnianGateUrl && !key) landed(e.data.finnianGateUrl);
+    if (e.origin === new URL(GATE).origin && e.data && e.data.finnianGateUrl) scDone(e.data.finnianGateUrl);
   });
 
-  // Step 2: email, checked against the key the SoundCloud step left; the Worker answers with the download.
-  $('unlock').addEventListener('click', function () {
-    var email = $('email').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
-    err('');
-    // With the Spotify step on, this same click opens the Hypeddit pop-up, so the fan clicks once, not twice.
-    var pop = SP ? openSpotify('about:blank') : null;
-    fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
-      if (!d.download) throw new Error('email');
-      $('dl').href = d.download;
-      if (SP) { spStarted = Date.now(); if (pop) { pop.location.href = SPOTIFY_GATE; watchSp(pop); } else location.href = SPOTIFY_GATE; }
-      step(SP ? 3 : LAST);
-    }).catch(function () { try { pop && pop.close(); } catch (x) {} err("that didn't go through. check your email and try again."); });
+  // Download click is counted by the Worker; Bandcamp asks a $0 fan for their email.
+  $('dl').addEventListener('click', function () {
+    try { navigator.sendBeacon(GATE + '/dl?k=' + encodeURIComponent(key || '')); } catch (x) {}
   });
   // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
   function openSpotify(url) {
