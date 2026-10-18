@@ -139,13 +139,8 @@
   // Spotify step (experiment, 2026-10-18): on with ?test=spotify, kept for an hour in localStorage across the SoundCloud redirect.
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
   var SPOTIFY_GATE = 'https://hypeddit.com/finnian/yougotme-spotify';
-  var SP = false;
-  // localStorage, not sessionStorage: the SoundCloud return can land in another window, which lost the flag.
-  try {
-    if (q.get('test') === 'spotify') localStorage.setItem('finnian-sp', String(Date.now()));
-    if (q.get('test') === 'off') localStorage.removeItem('finnian-sp');
-    SP = Date.now() - (+localStorage.getItem('finnian-sp') || 0) < 3600e3;
-  } catch (x) {}
+  // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
+  var SP = q.get('spotify') !== 'off';
   var STEPS = SP ? ['s1', 'ssp', 's3'] : ['s1', 's3'];
   document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
   if (SP) $('spotify').hidden = true;
