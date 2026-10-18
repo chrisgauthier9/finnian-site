@@ -118,6 +118,14 @@
         <p class="gate__fine">Connect with SoundCloud to follow finnian, like and repost you got me, and post your comment.</p>
       </div>
 
+      <div id="s2" hidden>
+        <label class="gate__field">your email
+          <input type="email" id="email" autocomplete="email" placeholder="you@email.com">
+        </label>
+        <button class="btn btn--solid gate__cta" id="unlock" type="button">unlock download</button>
+        <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
+      </div>
+
       <div id="ssp" hidden>
         <p class="gate__wait"><i class="gate__spin" aria-hidden="true"></i>finish the Spotify step in the small window</p>
         <button class="btn gate__cta" id="spconnect" type="button">reopen Spotify window</button>
@@ -149,11 +157,19 @@
   };
   function err(t) { $('err').textContent = t; $('err').hidden = !t; }
   // Hypeddit-style card: one step at a time, dots show progress. 1 SoundCloud, 2 email, 3 download.
+  // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
+  // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
+  // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
+  var T = { slug: 'you-got-me', download: 'bandcamp' };
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
-  var SPOTIFY_GATE = 'https://hypeddit.com/finnian/yougotme-spotify';
+  var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
   var SP = q.get('spotify') !== 'off';
-  var STEPS = SP ? ['s1', 'ssp', 's3'] : ['s1', 's3'];
+  var EMAIL = T.download === 'file';
+  var STEPS = ['s1'].concat(SP ? ['ssp'] : [], EMAIL ? ['s2'] : [], ['s3']);
+  if (EMAIL) $('dl').removeAttribute('target');
+  else $('s2').remove();
+  function after(id) { return STEPS.indexOf(id) + 2; }
   document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
   function step(n) {
     $('go').hidden = true; $('card').hidden = false;
@@ -176,7 +192,7 @@
     err('');
     var a = new Uint8Array(18); crypto.getRandomValues(a);
     var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    var start = GATE + '/start?t=you-got-me&sid=' + sid;
+    var start = GATE + '/start?t=' + T.slug + '&sid=' + sid;
     var w = 520, h = 720;
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
     var pop = scPop = SP ? openSpotify('about:blank') : window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
@@ -223,8 +239,22 @@
     if (e.origin === new URL(GATE).origin && e.data && e.data.finnianGateUrl) scDone(e.data.finnianGateUrl);
   });
 
-  // Download click is counted by the Worker; Bandcamp asks a $0 fan for their email.
+  // Email step (file gates only): checked against the key the SoundCloud step left; the Worker answers with the file link.
+  if (EMAIL) $('unlock').addEventListener('click', function () {
+    var email = $('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
+    err('');
+    fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.download) throw new Error('email');
+      $('dl').href = d.download;
+      step(LAST);
+    }).catch(function () { err("that didn't go through. check your email and try again."); });
+  });
+
+  // Download click is counted by the Worker (a file gate counts in /file instead); Bandcamp asks a $0 fan for their email.
   $('dl').addEventListener('click', function () {
+    if (EMAIL) return;
     try { navigator.sendBeacon(GATE + '/dl?k=' + encodeURIComponent(key || '')); } catch (x) {}
   });
   // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
@@ -268,7 +298,7 @@
 
   // Spotify step: Hypeddit pop-up; done when finnian.ca/gate-done/ posts a message or writes localStorage.
   var spStarted = 0;
-  function spDone() { if (spStarted) { spStarted = 0; err(''); step(LAST); } }
+  function spDone() { if (spStarted) { spStarted = 0; err(''); step(after('ssp')); } }
   $('spconnect').addEventListener('click', function () {
     spStarted = Date.now(); err('');
     var pop = openSpotify(SPOTIFY_GATE);
