@@ -114,6 +114,11 @@
         <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
       </div>
 
+      <div id="ssp" hidden>
+        <button class="btn btn--solid gate__cta" id="spconnect" type="button">connect Spotify</button>
+        <p class="gate__fine">Connect with Spotify to follow finnian and save you got me. Opens Hypeddit in a small window.</p>
+      </div>
+
       <div id="s3" hidden>
         <a class="btn btn--solid gate__cta" id="dl" href="https://finnianmusictoronto.bandcamp.com/album/you-got-me">download you got me</a>
         <a class="btn gate__cta" id="spotify" href="https://open.spotify.com/playlist/6MLFPdJeEIX2EhkCgavgnV" target="_blank" rel="noopener">follow sunset dance tracks on Spotify</a>
@@ -137,18 +142,27 @@
   };
   function err(t) { $('err').textContent = t; $('err').hidden = !t; }
   // Hypeddit-style card: one step at a time, dots show progress. 1 SoundCloud, 2 email, 3 download.
+  // Spotify step (experiment, 2026-10-18): on with ?test=spotify, kept in sessionStorage across the SoundCloud redirect.
+  // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
+  var SPOTIFY_GATE = 'https://hypeddit.com/REPLACE_ME';
+  var SP = false;
+  try { if (q.get('test') === 'spotify') sessionStorage.setItem('finnian-sp', '1'); SP = sessionStorage.getItem('finnian-sp') === '1'; } catch (x) {}
+  var STEPS = SP ? ['s1', 's2', 'ssp', 's3'] : ['s1', 's2', 's3'];
+  document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
+  if (SP) $('spotify').hidden = true;
   function step(n) {
     $('go').hidden = true; $('card').hidden = false;
-    ['s1', 's2', 's3'].forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
+    STEPS.forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
     [].forEach.call(document.querySelectorAll('.gate__dots i'), function (d, i) { d.className = i < n ? 'on' : ''; });
-    if (n === 3) document.querySelector('.gate__ask').textContent = 'unlocked. thank you';
+    if (n === STEPS.length) document.querySelector('.gate__ask').textContent = 'unlocked. thank you';
   }
+  var LAST = STEPS.length;
 
   $('go').addEventListener('click', function () { step(1); });
   if (msgs[q.get('e')]) { step(1); err(msgs[q.get('e')]); }
   var key = q.get('k');
   if (key) step(2);
-  if (q.get('unlocked')) step(3);
+  if (q.get('unlocked')) step(LAST);
 
   // Step 1: the comment (required) goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
   // small popup while the page polls for the result. Full-tab flow if popups are blocked.
@@ -183,7 +197,7 @@
     fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d.download) throw new Error('email');
-      $('dl').href = d.download; step(3);
+      $('dl').href = d.download; step(SP ? 3 : LAST);
     }).catch(function () { err("that didn't go through. check your email and try again."); });
   });
 
@@ -198,6 +212,19 @@
     w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; });
   };
   document.head.appendChild(sc);
+
+  // Spotify step: Hypeddit pop-up; done when finnian.ca/gate-done/ posts a message or writes localStorage.
+  var spStarted = 0;
+  function spDone() { if (spStarted) { spStarted = 0; step(LAST); } }
+  $('spconnect').addEventListener('click', function () {
+    spStarted = Date.now();
+    var w = 520, h = 720;
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    var pop = window.open(SPOTIFY_GATE, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    if (!pop) location.href = SPOTIFY_GATE;
+  });
+  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data && e.data.finnianGate === 'spotify') spDone(); });
+  window.addEventListener('storage', function (e) { if (e.key === 'finnian-gate-spotify' && +e.newValue >= spStarted) spDone(); });
 
   // Spotify playlist opens in a small window over the page; new tab if popups are blocked.
   $('spotify').addEventListener('click', function (ev) {

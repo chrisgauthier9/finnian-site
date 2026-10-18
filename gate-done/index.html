@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>finnian</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f1f1f3;color:#000;font:16px system-ui,sans-serif;text-align:center}</style>
+</head>
+<body>
+<p>done, back to finnian…</p>
+<script>
+  // Destination of the Hypeddit Spotify link gate. Runs inside the gate's pop-up (finnian.ca origin), tells the
+  // download page the Spotify step finished, then closes. Opened on its own, it sends the fan to finnian.ca.
+  var step = new URLSearchParams(location.search).get('s') || 'spotify';
+  try { localStorage.setItem('finnian-gate-' + step, String(Date.now())); } catch (e) {}
+  try { if (window.opener && !window.opener.closed) window.opener.postMessage({ finnianGate: step }, location.origin); } catch (e) {}
+  setTimeout(function () { window.close(); }, 300);
+  setTimeout(function () { location.replace('/'); }, 2500);
+</script>
+</body>
+</html>
