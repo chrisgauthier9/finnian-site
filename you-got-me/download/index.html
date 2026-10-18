@@ -166,24 +166,36 @@
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
   var SP = T.spotify !== false && q.get('spotify') !== 'off';  // edits that are not on Spotify set spotify: false
   var EMAIL = T.download === 'file';
-  var STEPS = ['s1'].concat(SP ? ['ssp'] : [], EMAIL ? ['s2'] : [], ['s3']);
-  if (EMAIL) $('dl').removeAttribute('target');
-  else $('s2').remove();
+  var STEPS, LAST;
+  function layout() {
+    STEPS = ['s1'].concat(SP ? ['ssp'] : [], EMAIL ? ['s2'] : [], ['s3']);
+    LAST = STEPS.length;
+    if (EMAIL) $('dl').removeAttribute('target'); else $('dl').setAttribute('target', '_blank');
+    document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
+  }
+  layout();
   function after(id) { return STEPS.indexOf(id) + 2; }
-  document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
   function step(n) {
     $('go').hidden = true; $('card').hidden = false;
     STEPS.forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
     [].forEach.call(document.querySelectorAll('.gate__dots i'), function (d, i) { d.className = i < n ? 'on' : ''; });
     if (n === STEPS.length) document.querySelector('.gate__ask').textContent = 'unlocked. thank you';
   }
-  var LAST = STEPS.length;
 
   $('go').addEventListener('click', function () { step(1); });
   if (msgs[q.get('e')]) { step(1); err(msgs[q.get('e')]); }
   var key = q.get('k');
   if (key) step(2);
   if (q.get('unlocked')) step(LAST);
+
+  // Bandcamp's 200 free downloads a month: near the cap the Worker answers 'file', and this gate brings back the
+  // email step and serves the file itself, so nobody is asked to pay (Chris, 2026-10-18).
+  if (!EMAIL) fetch(GATE + '/mode?t=' + T.slug).then(function (r) { return r.json(); }).then(function (m) {
+    if (m.download !== 'file' || q.get('unlocked')) return;
+    var shown = STEPS.filter(function (id) { return !$(id).hidden; })[0];
+    EMAIL = true; layout();
+    if (shown && !$('card').hidden) step(STEPS.indexOf(shown === 's3' ? 's2' : shown) + 1);
+  }).catch(function () {});
 
   // Step 1: the comment (required) goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
   // small popup while the page polls for the result. Full-tab flow if popups are blocked.
@@ -240,7 +252,8 @@
   });
 
   // Email step (file gates only): checked against the key the SoundCloud step left; the Worker answers with the file link.
-  if (EMAIL) $('unlock').addEventListener('click', function () {
+  $('unlock').addEventListener('click', function () {
+    if (!EMAIL) return;
     var email = $('email').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
     err('');
