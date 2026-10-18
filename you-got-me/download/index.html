@@ -205,7 +205,7 @@
       body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d.download) throw new Error('email');
       $('dl').href = d.download;
-      if (SP) { spStarted = Date.now(); if (pop) pop.location.href = SPOTIFY_GATE; else location.href = SPOTIFY_GATE; }
+      if (SP) { spStarted = Date.now(); if (pop) { pop.location.href = SPOTIFY_GATE; watchSp(pop); } else location.href = SPOTIFY_GATE; }
       step(SP ? 3 : LAST);
     }).catch(function () { try { pop && pop.close(); } catch (x) {} err("that didn't go through. check your email and try again."); });
   });
@@ -240,9 +240,23 @@
   var spStarted = 0;
   function spDone() { if (spStarted) { spStarted = 0; step(LAST); } }
   $('spconnect').addEventListener('click', function () {
-    spStarted = Date.now();
-    if (!openSpotify(SPOTIFY_GATE)) location.href = SPOTIFY_GATE;
+    spStarted = Date.now(); err('');
+    var pop = openSpotify(SPOTIFY_GATE);
+    if (pop) watchSp(pop); else location.href = SPOTIFY_GATE;
   });
+  // Hypeddit waits a fixed 3 s after its Unlock before redirecting, so a fan may close the pop-up instead.
+  // Closed after 10 s or more counts as done (about a real Spotify connect); sooner sends them back to it.
+  var spWatch = 0;
+  function watchSp(pop) {
+    clearInterval(spWatch);
+    spWatch = setInterval(function () {
+      if (!spStarted) return clearInterval(spWatch);
+      if (!pop.closed) return;
+      clearInterval(spWatch);
+      if (Date.now() - spStarted >= 10000) spDone();
+      else err("the Spotify step didn't finish. reopen the window to finish it.");
+    }, 300);
+  }
   window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data && e.data.finnianGate === 'spotify') spDone(); });
   window.addEventListener('storage', function (e) { if (e.key === 'finnian-gate-spotify' && +e.newValue >= spStarted) spDone(); });
 
