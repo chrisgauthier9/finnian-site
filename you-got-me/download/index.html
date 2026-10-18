@@ -237,11 +237,12 @@
     w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; });
     // Autoplay: browsers block sound until the visitor interacts, so try on load, then start on the first click
     // anywhere (usually "download"). Only once, so a fan who paused is never restarted.
+    // A blocked autoplay still fires PLAY then PAUSE, so "started" means sound actually ran past half a second.
     var started = false;
-    w.bind(SC.Widget.Events.PLAY, function () { started = true; });
+    w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { if (e.currentPosition > 500) started = true; });
     w.bind(SC.Widget.Events.READY, function () { w.play(); });
     document.addEventListener('pointerdown', function (e) {
-      if (!started && !e.target.closest('#play')) { started = true; w.play(); }
+      if (!started && !e.target.closest('#play')) w.play();
     }, { once: true });
   };
   document.head.appendChild(sc);
