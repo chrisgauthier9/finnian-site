@@ -160,7 +160,7 @@
   // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
   // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
   // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
-  var T = { slug: 'mimosa', download: 'file' };
+  var T = { slug: 'mimosa', download: 'file', spotify: 'https://hypeddit.com/finnian/mimosa-spotify' };
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
   var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
