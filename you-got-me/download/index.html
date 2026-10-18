@@ -144,7 +144,7 @@
   // Hypeddit-style card: one step at a time, dots show progress. 1 SoundCloud, 2 email, 3 download.
   // Spotify step (experiment, 2026-10-18): on with ?test=spotify, kept in sessionStorage across the SoundCloud redirect.
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
-  var SPOTIFY_GATE = 'https://hypeddit.com/REPLACE_ME';
+  var SPOTIFY_GATE = 'https://hypeddit.com/finnian/yougotme-spotify';
   var SP = false;
   try { if (q.get('test') === 'spotify') sessionStorage.setItem('finnian-sp', '1'); SP = sessionStorage.getItem('finnian-sp') === '1'; } catch (x) {}
   var STEPS = SP ? ['s1', 's2', 'ssp', 's3'] : ['s1', 's2', 's3'];
