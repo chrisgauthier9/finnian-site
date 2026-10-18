@@ -238,7 +238,7 @@
 
   // Spotify step: Hypeddit pop-up; done when finnian.ca/gate-done/ posts a message or writes localStorage.
   var spStarted = 0;
-  function spDone() { if (spStarted) { spStarted = 0; step(LAST); } }
+  function spDone() { if (spStarted) { spStarted = 0; err(''); step(LAST); } }
   $('spconnect').addEventListener('click', function () {
     spStarted = Date.now(); err('');
     var pop = openSpotify(SPOTIFY_GATE);
