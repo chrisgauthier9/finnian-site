@@ -181,7 +181,7 @@
     var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
     var pop = scPop = SP ? openSpotify('about:blank') : window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
     fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sid: sid, comment: $('comment').value.trim() }) }).catch(function () {}).then(function () {
+      body: JSON.stringify({ sid: sid, comment: $('comment').value.trim(), at: commentAt() }) }).catch(function () {}).then(function () {
       if (!pop) { location.href = start; return; }
       pop.location.href = start;
       var tries = 0;
@@ -235,6 +235,14 @@
     return window.open(url, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
   }
 
+  // The comment lands where the fan is in the song; if it never played, somewhere between 15% and 85%.
+  var playPos = 0, playLen = 0;
+  function commentAt() {
+    if (playPos > 1000) return Math.round(playPos);
+    var len = playLen || 240000;
+    return Math.round(len * (0.15 + Math.random() * 0.7));
+  }
+
   // Play button on the cover drives a hidden SoundCloud widget, like Hypeddit's.
   var sc = document.createElement('script'); sc.src = 'https://w.soundcloud.com/player/api.js';
   sc.onload = function () {
@@ -243,7 +251,8 @@
     w.bind(SC.Widget.Events.PLAY, function () { $('play').classList.add('on'); });
     w.bind(SC.Widget.Events.PAUSE, function () { $('play').classList.remove('on'); });
     w.bind(SC.Widget.Events.FINISH, function () { $('play').classList.remove('on'); });
-    w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; });
+    w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; playPos = e.currentPosition; });
+    w.bind(SC.Widget.Events.READY, function () { w.getDuration(function (d) { playLen = d; }); });
     // Autoplay: browsers block sound until the visitor interacts, so try on load, then start on the first click
     // anywhere (usually "download"). Only once, so a fan who paused is never restarted.
     // A blocked autoplay still fires PLAY then PAUSE, so "started" means sound actually ran past half a second.
@@ -281,13 +290,7 @@
   window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data && e.data.finnianGate === 'spotify') spDone(); });
   window.addEventListener('storage', function (e) { if (e.key === 'finnian-gate-spotify' && +e.newValue >= spStarted) spDone(); });
 
-  // Up next opens in a small window over the page, so the song keeps playing; new tab if popups are blocked.
-  $('next').addEventListener('click', function (ev) {
-    var w = 480, h = 720;
-    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
-    var pop = window.open(this.href, 'finnian-next', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    if (pop) ev.preventDefault();
-  });
+  // Up next opens in a normal new tab (a 480px pop-up squeezed the Spotify player); the song keeps playing here.
 </script>
 </body>
 </html>
