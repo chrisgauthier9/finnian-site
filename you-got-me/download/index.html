@@ -225,6 +225,14 @@
     w.bind(SC.Widget.Events.PAUSE, function () { $('play').classList.remove('on'); });
     w.bind(SC.Widget.Events.FINISH, function () { $('play').classList.remove('on'); });
     w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; });
+    // Autoplay: browsers block sound until the visitor interacts, so try on load, then start on the first click
+    // anywhere (usually "download"). Only once, so a fan who paused is never restarted.
+    var started = false;
+    w.bind(SC.Widget.Events.PLAY, function () { started = true; });
+    w.bind(SC.Widget.Events.READY, function () { w.play(); });
+    document.addEventListener('pointerdown', function (e) {
+      if (!started && !e.target.closest('#play')) { started = true; w.play(); }
+    }, { once: true });
   };
   document.head.appendChild(sc);
 
