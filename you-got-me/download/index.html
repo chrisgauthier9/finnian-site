@@ -188,7 +188,7 @@
       var timer = setInterval(function () {
         if (++tries > 600) return clearInterval(timer);
         fetch(GATE + '/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
-          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} landed(d.url); }
+          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} if (!key) landed(d.url); }
         }).catch(function () {});
       }, 1000);
     });
@@ -203,6 +203,11 @@
     if (u.searchParams.get('k')) { key = u.searchParams.get('k'); err(''); step(2); }
     else err(msgs[e] || "that didn't go through. try again.");
   }
+
+  // The SoundCloud pop-up posts its result here instead of reloading this page (the /status poll is the backup).
+  window.addEventListener('message', function (e) {
+    if (e.origin === new URL(GATE).origin && e.data && e.data.finnianGateUrl && !key) landed(e.data.finnianGateUrl);
+  });
 
   // Step 2: email, checked against the key the SoundCloud step left; the Worker answers with the download.
   $('unlock').addEventListener('click', function () {
