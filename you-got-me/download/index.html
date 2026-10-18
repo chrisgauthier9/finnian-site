@@ -188,11 +188,21 @@
       var timer = setInterval(function () {
         if (++tries > 600) return clearInterval(timer);
         fetch(GATE + '/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
-          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} location.href = d.url; }
+          if (d.url) { clearInterval(timer); try { pop.close(); } catch (x) {} landed(d.url); }
         }).catch(function () {});
       }, 1000);
     });
   });
+
+  // The result comes back as a link to this page (?k= or ?e=): apply it in place, so the track keeps playing.
+  function landed(url) {
+    var u = new URL(url, location.href);
+    if (u.origin + u.pathname !== location.origin + location.pathname) { location.href = url; return; }
+    history.replaceState(null, '', u.pathname + u.search);
+    var e = u.searchParams.get('e');
+    if (u.searchParams.get('k')) { key = u.searchParams.get('k'); err(''); step(2); }
+    else err(msgs[e] || "that didn't go through. try again.");
+  }
 
   // Step 2: email, checked against the key the SoundCloud step left; the Worker answers with the download.
   $('unlock').addEventListener('click', function () {
