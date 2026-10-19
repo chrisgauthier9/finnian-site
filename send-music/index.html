@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finnian – send music</title>
+<meta name="description" content="Send finnian your music. Every track gets listened to.">
+<link rel="canonical" href="https://finnian.ca/send-music/">
+<meta property="og:title" content="Finnian – send music">
+<meta property="og:description" content="Send finnian your music. Every track gets listened to.">
+<meta property="og:image" content="https://finnian.ca/assets/og.jpg?v=1">
+<meta name="theme-color" content="#f1f1f3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png?v=2">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=44">
+<style>
+  .send { display: grid; gap: 10px; max-width: 520px; margin-top: var(--s4); }
+  .send label { font-size: 0.8125rem; margin: var(--s1) 0 -4px 22px; }
+  .send input, .send textarea {
+    width: 100%; padding: 16px 22px; border: 1px solid var(--black); border-radius: 999px;
+    background: #fff; color: var(--black); font: inherit;
+  }
+  .send textarea { border-radius: 24px; min-height: 120px; resize: vertical; }
+  .send input::placeholder, .send textarea::placeholder { color: rgba(0,0,0,0.42); }
+  .send input:focus-visible, .send textarea:focus-visible { outline: 3px solid var(--yellow); outline-offset: 1px; }
+  .send .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .send button { margin-top: var(--s2); }
+  .send-done { display: none; margin-top: var(--s4); }
+</style>
+</head>
+<body>
+
+<main class="band" data-tone="paper">
+  <div class="wrap band__inner prose">
+    <h1 class="display display--stop" style="margin-bottom: var(--s4)">send music</h1>
+    <p>got a track you think i'd play? send it here. i listen to everything that comes in, and if it's one for my sets you'll hear from me.</p>
+    <p class="caption">a private SoundCloud link works best, with downloads on. no attachments. up to 2 tracks a month.</p>
+
+    <form class="send" id="send" novalidate>
+      <label for="artist">artist name</label>
+      <input id="artist" name="artist" autocomplete="nickname" required maxlength="120">
+      <label for="email">email</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required maxlength="200">
+      <label for="track">track link</label>
+      <input id="track" name="track" type="url" inputmode="url" placeholder="https://soundcloud.com/..." required maxlength="500">
+      <label for="instagram">instagram (optional)</label>
+      <input id="instagram" name="instagram" placeholder="@yourname" maxlength="80">
+      <label for="genre">genre (optional)</label>
+      <input id="genre" name="genre" placeholder="ukg, house, bass..." maxlength="80">
+      <label for="note">anything else (optional)</label>
+      <textarea id="note" name="note" maxlength="1000"></textarea>
+      <div class="hp" aria-hidden="true"><label for="website">website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+      <button class="btn btn--solid" type="submit">send it</button>
+      <p class="form-status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="send-done" id="done">
+      <p><b>got it.</b> thanks for sending it over, i'll give it a proper listen.</p>
+      <p><a href="/">← finnian.ca</a></p>
+    </div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const f = document.getElementById('send'), status = document.getElementById('status');
+  f.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(f));
+    if (!d.artist.trim() || !/^\S+@\S+\.\S+$/.test(d.email) || !/^https?:\/\/\S+$/.test(d.track.trim())) {
+      status.textContent = 'add your artist name, email and a track link (starting with https://).';
+      return;
+    }
+    const btn = f.querySelector('button'); btn.disabled = true; status.textContent = 'sending…';
+    try {
+      const r = await fetch('https://finnian-gate.food-log.workers.dev/submit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (j.ok) { f.style.display = 'none'; document.getElementById('done').style.display = 'block'; return; }
+      status.textContent = j.error === 'limit'
+        ? "you've hit the limit for now (2 tracks a month). try again later."
+        : 'something went wrong. check the link and try again.';
+    } catch { status.textContent = 'something went wrong. try again in a minute.'; }
+    btn.disabled = false;
+  });
+})();
+</script>
+
+</body>
+</html>
