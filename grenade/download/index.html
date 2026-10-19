@@ -132,7 +132,7 @@
       </div>
 
       <div id="s3" hidden>
-        <a class="btn btn--solid gate__cta" id="dl" href="#" target="_blank" rel="noopener">download grenade</a>
+        <a class="btn btn--solid gate__cta" id="dl" href="https://finnianmusictoronto.bandcamp.com/track/grenade-minimal-house-edit-free-download" target="_blank" rel="noopener">download grenade</a>
         <a class="gate__next" id="next" href="https://finnian.ca/mimosa/download/" target="_blank" rel="noopener">
           <img src="/assets/mimosa.jpg" alt="" width="56" height="56">
           <span><small>up next</small><b>mimosa 2000 (140 rework)</b><em>free download</em></span>
@@ -160,7 +160,7 @@
   // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
   // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
   // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
-  var T = { slug: 'grenade', download: 'file', spotify: false };
+  var T = { slug: 'grenade', download: 'bandcamp', spotify: false };
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
   var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
