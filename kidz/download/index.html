@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MGMT - Kids (finnian edit), free download – finnian</title>
+<meta name="description" content="Free download of MGMT - Kids (finnian edit) by finnian.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://finnian.ca/kidz/download/">
+<meta property="og:title" content="MGMT - Kids (finnian edit), free download – finnian">
+<meta property="og:image" content="https://finnian.ca/assets/kidz.jpg">
+<meta name="theme-color" content="#f1f1f3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=44">
+<style>
+  /* Download gate. Desktop first: cover stage left, steps panel right. Stacks under 900px. */
+  html, body { height: 100%; }
+  .gate { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(420px, 0.85fr); min-height: 100vh; }
+
+  .gate__stage { position: relative; overflow: hidden; background: var(--black); display: grid; place-items: center; padding: clamp(32px, 5vw, 80px); }
+  .gate__stage::before {
+    content: ""; position: absolute; inset: -60px;
+    background: url(/assets/kidz.jpg) center / cover no-repeat;
+    filter: blur(48px) saturate(1.1) brightness(0.85); transform: scale(1.1);
+  }
+  .gate__cover { position: relative; width: min(100%, 62vh, 620px); aspect-ratio: 1; border: 1px solid var(--black); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+  .gate__cover img { width: 100%; height: 100%; object-fit: cover; }
+  .gate__brand { position: absolute; top: 28px; left: 32px; z-index: 1; color: var(--paper); text-decoration: none; font-family: var(--font); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.03em; }
+
+  .gate__panel { display: flex; flex-direction: column; justify-content: center; padding: clamp(24px, 4vh, 56px) clamp(32px, 4.5vw, 72px); background: var(--paper); }
+  .gate__panel .eyebrow b { color: var(--black); background: var(--yellow); padding: 2px 6px; }
+  .gate__title { font-size: clamp(2.6rem, min(4.6vw, 8vh), 4.5rem); }
+  .gate__artist { margin: var(--s2) 0 0; font-family: var(--font); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.01em; }
+
+  .gate__play { position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border: 0; border-radius: 50%;
+    background: var(--yellow); box-shadow: 0 10px 30px rgba(0,0,0,0.35); cursor: pointer; display: grid; place-items: center; transition: transform .15s; }
+  .gate__play:hover { transform: scale(1.06); }
+  .gate__play span { width: 0; height: 0; margin-left: 6px; border-style: solid; border-width: 15px 0 15px 24px; border-color: transparent transparent transparent var(--black); }
+  .gate__play.on span { margin: 0; width: 22px; height: 26px; border: 0; border-left: 7px solid var(--black); border-right: 7px solid var(--black); }
+  .gate__bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 0; background: var(--yellow); }
+  #sc { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; }
+
+  .gate__cta { display: block; width: 100%; margin-top: var(--s3); padding: 18px 22px; font-size: 0.8rem; text-align: center; }
+  .gate__go { margin-top: var(--s5); }
+  .gate [hidden] { display: none !important; }
+  .gate__sc::before { content: ""; display: inline-block; width: 22px; height: 12px; margin-right: 12px; vertical-align: -1px;
+    background: currentColor; -webkit-mask: url(/assets/soundcloud.svg) center / contain no-repeat; mask: url(/assets/soundcloud.svg) center / contain no-repeat; }
+
+  .gate__card { margin-top: var(--s4); padding: clamp(18px, 2.6vh, 28px) clamp(20px, 2.4vw, 32px); border: 1px solid var(--black); background: #fff; box-shadow: 6px 6px 0 var(--black); }
+  .gate__dots { display: flex; gap: 8px; }
+  .gate__dots i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--black); }
+  .gate__dots i.on { background: var(--black); }
+  .gate__ask { margin: var(--s3) 0 0; font-family: var(--mono); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4; }
+  .gate__field { display: grid; gap: 6px; margin-top: var(--s3); font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+  .gate__field small { text-transform: none; letter-spacing: 0; color: var(--fg-dim); font-size: 0.75rem; }
+  .gate__field input, .gate__field textarea { font: 1rem var(--font); padding: 12px 14px; border: 1px solid var(--black); background: #fff; color: var(--black); border-radius: 0; text-transform: none; letter-spacing: 0; }
+  .gate__field textarea { min-height: 52px; resize: vertical; }
+  .gate__wait { display: flex; align-items: center; gap: 12px; margin: var(--s3) 0; font-family: var(--font); }
+  .gate__spin { flex: none; width: 20px; height: 20px; border: 2.5px solid var(--black); border-top-color: transparent; border-radius: 50%; animation: gate-spin 0.8s linear infinite; }
+  @keyframes gate-spin { to { transform: rotate(360deg); } }
+  /* Up next: same type as this release (remix → remix, original → original), else On My USB. Set per gate. */
+  .gate__next { display: flex; align-items: center; gap: 14px; margin-top: var(--s3); padding: 10px 16px 10px 10px; border: 1px solid var(--black); background: #fff; color: var(--black); text-decoration: none; }
+  .gate__next:hover { background: var(--paper); }
+  .gate__next img { flex: none; width: 56px; height: 56px; object-fit: cover; }
+  .gate__next span { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  .gate__next small { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-dim); }
+  .gate__next b { font-family: var(--font); font-size: 1rem; }
+  .gate__next em { font-family: var(--font); font-style: normal; font-size: 0.8rem; color: var(--fg-dim); }
+  .gate__next i { font-style: normal; font-size: 1.2rem; }
+  .gate__fine { margin: var(--s3) 0 0; font-family: var(--font); font-size: 0.8rem; color: var(--fg-dim); }
+  .gate__err { margin-top: var(--s4); max-width: none; border: 1px solid var(--black); background: var(--yellow); padding: var(--s3); }
+  .gate__foot { margin-top: var(--s4); }
+
+  @media (max-width: 900px) {
+    .gate { grid-template-columns: 1fr; min-height: 0; }
+    .gate__stage { padding: 72px 20px 32px; }
+    .gate__cover { width: min(100%, 420px); }
+    .gate__panel { padding: 32px 20px 48px; }
+  }
+</style>
+<script src="/assets/pixel.js?v=1" defer></script>
+</head>
+<body>
+
+<main class="gate" data-tone="paper">
+  <section class="gate__stage">
+    <a class="gate__brand" href="/">finnian</a>
+    <div class="gate__cover"><img src="/assets/kidz.jpg" alt="MGMT - Kids (finnian edit) cover" width="1200" height="1200">
+      <button class="gate__play" id="play" type="button" aria-label="play MGMT - Kids (finnian edit)"><span></span></button>
+      <i class="gate__bar" id="bar"></i>
+      <iframe id="sc" title="MGMT - Kids (finnian edit) on SoundCloud" allow="autoplay" tabindex="-1" aria-hidden="true"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/kids-finnian-edit/s-AsGK4FWeTlw&auto_play=false"></iframe>
+    </div>
+  </section>
+
+  <section class="gate__panel">
+    <p class="eyebrow"><b>free download</b></p>
+    <h1 class="display display--stop gate__title">kids</h1>
+    <p class="gate__artist">finnian · finnian edit</p>
+
+
+
+    <button class="btn btn--solid gate__cta gate__go" id="go" type="button">download</button>
+
+    <div class="gate__card" id="card" hidden>
+      <div class="gate__dots"><i class="on"></i><i></i><i></i></div>
+      <p class="gate__ask">support finnian to unlock your download</p>
+      <p class="typed gate__err" id="err" hidden></p>
+
+      <div id="s1">
+        <label class="gate__field">leave a comment
+          <textarea id="comment" maxlength="500" placeholder="what do you think of it?"></textarea>
+        </label>
+        <button class="btn btn--solid gate__cta gate__sc" id="connect" type="button">connect</button>
+        <p class="gate__fine">Connect with SoundCloud to follow finnian and post your comment.</p>
+      </div>
+
+      <div id="s2" hidden>
+        <label class="gate__field">your email
+          <input type="email" id="email" autocomplete="email" placeholder="you@email.com">
+        </label>
+        <button class="btn btn--solid gate__cta" id="unlock" type="button">unlock download</button>
+        <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
+      </div>
+
+      <div id="ssp" hidden>
+        <p class="gate__wait"><i class="gate__spin" aria-hidden="true"></i>finish the Spotify step in the small window</p>
+        <button class="btn gate__cta" id="spconnect" type="button">reopen Spotify window</button>
+      </div>
+
+      <div id="s3" hidden>
+        <a class="btn btn--solid gate__cta" id="dl" href="#" target="_blank" rel="noopener">download kids</a>
+        <a class="gate__next" id="next" href="https://finnian.ca/baiana/download/" target="_blank" rel="noopener">
+          <img src="/assets/baiana.jpg" alt="" width="56" height="56">
+          <span><small>up next</small><b>baianà (speed garage edit)</b><em>free download</em></span>
+          <i aria-hidden="true">&rarr;</i>
+        </a>
+      </div>
+    </div>
+
+    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/kids-finnian-edit/s-AsGK4FWeTlw" target="_blank" rel="noopener">on SoundCloud</a> · <a href="/">finnian.ca</a></p>
+  </section>
+</main>
+
+<script>
+  var GATE = 'https://finnian-gate.food-log.workers.dev';
+  var q = new URLSearchParams(location.search);
+  var $ = function (id) { return document.getElementById(id); };
+  var msgs = {
+    cancelled: "you cancelled the SoundCloud sign-in. try again when you're ready.",
+    expired: "that took too long. try again.",
+    signin: "the SoundCloud sign-in didn't work. try again.",
+    follow: "SoundCloud didn't let the follow through. try again."
+  };
+  function err(t) { $('err').textContent = t; $('err').hidden = !t; }
+  // Hypeddit-style card: one step at a time, dots show progress. 1 SoundCloud, 2 email, 3 download.
+  // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
+  // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
+  // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
+  var T = { slug: 'kidz', download: 'file', spotify: false };
+  // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
+  var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
+  // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
+  var SP = T.spotify !== false && q.get('spotify') !== 'off';  // edits that are not on Spotify set spotify: false
+  var EMAIL = T.download === 'file';
+  var STEPS, LAST;
+  function layout() {
+    STEPS = ['s1'].concat(SP ? ['ssp'] : [], EMAIL ? ['s2'] : [], ['s3']);
+    LAST = STEPS.length;
+    if (EMAIL) $('dl').removeAttribute('target'); else $('dl').setAttribute('target', '_blank');
+    document.querySelector('.gate__dots').innerHTML = STEPS.map(function () { return '<i></i>'; }).join('');
+  }
+  layout();
+  function after(id) { return STEPS.indexOf(id) + 2; }
+  function step(n) {
+    $('go').hidden = true; $('card').hidden = false;
+    STEPS.forEach(function (id, i) { $(id).hidden = i + 1 !== n; });
+    [].forEach.call(document.querySelectorAll('.gate__dots i'), function (d, i) { d.className = i < n ? 'on' : ''; });
+    if (n === STEPS.length) document.querySelector('.gate__ask').textContent = 'unlocked. thank you';
+  }
+
+  $('go').addEventListener('click', function () { step(1); });
+  if (msgs[q.get('e')]) { step(1); err(msgs[q.get('e')]); }
+  var key = q.get('k');
+  if (key) step(2);
+  if (q.get('unlocked')) step(LAST);
+
+  // Bandcamp's 200 free downloads a month: near the cap the Worker answers 'file', and this gate brings back the
+  // email step and serves the file itself, so nobody is asked to pay (Chris, 2026-10-18).
+  if (!EMAIL) fetch(GATE + '/mode?t=' + T.slug).then(function (r) { return r.json(); }).then(function (m) {
+    if (m.download !== 'file' || q.get('unlocked')) return;
+    var shown = STEPS.filter(function (id) { return !$(id).hidden; })[0];
+    EMAIL = true; layout();
+    if (shown && !$('card').hidden) step(STEPS.indexOf(shown === 's3' ? 's2' : shown) + 1);
+  }).catch(function () {});
+
+  // Step 1: the comment (required) goes to the Worker under the popup sid, then SoundCloud sign-in runs in a
+  // small popup while the page polls for the result. Full-tab flow if popups are blocked.
+  $('connect').addEventListener('click', function () {
+    if ($('comment').value.trim().length < 2) { $('comment').focus(); return err('leave a comment on the track first.'); }
+    err('');
+    var a = new Uint8Array(18); crypto.getRandomValues(a);
+    var sid = btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    var start = GATE + '/start?t=' + T.slug + '&sid=' + sid;
+    var w = 520, h = 720;
+    var left = (screen.availWidth - w) / 2 + (screen.availLeft || 0), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    var pop = scPop = SP ? openSpotify('about:blank') : window.open('about:blank', 'finnian-sc', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    fetch(GATE + '/prep', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sid: sid, comment: $('comment').value.trim(), at: commentAt() }) }).catch(function () {}).then(function () {
+      if (!pop) { location.href = start; return; }
+      pop.location.href = start;
+      var tries = 0;
+      var timer = setInterval(function () {
+        if (++tries > 600) return clearInterval(timer);
+        fetch(GATE + '/status?sid=' + sid).then(function (r) { return r.json(); }).then(function (d) {
+          if (d.url) { clearInterval(timer); scDone(d.url); }
+        }).catch(function () {});
+      }, 1000);
+    });
+  });
+
+  // SoundCloud finished. With Spotify on, the same small window goes straight on to the Hypeddit step,
+  // so the fan never clicks again; otherwise it closes and the download shows.
+  var scPop = null;
+  function scDone(url) {
+    if (key) return;
+    var ok = /[?&]k=/.test(url);
+    if (SP && ok && scPop && !scPop.closed) {
+      try { scPop.postMessage('finnian-stay', new URL(GATE).origin); } catch (x) {}
+      spStarted = Date.now(); scPop.location.href = SPOTIFY_GATE; watchSp(scPop);
+    }
+    else { try { scPop && scPop.close(); } catch (x) {} }
+    landed(url);
+  }
+
+  // The result comes back as a link to this page (?k= or ?e=): apply it in place, so the track keeps playing.
+  function landed(url) {
+    var u = new URL(url, location.href);
+    if (u.origin + u.pathname !== location.origin + location.pathname) { location.href = url; return; }
+    history.replaceState(null, '', u.pathname + u.search);
+    var e = u.searchParams.get('e');
+    if (u.searchParams.get('k')) { key = u.searchParams.get('k'); err(''); step(2); }
+    else err(msgs[e] || "that didn't go through. try again.");
+  }
+
+  // The SoundCloud pop-up posts its result here instead of reloading this page (the /status poll is the backup).
+  window.addEventListener('message', function (e) {
+    if (e.origin === new URL(GATE).origin && e.data && e.data.finnianGateUrl) scDone(e.data.finnianGateUrl);
+  });
+
+  // Email step (file gates only): checked against the key the SoundCloud step left; the Worker answers with the file link.
+  $('unlock').addEventListener('click', function () {
+    if (!EMAIL) return;
+    var email = $('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err('add your email first.');
+    err('');
+    fetch(GATE + '/email', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ k: key, email: email }) }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.download) throw new Error('email');
+      $('dl').href = d.download;
+      step(LAST);
+    }).catch(function () { err("that didn't go through. check your email and try again."); });
+  });
+
+  // Download click is counted by the Worker (a file gate counts in /file instead); Bandcamp asks a $0 fan for their email.
+  $('dl').addEventListener('click', function () {
+    if (EMAIL) return;
+    try { navigator.sendBeacon(GATE + '/dl?k=' + encodeURIComponent(key || '')); } catch (x) {}
+  });
+  // Hypeddit's card sits under the cover art, so the window is as tall as the screen allows to avoid scrolling.
+  function openSpotify(url) {
+    var w = 480, h = Math.min(screen.availHeight - 40, 1000);
+    var half = window.screenX + window.outerWidth / 4;
+    var left = Math.max(screen.availLeft || 0, half - w / 2), top = (screen.availHeight - h) / 2 + (screen.availTop || 0);
+    return window.open(url, 'finnian-sp', 'popup,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+  }
+
+  // The comment lands where the fan is in the song; if it never played, somewhere between 15% and 85%.
+  var playPos = 0, playLen = 0;
+  function commentAt() {
+    if (playPos > 1000) return Math.round(playPos);
+    var len = playLen || 240000;
+    return Math.round(len * (0.15 + Math.random() * 0.7));
+  }
+
+  // Play button on the cover drives a hidden SoundCloud widget, like Hypeddit's.
+  var sc = document.createElement('script'); sc.src = 'https://w.soundcloud.com/player/api.js';
+  sc.onload = function () {
+    var w = SC.Widget($('sc'));
+    $('play').addEventListener('click', function () { w.toggle(); });
+    w.bind(SC.Widget.Events.PLAY, function () { $('play').classList.add('on'); });
+    w.bind(SC.Widget.Events.PAUSE, function () { $('play').classList.remove('on'); });
+    w.bind(SC.Widget.Events.FINISH, function () { $('play').classList.remove('on'); });
+    w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { $('bar').style.width = (e.relativePosition * 100) + '%'; playPos = e.currentPosition; });
+    w.bind(SC.Widget.Events.READY, function () { w.getDuration(function (d) { playLen = d; }); });
+    // Autoplay: browsers block sound until the visitor interacts, so try on load, then start on the first click
+    // anywhere (usually "download"). Only once, so a fan who paused is never restarted.
+    // A blocked autoplay still fires PLAY then PAUSE, so "started" means sound actually ran past half a second.
+    var started = false;
+    w.bind(SC.Widget.Events.PLAY_PROGRESS, function (e) { if (e.currentPosition > 500) started = true; });
+    w.bind(SC.Widget.Events.READY, function () { w.play(); });
+    // On click, not pointerdown: a play() sent from pointerdown was still blocked in Chrome.
+    document.addEventListener('click', function (e) {
+      if (!started && !e.target.closest('#play')) w.play();
+    }, { once: true, capture: true });
+  };
+  document.head.appendChild(sc);
+
+  // Spotify step: Hypeddit pop-up; done when finnian.ca/gate-done/ posts a message or writes localStorage.
+  var spStarted = 0;
+  function spDone() { if (spStarted) { spStarted = 0; err(''); step(after('ssp')); } }
+  $('spconnect').addEventListener('click', function () {
+    spStarted = Date.now(); err('');
+    var pop = openSpotify(SPOTIFY_GATE);
+    if (pop) watchSp(pop); else location.href = SPOTIFY_GATE;
+  });
+  // Hypeddit waits a fixed 3 s after its Unlock before redirecting, so a fan may close the pop-up instead.
+  // Closed after 10 s or more counts as done (about a real Spotify connect); sooner sends them back to it.
+  var spWatch = 0;
+  function watchSp(pop) {
+    clearInterval(spWatch);
+    spWatch = setInterval(function () {
+      if (!spStarted) return clearInterval(spWatch);
+      if (!pop.closed) return;
+      clearInterval(spWatch);
+      if (Date.now() - spStarted >= 10000) spDone();
+      else err("the Spotify step didn't finish. reopen the window to finish it.");
+    }, 300);
+  }
+  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data && e.data.finnianGate === 'spotify') spDone(); });
+  window.addEventListener('storage', function (e) { if (e.key === 'finnian-gate-spotify' && +e.newValue >= spStarted) spDone(); });
+
+  // Up next opens in a normal new tab (a 480px pop-up squeezed the Spotify player); the song keeps playing here.
+</script>
+</body>
+</html>
