@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://finnian.ca/kidz/download/">
 <meta property="og:title" content="mgmt - kids (finnian edit), free download – finnian">
-<meta property="og:image" content="https://finnian.ca/assets/kidz.jpg?v=3">
+<meta property="og:image" content="https://finnian.ca/assets/kidz.jpg">
 <meta name="theme-color" content="#f1f1f3">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
 <link rel="apple-touch-icon" href="/assets/favicon-180.png?v=2">
@@ -24,7 +24,7 @@
   .gate__stage { position: relative; overflow: hidden; background: var(--black); display: grid; place-items: center; padding: clamp(32px, 5vw, 80px); }
   .gate__stage::before {
     content: ""; position: absolute; inset: -60px;
-    background: url(/assets/kidz.jpg?v=3) center / cover no-repeat;
+    background: url(/assets/kidz.jpg) center / cover no-repeat;
     filter: blur(48px) saturate(1.1) brightness(0.85); transform: scale(1.1);
   }
   .gate__cover { position: relative; width: min(100%, 62vh, 620px); aspect-ratio: 1; border: 1px solid var(--black); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
@@ -89,11 +89,11 @@
 <main class="gate" data-tone="paper">
   <section class="gate__stage">
     <a class="gate__brand" href="/">finnian</a>
-    <div class="gate__cover"><img src="/assets/kidz.jpg?v=3" alt="mgmt - kids (finnian edit) cover" width="1200" height="1200">
+    <div class="gate__cover"><img src="/assets/kidz.jpg" alt="mgmt - kids (finnian edit) cover" width="1200" height="1200">
       <button class="gate__play" id="play" type="button" aria-label="play mgmt - kids (finnian edit)"><span></span></button>
       <i class="gate__bar" id="bar"></i>
       <iframe id="sc" title="mgmt - kids (finnian edit) on SoundCloud" allow="autoplay" tabindex="-1" aria-hidden="true"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/kids-finnian-edit&secret_token=s-AsGK4FWeTlw&auto_play=false"></iframe>
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/kids-finnian-edit&auto_play=false"></iframe>
     </div>
   </section>
 
@@ -116,7 +116,7 @@
           <textarea id="comment" maxlength="500" placeholder="what do you think of it?"></textarea>
         </label>
         <button class="btn btn--solid gate__cta gate__sc" id="connect" type="button">connect</button>
-        <p class="gate__fine">Connect with SoundCloud to follow finnian and post your comment.</p>
+        <p class="gate__fine">Connect with SoundCloud to follow finnian, like and repost mgmt - kids (finnian edit), and post your comment.</p>
       </div>
 
       <div id="s2" hidden>
@@ -133,7 +133,7 @@
       </div>
 
       <div id="s3" hidden>
-        <a class="btn btn--solid gate__cta" id="dl" href="#" target="_blank" rel="noopener">download kids</a>
+        <a class="btn btn--solid gate__cta" id="dl" href="https://finnianmusictoronto.bandcamp.com/album/mgmt-kids-finnian-edit-free-download" target="_blank" rel="noopener">download kids</a>
         <a class="gate__next" id="next" href="https://finnian.ca/baiana/download/" target="_blank" rel="noopener">
           <img src="/assets/baiana.jpg" alt="" width="56" height="56">
           <span><small>up next</small><b>baianà (speed garage edit)</b><em>free download</em></span>
@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/kids-finnian-edit/s-AsGK4FWeTlw" target="_blank" rel="noopener">on SoundCloud</a> · <a href="/">finnian.ca</a></p>
+    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/kids-finnian-edit" target="_blank" rel="noopener">on SoundCloud</a> · <a href="/">finnian.ca</a></p>
   </section>
 </main>
 
@@ -161,7 +161,7 @@
   // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
   // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
   // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
-  var T = { slug: 'kidz', download: 'file', spotify: false };
+  var T = { slug: 'kidz', download: 'bandcamp', spotify: false };
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
   var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
