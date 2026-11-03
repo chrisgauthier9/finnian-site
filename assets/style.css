@@ -396,6 +396,16 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .release-page__or { margin: var(--s6) 0 var(--s3); }
 @media (max-width: 860px) { .release-page__art { max-width: 360px; } }
 
+.btn--new { background: var(--fg); color: var(--bg); animation: btn-jiggle 4s ease-in-out 1s infinite; }
+.btn--new:hover, .btn--new:focus-visible { background: var(--accent); color: var(--black); border-color: var(--accent); }
+@keyframes btn-jiggle {
+  0%, 12%, 100% { transform: none; }
+  3% { transform: rotate(-1.5deg) translateX(-3px); }
+  6% { transform: rotate(1.5deg) translateX(3px); }
+  9% { transform: rotate(-1deg) translateX(-2px); }
+}
+@media (prefers-reduced-motion: reduce) { .btn--new { animation: none; } }
+
 /* ---------- motion ---------- */
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
