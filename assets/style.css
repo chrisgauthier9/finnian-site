@@ -396,7 +396,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .release-page__or { margin: var(--s6) 0 var(--s3); }
 @media (max-width: 860px) { .release-page__art { max-width: 360px; } }
 
-.btn--new { background: var(--yellow); color: var(--black); border: 2px solid var(--black); padding: 26px 12px; font-size: clamp(0.75rem, 3.9vw, 0.9375rem); letter-spacing: 0.14em; white-space: nowrap; box-shadow: 6px 6px 0 var(--black); margin-bottom: 26px; animation: btn-jiggle 4s ease-in-out 1s infinite; }
+.btn--new { background: var(--yellow); color: var(--black); border: 2px solid var(--black); padding: 15px 12px; line-height: 1.4; font-size: clamp(0.6rem, 3.1vw, 0.75rem); letter-spacing: 0.14em; white-space: nowrap; box-shadow: 6px 6px 0 var(--black); margin-bottom: 26px; animation: btn-jiggle 4s ease-in-out 1s infinite; }
 .btn--new:hover, .btn--new:focus-visible { background: var(--black); color: var(--yellow); border-color: var(--black); }
 @keyframes btn-jiggle {
   0%, 12%, 100% { transform: none; }
