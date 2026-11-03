@@ -405,7 +405,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
   9% { transform: rotate(-1deg) translateX(-2px); }
 }
 @media (prefers-reduced-motion: reduce) { .btn--new { animation: none; } }
-.stack__sep { position: relative; height: 1px; margin: 8px 0 12px; background: var(--fg); }
+.stack__sep { position: relative; width: 40%; height: 1px; margin: 8px auto 12px; background: var(--fg); }
 .stack__sep::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border: 1px solid var(--fg); border-radius: 50%; background: var(--yellow); }
 
 /* ---------- motion ---------- */
