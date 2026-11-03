@@ -396,7 +396,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .release-page__or { margin: var(--s6) 0 var(--s3); }
 @media (max-width: 860px) { .release-page__art { max-width: 360px; } }
 
-.btn--new { background: var(--fg); color: var(--bg); animation: btn-jiggle 4s ease-in-out 1s infinite; }
+.btn--new { background: var(--black); color: var(--yellow); border: 2px solid var(--black); padding: 26px 22px; font-size: 1.05em; font-weight: 700; box-shadow: 6px 6px 0 var(--yellow), 6px 6px 0 2px var(--black); margin-bottom: 22px; animation: btn-jiggle 4s ease-in-out 1s infinite; }
 .btn--new:hover, .btn--new:focus-visible { background: var(--accent); color: var(--black); border-color: var(--accent); }
 @keyframes btn-jiggle {
   0%, 12%, 100% { transform: none; }
