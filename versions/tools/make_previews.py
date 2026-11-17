@@ -6,6 +6,10 @@ import os, re, json, shutil, subprocess, html
 V = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); REPO = os.path.dirname(V)
 P = V + "/previews"
 cfg = json.load(open(V + "/pages.json"))
+def _resolve(ref):  # fresh clones only have origin/<branch>; use it when no local branch exists
+    if subprocess.run(["git", "rev-parse", "--verify", "-q", ref], cwd=REPO, capture_output=True).returncode == 0: return ref
+    return "origin/" + ref
+for _st in cfg["stages"].values(): _st["ref"] = _resolve(_st["ref"])
 def git(*a, raw=False):
     r = subprocess.run(["git", *a], cwd=REPO, capture_output=True, text=not raw); return r
 def show(ref, path):
