@@ -27,3 +27,5 @@ Merge the release branch as usual, then in `pages.json` drop that stage from `ch
 set `thumb` to `now`, re-run `make_previews.py`, push.
 
 Never link `/versions/` from the site. Keep it out of `sitemap.xml`.
+
+Changed `common.css`? Bump the `?v=` on its link in `index.html` and `compare/index.html` (Cloudflare caches it 4 hours). Same for `pages.json` if edits do not show: open it once with `?x=1` to confirm.
