@@ -7,7 +7,7 @@ Files: `pages.json` (the only thing to edit by hand), `index.html` (grid), `comp
 `common.css`, `previews/` (generated copies of pages), `tools/make_previews.py`.
 
 ## Add a page
-1. Add an entry to `pages` in `pages.json`: `id` (short, unique), `name`, `url`, `file` (path in the site repo), `thumb` (`now`),
+1. Add an entry to `pages` in `pages.json`: `id` (short, unique), `type` (`main`, `release` or `download`: which section it sits in; pages with changes list first), `name`, `url`, `file` (path in the site repo), `thumb` (`now`),
    `changes` (`[]`), `compare` (`[]`).
 2. Run `python3 versions/tools/make_previews.py`, then commit `versions/` and push.
 
@@ -29,3 +29,5 @@ set `thumb` to `now`, re-run `make_previews.py`, push.
 Never link `/versions/` from the site. Keep it out of `sitemap.xml`.
 
 Changed `common.css`? Bump the `?v=` on its link in `index.html` and `compare/index.html` (Cloudflare caches it 4 hours). Same for `pages.json` if edits do not show: open it once with `?x=1` to confirm.
+
+Previews are silent on purpose: `make_previews.py` strips all scripts, audio/video/iframes and autoplay from the copies, and the thumbnails are sandboxed iframes. Do not add players back.

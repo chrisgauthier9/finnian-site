@@ -66,31 +66,7 @@
   </div>
 </main>
 
-<script>
-(() => {
-  const f = document.getElementById('send'), status = document.getElementById('status');
-  f.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const d = Object.fromEntries(new FormData(f));
-    if (!d.artist.trim() || !/^\S+@\S+\.\S+$/.test(d.email) || !/^https?:\/\/\S+$/.test(d.track.trim())) {
-      status.textContent = 'add your artist name, email and a track link (starting with https://).';
-      return;
-    }
-    const btn = f.querySelector('button'); btn.disabled = true; status.textContent = 'sending…';
-    try {
-      const r = await fetch('https://finnian-gate.food-log.workers.dev/submit', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d),
-      });
-      const j = await r.json().catch(() => ({}));
-      if (j.ok) { f.style.display = 'none'; document.getElementById('done').style.display = 'block'; return; }
-      status.textContent = j.error === 'limit'
-        ? "you've hit the limit for now (2 tracks a month). try again later."
-        : 'something went wrong. check the link and try again.';
-    } catch { status.textContent = 'something went wrong. try again in a minute.'; }
-    btn.disabled = false;
-  });
-})();
-</script>
+
 
 </body>
 </html>

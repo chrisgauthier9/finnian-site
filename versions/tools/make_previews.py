@@ -20,6 +20,11 @@ def wrap(h, label, ph):
     for n in set(re.findall(r'/(assets/[A-Za-z0-9_.\-]+)', h)):
         if n not in main_assets: h = h.replace("/" + n, "/versions/previews/" + n)
     h = re.sub(r'<script[^>]*pixel\.js[^>]*></script>', '', h)
+    # silent previews: no scripts (players, tracking), no media or embeds, no autoplay
+    h = re.sub(r'<script\b.*?</script>', '', h, flags=re.S | re.I)
+    h = re.sub(r'<(audio|video|iframe|object|embed)\b.*?</\1>', '', h, flags=re.S | re.I)
+    h = re.sub(r'<(audio|video|iframe|embed|source)\b[^>]*/?>', '', h, flags=re.I)
+    h = re.sub(r'\sautoplay(=("[^"]*"|\'[^\']*\'))?', '', h, flags=re.I)
     h = re.sub(r'<script>\s*/\* Before release.*?</script>', '', h, flags=re.S)
     h = re.sub(r'href="/[^"]*"', lambda m: m.group(0) if m.group(0).startswith('href="/assets/') else 'href="#"', h)
     h = re.sub(r'href="https://finnian\.ca/[^"]*"', 'href="#"', h)
