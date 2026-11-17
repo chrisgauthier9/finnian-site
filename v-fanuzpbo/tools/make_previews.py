@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild versions/previews/ from pages.json. Run from anywhere: python3 versions/tools/make_previews.py
+"""Rebuild v-fanuzpbo/previews/ from pages.json. Run from anywhere: python3 v-fanuzpbo/tools/make_previews.py
 Copies each page as it exists on a stage's git ref (see "stages" in pages.json), marks it as a preview,
 strips tracking and redirect scripts, neuters links. Re-run after a release branch changes."""
 import os, re, json, shutil, subprocess, html
@@ -18,7 +18,7 @@ main_assets = set(git("ls-tree", "-r", "--name-only", "main", "assets").stdout.s
 def wrap(h, label, ph):
     # assets only on a release branch live in previews/assets
     for n in set(re.findall(r'/(assets/[A-Za-z0-9_.\-]+)', h)):
-        if n not in main_assets: h = h.replace("/" + n, "/versions/previews/" + n)
+        if n not in main_assets: h = h.replace("/" + n, "/v-fanuzpbo/previews/" + n)
     h = re.sub(r'<script[^>]*pixel\.js[^>]*></script>', '', h)
     # silent previews: no scripts (players, tracking), no media or embeds, no autoplay
     h = re.sub(r'<script\b.*?</script>', '', h, flags=re.S | re.I)
@@ -35,8 +35,8 @@ def wrap(h, label, ph):
         h = re.sub(r'(<a class="btn[^"]*" href="[^"]*">)([^<]+)(</a>)', mark, h)
     h = h.replace("<head>", '<head><meta name="robots" content="noindex,nofollow">', 1)
     bar = (f'<div class="vbar" style="position:sticky;top:0;z-index:99;background:#e0a800;color:#17171a;font:700 12px/1.4 monospace;padding:5px 10px;text-align:center">PREVIEW, not live. {html.escape(label)}</div>'
-           '<a class="vbar" href="/versions/" style="position:fixed;top:34px;left:8px;z-index:100;background:#17171a;color:#fff;font:700 13px/1 monospace;padding:9px 13px;border-radius:999px;text-decoration:none;border:1px solid #fff">&larr; Back</a>'
-           '<script>if(top!==self){document.querySelectorAll(".vbar").forEach(function(x){x.remove()})}else{addEventListener("keydown",function(k){if(k.key==="Escape")location.href="/versions/"})}</script>')
+           '<a class="vbar" href="/v-fanuzpbo/" style="position:fixed;top:34px;left:8px;z-index:100;background:#17171a;color:#fff;font:700 13px/1 monospace;padding:9px 13px;border-radius:999px;text-decoration:none;border:1px solid #fff">&larr; Back</a>'
+           '<script>if(top!==self){document.querySelectorAll(".vbar").forEach(function(x){x.remove()})}else{addEventListener("keydown",function(k){if(k.key==="Escape")location.href="/v-fanuzpbo/"})}</script>')
     return re.sub(r'(<body[^>]*>)', lambda m: m.group(1) + bar, h, count=1)
 if os.path.exists(P): shutil.rmtree(P)
 os.makedirs(P + "/assets")

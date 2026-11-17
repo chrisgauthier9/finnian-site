@@ -1,16 +1,16 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><title>finnian.ca versions</title><link rel="stylesheet" href="/versions/common.css?v=3"></head>
-<body><header class="top"><a href="/versions/" id="back">&larr; Back</a><h1 id="t"></h1><code id="u"></code></header><p class="nt" id="n"></p><main class="cmp" id="m" style="padding-top:0"></main>
+<meta name="robots" content="noindex,nofollow"><title>finnian.ca versions</title><link rel="stylesheet" href="/v-fanuzpbo/common.css?v=3"></head>
+<body><header class="top"><a href="/v-fanuzpbo/" id="back">&larr; Back</a><h1 id="t"></h1><code id="u"></code></header><p class="nt" id="n"></p><main class="cmp" id="m" style="padding-top:0"></main>
 <script>
 var E=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
-addEventListener("keydown",function(k){if(k.key==="Escape")location.href="/versions/"});
+addEventListener("keydown",function(k){if(k.key==="Escape")location.href="/v-fanuzpbo/"});
 var id=new URLSearchParams(location.search).get("p");
-fetch("/versions/pages.json").then(function(r){return r.json()}).then(function(c){
- var p=c.pages.filter(function(x){return x.id===id})[0]; if(!p){location.href="/versions/";return}
+fetch("/v-fanuzpbo/pages.json").then(function(r){return r.json()}).then(function(c){
+ var p=c.pages.filter(function(x){return x.id===id})[0]; if(!p){location.href="/v-fanuzpbo/";return}
  t.textContent=p.name;u.textContent="finnian.ca"+p.url;
  if(p.placeholders)n.textContent="Placeholder links and covers are marked on the page.";
  m.innerHTML=p.compare.map(function(s){var l=E(c.stages[s].label);
   if(s==="now"&&p.nowRedirect)return '<figure><figcaption>'+E(p.nowRedirect)+'</figcaption><div class="rd">redirect, no page to show</div></figure>';
-  var f="/versions/previews/"+s+"/"+p.id+".html";
+  var f="/v-fanuzpbo/previews/"+s+"/"+p.id+".html";
   return '<figure><figcaption>'+l+'</figcaption><div class="th" style="width:312px;height:608px"><iframe sandbox="allow-scripts" src="'+f+'" title="" tabindex="-1" style="width:390px;height:760px;transform:scale(.8)"></iframe></div><a href="'+f+'">Open full size</a></figure>'}).join("")});
 </script></body></html>

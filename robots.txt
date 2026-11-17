@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /versions/
 Sitemap: https://finnian.ca/sitemap.xml
