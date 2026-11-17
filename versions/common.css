@@ -15,3 +15,4 @@ b{font-size:13px}code{font:10px var(--display);color:var(--mute);overflow-wrap:a
 .cmp{display:flex;gap:18px;padding:0 16px 24px;overflow-x:auto;align-items:flex-start}.cmp figure{margin:0;display:flex;flex-direction:column;gap:6px;flex:none}.cmp figcaption{font:700 13px var(--display)}.cmp figure a{color:inherit}
 .rd{width:312px;height:120px;border:1px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.7;text-align:center;padding:8px}.nt{margin:0 16px 8px;color:var(--mute);font-size:13px}
 main.cmp{flex-direction:row;max-width:none;margin:0;padding:0 16px 24px;gap:18px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:auto;padding-top:6px}.chips .bd{margin-top:0;white-space:nowrap;padding:2px 7px}.lb{font:700 10px var(--display);color:var(--chg);text-transform:uppercase;letter-spacing:.05em}.card{height:100%}
