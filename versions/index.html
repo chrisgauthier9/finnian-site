@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>finnian.ca versions</title><link rel="stylesheet" href="/versions/common.css"></head>
+<body><main><header><h1>finnian.ca versions</h1></header><section><div class="grid" id="g"></div></section>
+<section><h2>Hidden redirects</h2><div class="hids" id="h"></div></section></main>
+<script>
+var E=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+fetch("/versions/pages.json").then(function(r){return r.json()}).then(function(c){
+ g.innerHTML=c.pages.map(function(p){
+  var th='<div class="th" style="width:156px;height:156px"><iframe src="/versions/previews/'+p.thumb+'/'+p.id+'.html" title="" tabindex="-1" loading="lazy" style="width:390px;height:390px;transform:scale(.4)"></iframe></div>';
+  var inner='<div class="sh">'+th+'</div><b>'+E(p.name)+'</b><code>'+E(p.url)+'</code>';
+  if(p.changes.length) return '<a class="card has" href="/versions/compare/?p='+p.id+'">'+inner+'<span class="bd chg">Changes '+p.changes.map(function(s){return E(c.stages[s].label)}).join(", ")+'</span></a>';
+  return '<div class="card">'+inner+'<span class="bd">No changes</span></div>'});
+ h.innerHTML=c.hidden.map(function(x){return '<div class="hid"><b>'+E(x.name)+'</b><code>'+E(x.url)+'</code><span class="bd">No changes</span></div>'}).join("")});
+</script></body></html>
