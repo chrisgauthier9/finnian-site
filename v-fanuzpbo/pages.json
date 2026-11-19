@@ -207,8 +207,12 @@
    "name": "Pitch links"
   },
   {
-   "url": "/ig/ and /tt/",
-   "name": "Bio shortcuts"
+   "url": "/ig/",
+   "name": "Instagram bio shortcut"
+  },
+  {
+   "url": "/tt/",
+   "name": "TikTok bio shortcut"
   },
   {
    "url": "/gate-done/",
