@@ -26,6 +26,8 @@ Files: `pages.json` (the only thing to edit by hand), `index.html` (grid), `comp
 Merge the release branch as usual, then in `pages.json` drop that stage from `changes` and `compare` (and the stage if unused),
 set `thumb` to `now`, re-run `make_previews.py`, push.
 
+Each card and hidden redirect also shows "Open live", linking to `https://finnian.ca` + the entry's `url` (derived, no extra field; new pages not yet merged will 404 there until release).
+
 Never link `/v-fanuzpbo/` from the site. Keep it out of `sitemap.xml`.
 
 Changed `common.css`? Bump the `?v=` on its link in `index.html` and `compare/index.html` (Cloudflare caches it 4 hours). Same for `pages.json` if edits do not show: open it once with `?x=1` to confirm.
