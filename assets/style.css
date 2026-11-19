@@ -194,7 +194,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 
 .hero__plate {
   position: relative;
-  background: #cfcfd3 url("hero-release.webp?v=1") center / cover no-repeat;
+  background: #cfcfd3 url("hero-nwthy.webp?v=1") center / cover no-repeat;
 }
 
 .hero__copy {
