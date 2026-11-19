@@ -1,4 +1,4 @@
-# Publishes the Never Wanted To Hurt You release-day site at exactly 00:00 Toronto (EST) on Fri 20 Nov 2026,
+# Publishes the Never Wanted To Hurt You release-day site at exactly 00:00 Toronto (EST) on Fri 27 Nov 2026,
 # by merging the `release/nwthy-nov20` branch into `main` (GitHub Pages then serves it).
 # Laleh asked for this on 18 Nov. Delete this file once it has run.
 #
@@ -9,11 +9,11 @@ name: NWTHY release day - publish at midnight
 
 on:
   schedule:            # UTC. 05:00 UTC = 00:00 EST.
-    - cron: "30 0 20 11 *"
-    - cron: "30 1 20 11 *"
-    - cron: "30 2 20 11 *"
-    - cron: "30 3 20 11 *"
-    - cron: "30 4 20 11 *"
+    - cron: "30 0 27 11 *"
+    - cron: "30 1 27 11 *"
+    - cron: "30 2 27 11 *"
+    - cron: "30 3 27 11 *"
+    - cron: "30 4 27 11 *"
   workflow_dispatch:   # "Run workflow" button: publishes now if it is already past midnight, otherwise waits
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          target=$(date -u -d '2026-11-20T05:00:00Z' +%s)
+          target=$(date -u -d '2026-11-27T05:00:00Z' +%s)
           now=$(date -u +%s)
           if [ "$now" -gt $((target + 3*86400)) ]; then echo "Past the release window; doing nothing."; exit 0; fi
           git fetch origin release/nwthy-nov20 main
