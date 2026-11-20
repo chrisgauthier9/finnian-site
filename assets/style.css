@@ -396,7 +396,7 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .release-page__or { margin: var(--s6) 0 var(--s3); }
 @media (max-width: 860px) { .release-page__art { max-width: 360px; } }
 
-.btn--new { background: var(--yellow); color: var(--black); border: 2px solid var(--black); padding: 15px 12px; line-height: 1.4; font-size: clamp(0.6rem, 3.1vw, 0.75rem); letter-spacing: 0.14em; white-space: nowrap; box-shadow: 6px 6px 0 var(--black); margin-bottom: 14px; animation: btn-jiggle 4s ease-in-out 1s infinite; }
+.btn--new { background: var(--yellow); color: var(--black); border: 2px solid var(--black); padding: 16px 20px; line-height: 1.4; font-size: clamp(0.6rem, 3.1vw, 0.75rem); letter-spacing: 0.14em; white-space: nowrap; box-shadow: 6px 6px 0 var(--black); margin-bottom: 14px; animation: btn-jiggle 4s ease-in-out 1s infinite; }
 .btn--new:hover, .btn--new:focus-visible { background: var(--black); color: var(--yellow); border-color: var(--black); }
 @keyframes btn-jiggle {
   0%, 12%, 100% { transform: none; }
@@ -429,5 +429,7 @@ body:has(.social-bar) { padding-bottom: 58px; }
 /* links page, phones: let the tilted pre-save button wrap instead of running off the screen */
 @media (max-width: 480px) {
   .stack { grid-template-columns: minmax(0, 1fr); }
-  .btn--new { white-space: normal; overflow-wrap: anywhere; font-size: 0.75rem; letter-spacing: 0.1em; box-shadow: 4px 4px 0 var(--black); }
+  .btn--new { white-space: normal; overflow-wrap: anywhere; font-size: 0.75rem; letter-spacing: 0.1em; box-shadow: 4px 4px 0 var(--black); padding: 18px 26px; }
+  .btn--new .btn__sub { display: block; }
 }
+@media (max-width: 380px) { .btn--new { font-size: 0.68rem; letter-spacing: 0.06em; padding: 18px 22px; } }
