@@ -21,7 +21,7 @@ button:disabled{opacity:.5}
 .sheet textarea{min-height:64px;resize:vertical}
 .jobs{max-height:40dvh;overflow:auto}.job{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;display:flex;gap:8px;align-items:center;justify-content:space-between}
 #lock{padding:28px 18px;text-align:center;color:var(--mute);display:none}
-</style></head>
+#when,#bsch,#bdis,#bjobs{display:none!important}</style></head>
 <body>
 <header class="top"><a href="/v-fanuzpbo/">&larr; Back</a><h1 id="t">edit</h1><code id="u"></code></header>
 <div class="tb" id="tb"></div>
@@ -68,7 +68,7 @@ function label(){return cfg.stages[stg].label.replace(/^~/,"")}
 function load(){
  pending={};sel=null;closeSheet();doc=null;refresh();
  ref=cfg.stages[stg].ref;
- $("bpub").textContent=isMain()?"Publish now":"Save to "+label();$("when").style.display=$("bsch").style.display=isMain()?"":"none";
+ $("bpub").textContent="Save";
  var old=$("stage").querySelector("iframe");if(old)old.remove();
  $("lock").style.display="block";$("lock").textContent="loading "+pg.name+" ("+label()+")...";
  api("render?path="+encodeURIComponent(pg.file)+"&ref="+encodeURIComponent(ref)).then(function(d){
