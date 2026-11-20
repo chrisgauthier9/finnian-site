@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <script>
-/* Before release (Fri Nov 27 2026, midnight Toronto) this page is the pre-save: send people to Hypeddit. */
-if (Date.now() < Date.parse("2026-11-27T00:00:00-05:00")) location.replace("https://hypeddit.com/finnian/never-wanted-to-hurt-you");
+/* Before release (Fri Nov 20 2026, midnight Toronto) this page is the pre-save: send people to Hypeddit. */
+if (Date.now() < Date.parse("2026-11-20T00:00:00-05:00")) location.replace("https://hypeddit.com/finnian/never-wanted-to-hurt-you");
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>never wanted to hurt you – finnian</title>
@@ -35,12 +35,16 @@ if (Date.now() < Date.parse("2026-11-27T00:00:00-05:00")) location.replace("http
     <p class="typed">out now, listen anywhere.</p>
 
     <div class="stack">
-      <!-- Release morning: swap each Hypeddit/profile fallback for the track's own store link. -->
-      <a class="btn btn--solid" href="https://hypeddit.com/finnian/never-wanted-to-hurt-you">Spotify</a>
-      <a class="btn" href="https://hypeddit.com/finnian/never-wanted-to-hurt-you">Apple Music</a>
-      <a class="btn" href="https://soundcloud.com/finnian_music">SoundCloud</a>
-      <a class="btn" href="https://finnianmusictoronto.bandcamp.com">Bandcamp</a>
-      <a class="btn" href="https://hypeddit.com/finnian/never-wanted-to-hurt-you">Deezer</a>
+      <!-- Release morning: the box job (nwthy-links.py) swaps each data-fallback="1" search link for the live store link. -->
+      <a class="btn btn--solid" data-store="spotify" data-fallback="1" href="https://open.spotify.com/search/finnian%20never%20wanted%20to%20hurt%20you">Spotify</a>
+      <a class="btn" data-store="apple" data-fallback="1" href="https://music.apple.com/ca/search?term=finnian%20never%20wanted%20to%20hurt%20you">Apple Music</a>
+      <a class="btn" data-store="youtube" data-fallback="1" href="https://music.youtube.com/search?q=finnian%20never%20wanted%20to%20hurt%20you">YouTube Music</a>
+      <a class="btn" data-store="deezer" data-fallback="1" href="https://www.deezer.com/search/finnian%20never%20wanted%20to%20hurt%20you">Deezer</a>
+      <a class="btn" data-store="amazon" data-fallback="1" href="https://music.amazon.com/search/finnian%20never%20wanted%20to%20hurt%20you">Amazon Music</a>
+      <a class="btn" data-store="tidal" data-fallback="1" href="https://tidal.com/search?q=finnian%20never%20wanted%20to%20hurt%20you">Tidal</a>
+      <a class="btn" data-store="soundcloud" data-fallback="1" href="https://soundcloud.com/search?q=finnian%20never%20wanted%20to%20hurt%20you">SoundCloud</a>
+      <a class="btn" data-store="beatport" data-fallback="1" href="https://www.beatport.com/search?q=finnian%20never%20wanted%20to%20hurt%20you">Beatport</a>
+      <a class="btn" data-store="bandcamp" data-fallback="1" href="https://finnianmusictoronto.bandcamp.com">Bandcamp</a>
     </div>
 
     <p class="typed" style="margin-top:var(--s5)"><a href="/">finnian.ca</a> · <a href="/links/">all links</a></p>
