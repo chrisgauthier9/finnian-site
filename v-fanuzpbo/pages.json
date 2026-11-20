@@ -1,0 +1,236 @@
+{
+ "stages": {
+  "now": {
+   "label": "Now",
+   "ref": "main"
+  },
+  "nov20": {
+   "label": "Nov 20",
+   "ref": "release/nwthy-nov20"
+  },
+  "nov30": {
+   "label": "~Nov 30",
+   "ref": "release/go-a-little-presave"
+  },
+  "dec1": {
+   "label": "Dec 1",
+   "ref": "release/wimc-dec1"
+  },
+  "dec18": {
+   "label": "Dec 18",
+   "ref": "release/go-a-little-dec18"
+  }
+ },
+ "pages": [
+  {
+   "id": "home",
+   "name": "Home",
+   "url": "/",
+   "file": "index.html",
+   "thumb": "now",
+   "changes": [
+    "nov20",
+    "nov30",
+    "dec18"
+   ],
+   "compare": [
+    "now",
+    "nov20",
+    "nov30",
+    "dec18"
+   ],
+   "type": "main"
+  },
+  {
+   "id": "links",
+   "name": "Links",
+   "url": "/links/",
+   "file": "links/index.html",
+   "thumb": "now",
+   "changes": [
+    "nov20",
+    "nov30",
+    "dec1",
+    "dec18"
+   ],
+   "compare": [
+    "now",
+    "nov20",
+    "nov30",
+    "dec1",
+    "dec18"
+   ],
+   "type": "main"
+  },
+  {
+   "id": "nwthy",
+   "name": "Never Wanted To Hurt You",
+   "url": "/never-wanted-to-hurt-you/",
+   "file": "never-wanted-to-hurt-you/index.html",
+   "thumb": "nov20",
+   "changes": [
+    "nov20"
+   ],
+   "compare": [
+    "now",
+    "nov20"
+   ],
+   "nowRedirect": "Now: sends visitors to the Hypeddit pre-save",
+   "placeholders": {
+    "nov20": [
+     "Spotify",
+     "Apple Music",
+     "Deezer"
+    ]
+   },
+   "type": "release"
+  },
+  {
+   "id": "gal",
+   "name": "Go A Little (new)",
+   "url": "/go-a-little/",
+   "file": "go-a-little/index.html",
+   "thumb": "dec18",
+   "changes": [
+    "nov30",
+    "dec18"
+   ],
+   "compare": [
+    "dec18"
+   ],
+   "placeholders": {
+    "dec18": "ALL"
+   },
+   "type": "release"
+  },
+  {
+   "id": "wimc",
+   "name": "Wish Is My Command download (new)",
+   "url": "/wish-is-my-command/download/",
+   "file": "wish-is-my-command/download/index.html",
+   "thumb": "dec1",
+   "changes": [
+    "dec1"
+   ],
+   "compare": [
+    "dec1"
+   ],
+   "placeholders": {
+    "dec1": "ALL"
+   },
+   "type": "download"
+  },
+  {
+   "id": "ygm",
+   "name": "You Got Me",
+   "url": "/you-got-me/",
+   "file": "you-got-me/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "release"
+  },
+  {
+   "id": "ygmd",
+   "name": "You Got Me download",
+   "url": "/you-got-me/download/",
+   "file": "you-got-me/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "kidz",
+   "name": "Kids download",
+   "url": "/kidz/download/",
+   "file": "kidz/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "baiana",
+   "name": "baianà download",
+   "url": "/baiana/download/",
+   "file": "baiana/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "grenade",
+   "name": "grenade download",
+   "url": "/grenade/download/",
+   "file": "grenade/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "mimosa",
+   "name": "mimosa 2000 download",
+   "url": "/mimosa/download/",
+   "file": "mimosa/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "send",
+   "name": "Send music",
+   "url": "/send-music/",
+   "file": "send-music/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "main"
+  },
+  {
+   "id": "privacy",
+   "name": "Privacy",
+   "url": "/privacy/",
+   "file": "privacy/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "main"
+  }
+ ],
+ "hidden": [
+  {
+   "url": "/l/",
+   "name": "Pitch links"
+  },
+  {
+   "url": "/ig/",
+   "name": "Instagram bio shortcut"
+  },
+  {
+   "url": "/tt/",
+   "name": "TikTok bio shortcut"
+  },
+  {
+   "url": "/gate-done/",
+   "name": "Gate done"
+  }
+ ],
+ "types": [
+  {
+   "id": "main",
+   "label": "Main"
+  },
+  {
+   "id": "release",
+   "label": "Releases"
+  },
+  {
+   "id": "download",
+   "label": "Downloads"
+  }
+ ]
+}

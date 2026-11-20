@@ -425,3 +425,9 @@ h2.display { font-size: clamp(2.75rem, 7vw, 5.5rem); }
 .social-bar a:hover { opacity: 0.6; }
 .social-bar svg { width: 22px; height: 22px; fill: currentColor; }
 body:has(.social-bar) { padding-bottom: 58px; }
+
+/* links page, phones: let the tilted pre-save button wrap instead of running off the screen */
+@media (max-width: 480px) {
+  .stack { grid-template-columns: minmax(0, 1fr); }
+  .btn--new { white-space: normal; overflow-wrap: anywhere; font-size: 0.75rem; letter-spacing: 0.1em; box-shadow: 4px 4px 0 var(--black); }
+}
