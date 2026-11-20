@@ -4,20 +4,16 @@
    "label": "Now",
    "ref": "main"
   },
-  "nov20": {
-   "label": "Nov 20",
-   "ref": "release/nwthy-nov20"
-  },
   "nov30": {
-   "label": "~Nov 30",
+   "label": "~Nov 30, 12:00 am",
    "ref": "release/go-a-little-presave"
   },
   "dec1": {
-   "label": "Dec 1",
+   "label": "Dec 1, 12:00 am",
    "ref": "release/wimc-dec1"
   },
   "dec18": {
-   "label": "Dec 18",
+   "label": "Dec 18, 12:00 am",
    "ref": "release/go-a-little-dec18"
   }
  },
@@ -29,13 +25,11 @@
    "file": "index.html",
    "thumb": "now",
    "changes": [
-    "nov20",
     "nov30",
     "dec18"
    ],
    "compare": [
     "now",
-    "nov20",
     "nov30",
     "dec18"
    ],
@@ -48,14 +42,12 @@
    "file": "links/index.html",
    "thumb": "now",
    "changes": [
-    "nov20",
     "nov30",
     "dec1",
     "dec18"
    ],
    "compare": [
     "now",
-    "nov20",
     "nov30",
     "dec1",
     "dec18"
@@ -67,13 +59,10 @@
    "name": "Never Wanted To Hurt You",
    "url": "/never-wanted-to-hurt-you/",
    "file": "never-wanted-to-hurt-you/index.html",
-   "thumb": "nov20",
-   "changes": [
-    "nov20"
-   ],
+   "thumb": "now",
+   "changes": [],
    "compare": [
-    "now",
-    "nov20"
+    "now"
    ],
    "nowRedirect": "Now: sends visitors to the Hypeddit pre-save",
    "placeholders": {
