@@ -33,3 +33,10 @@ Never link `/v-fanuzpbo/` from the site. Keep it out of `sitemap.xml`.
 Changed `common.css`? Bump the `?v=` on its link in `index.html` and `compare/index.html` (Cloudflare caches it 4 hours). Same for `pages.json` if edits do not show: open it once with `?x=1` to confirm.
 
 Previews are silent on purpose: `make_previews.py` strips all scripts, audio/video/iframes and autoplay from the copies, and the thumbnails are sandboxed iframes. Do not add players back.
+
+## Tap-to-edit (v1.0, 2026-11-20)
+Open the hub, press **Edit: off** (top, shown only on a signed-in device) so it reads **Edit: on**, tap a page, then tap any text, button or link on the rendered page. A bottom sheet edits it (link text and its address together). **Publish now** commits to `main`; **Schedule** takes a Toronto date and time (the 5-minute cron commits it). On a staged version tab (Nov 20, Dec 1, ...) the button reads **Save to <date>** and commits to that release branch instead.
+- `edit/index.html` is the page; it calls the finnian-gate Worker (`/admin/api/render|publish|schedule|scheduled|cancel`, source `gate/src/admin.js`) with the secret in the `X-Admin-Token` header (CORS only for finnian.ca). The public hub holds no secret and cannot write.
+- Sign in once per device by opening the private hub link (`/admin/hub/<secret>`, kept in `Projects/Finnian/portal-link.txt` and Keychain, never committed). It redirects here with the token in the URL fragment; the hub stores it in localStorage and clears the URL.
+- The Worker renders the real source with every text node and link tagged with its parse id; an edit sends id, original text and the file's blob sha. It refuses if the text or the sha no longer matches (a changed page, a wrong node), so no regex or guessing.
+- Not editable: structure, images, new pages, `<title>`, option labels. `previews/` thumbnails are not refreshed by an edit; re-run `make_previews.py`.
