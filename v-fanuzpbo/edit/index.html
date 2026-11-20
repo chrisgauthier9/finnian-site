@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>finnian.ca edit</title><link rel="stylesheet" href="/v-fanuzpbo/common.css?v=4">
+<style>
+html,body{height:100%}body{display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+.top{padding:10px 12px;gap:6px 12px;flex:none;align-items:center}.top h1{font-size:16px}.top a{font:700 13px var(--display)}
+.tb{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px;flex:none;align-items:center}
+.tb button,.bar button,.sheet button{font:700 13px var(--display);border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:99px;padding:9px 14px;cursor:pointer}
+.tb button.alt,.bar button.alt,.sheet button.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.tb button.on{background:var(--accent);border-color:var(--accent);color:#17171a}
+.tb button.v{background:transparent;color:var(--ink);border-color:var(--line)}.tb button.v.on{border:2px solid var(--chg);color:var(--chg);background:transparent}
+button:disabled{opacity:.5}
+#stage{flex:1;min-height:0;display:flex;justify-content:center;background:var(--line);padding:0 0 0}
+#stage iframe{border:0;background:#fff;width:100%;max-width:440px;height:100%;display:block}#stage.wide iframe{max-width:none}
+#msg{position:absolute;left:12px;right:12px;top:96px;z-index:5;padding:10px 12px;border-radius:10px;font-size:14px;display:none;background:var(--card);border:1px solid var(--line)}
+#msg.ok{border-color:var(--ok);color:var(--ok);display:block}#msg.err{border-color:#c33;color:#c33;display:block}
+.bar,.sheet{flex:none;background:var(--card);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
+.bar .r,.sheet .r{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.bar .n{font:700 12px var(--display);color:var(--mute);flex:1}
+.bar input{font:14px var(--body);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-width:0;flex:1 1 170px}
+.sheet{display:none;max-height:55dvh;overflow:auto}.sheet label{font:700 11px var(--display);color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.sheet textarea,.sheet input{font:16px var(--body);width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.sheet textarea{min-height:64px;resize:vertical}
+.jobs{max-height:40dvh;overflow:auto}.job{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+#lock{padding:28px 18px;text-align:center;color:var(--mute);display:none}
+</style></head>
+<body>
+<header class="top"><a href="/v-fanuzpbo/">&larr; Back</a><h1 id="t">edit</h1><code id="u"></code></header>
+<div class="tb" id="tb"></div>
+<div id="msg"></div>
+<div id="stage"><div id="lock"></div></div>
+<div class="sheet" id="sheet"></div>
+<div class="bar" id="bar">
+ <div class="r"><span class="n" id="cnt">tap any text, button or link to change it</span><button class="alt" id="bdis" disabled>Discard</button><button class="alt" id="bjobs">Scheduled</button></div>
+ <div class="r"><button id="bpub" disabled>Publish now</button><input type="datetime-local" id="when" aria-label="schedule time (Toronto)"><button class="alt" id="bsch" disabled>Schedule</button></div>
+</div>
+<script>
+(function(){var m=/[#&]t=([^&]+)/.exec(location.hash);if(m){try{localStorage.setItem("fa_token",decodeURIComponent(m[1]));localStorage.setItem("fa_edit","1")}catch(e){}history.replaceState(null,"",location.pathname+location.search)}})();
+var API="https://finnian-gate.food-log.workers.dev/admin/api/";
+var $=function(i){return document.getElementById(i)};
+var E=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var TOK=null;try{TOK=localStorage.getItem("fa_token")}catch(e){}
+var q=new URLSearchParams(location.search),cfg,pg,stg,ref,sha,fields=[],pending={},editOn=true,doc=null,sel=null;
+addEventListener("keydown",function(k){if(k.key==="Escape"&&$("sheet").style.display!=="block")location.href="/v-fanuzpbo/"});
+function msg(t,ok){var m=$("msg");m.textContent=t;m.className=ok?"ok":"err";clearTimeout(msg.t);msg.t=setTimeout(function(){m.className=""},ok?6000:12000)}
+function api(path,body){
+ return fetch(API+path,{method:body?"POST":"GET",headers:Object.assign({"X-Admin-Token":TOK||""},body?{"Content-Type":"application/json"}:{}),body:body?JSON.stringify(body):undefined})
+ .catch(function(){throw new Error("Could not reach the editor. Check the connection.")})
+ .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t)}catch(e){}
+  if(r.status===404)throw new Error("This device is not signed in. Open your edit link once.");
+  if(!r.ok)throw new Error((j&&j.error)||"error "+r.status);return j})})}
+function lock(t){$("lock").style.display="block";$("lock").textContent=t;$("bar").style.display="none"}
+fetch("/v-fanuzpbo/pages.json").then(function(r){return r.json()}).then(function(c){
+ cfg=c;pg=c.pages.filter(function(x){return x.id===q.get("p")})[0];
+ if(!pg){location.href="/v-fanuzpbo/";return}
+ $("t").textContent=pg.name;$("u").textContent="finnian.ca"+pg.url;
+ var vs=(pg.compare&&pg.compare.length?pg.compare:["now"]).filter(function(s){return !(s==="now"&&pg.nowRedirect)});
+ stg=vs.indexOf(q.get("s"))>=0?q.get("s"):vs[0];
+ if(!TOK){lock("Editing is locked on this device. Open your private edit link once and it stays unlocked.");return}
+ $("tb").innerHTML='<button id="bedit" class="on">Edit: on</button><button id="bwide" class="alt">Wide</button><span style="flex:1"></span>'+vs.map(function(s){return '<button class="v'+(s===stg?" on":"")+'" data-s="'+s+'">'+E(c.stages[s].label.replace(/^~/,""))+'</button>'}).join("");
+ $("bedit").onclick=function(){editOn=!editOn;this.textContent="Edit: "+(editOn?"on":"off");this.classList.toggle("on",editOn);if(doc)doc.documentElement.classList.toggle("fa-edit",editOn);closeSheet()};
+ $("bwide").onclick=function(){$("stage").classList.toggle("wide");this.classList.toggle("on")};
+ [].forEach.call($("tb").querySelectorAll(".v"),function(b){b.onclick=function(){
+  if(Object.keys(pending).length&&!confirm("Discard your unsaved edits?"))return;
+  [].forEach.call($("tb").querySelectorAll(".v"),function(x){x.classList.toggle("on",x===b)});stg=b.dataset.s;load()}});
+ load();
+});
+function isMain(){return stg==="now"}
+function label(){return cfg.stages[stg].label.replace(/^~/,"")}
+function load(){
+ pending={};sel=null;closeSheet();doc=null;refresh();
+ ref=cfg.stages[stg].ref;
+ $("bpub").textContent=isMain()?"Publish now":"Save to "+label();
+ var old=$("stage").querySelector("iframe");if(old)old.remove();
+ $("lock").style.display="block";$("lock").textContent="loading "+pg.name+" ("+label()+")...";
+ api("render?path="+encodeURIComponent(pg.file)+"&ref="+encodeURIComponent(ref)).then(function(d){
+  sha=d.sha;fields=d.fields;$("lock").style.display="none";
+  var f=document.createElement("iframe");f.title="page";f.onload=function(){setup(f)};f.srcdoc=d.html;$("stage").appendChild(f);
+ }).catch(function(e){$("lock").textContent=e.message;msg(e.message)})}
+function setup(f){
+ doc=f.contentDocument;
+ var st=doc.createElement("style");st.textContent=
+  ".fa-edit fa-t,.fa-edit a[data-fa-href],.fa-edit [data-fa-attr]{outline:1px dashed rgba(224,168,0,.9);outline-offset:2px;cursor:pointer}"+
+  ".fa-edit fa-t:hover{background:rgba(224,168,0,.2)}"+
+  "fa-t.fa-ch,a.fa-ch,input.fa-ch{outline:2px solid #e07a1a!important;background:rgba(224,122,26,.22)!important}"+
+  ".fa-sel{outline:3px solid #e0a800!important;outline-offset:2px}html{scroll-behavior:auto!important}body{padding-bottom:30px}";
+ doc.head.appendChild(st);doc.documentElement.classList.toggle("fa-edit",editOn);
+ doc.addEventListener("submit",function(e){e.preventDefault()},true);
+ doc.addEventListener("click",function(e){
+  var t=e.target;if(!t.closest)return;
+  if(t.closest("a,button,label,summary,form"))e.preventDefault();
+  if(!editOn)return;
+  var p=pick(t);if(!p)return;
+  e.preventDefault();e.stopPropagation();openSheet(p)},true);
+}
+function pick(el){
+ var tx=el.closest("fa-t"),ln=el.closest("a[data-fa-href]"),at=el.closest("[data-fa-attr],[data-fa-attr-ph]");
+ if(!tx&&!at){var scope=ln||el;var all=scope.querySelectorAll?scope.querySelectorAll("fa-t"):[];if(all.length===1)tx=all[0]}
+ if(!tx&&!ln&&!at)return null;
+ if(tx&&!ln)ln=tx.closest("a[data-fa-href]");
+ return{tx:tx,ln:ln,at:at}}
+function cur(id){return id in pending?pending[id]:fields[id].value}
+function openSheet(p){
+ if(sel)[sel.tx,sel.ln,sel.at].forEach(function(x){x&&x.classList.remove("fa-sel")});
+ sel=p;var h='';
+ var tid=p.tx&&+p.tx.dataset.fa,lid=p.ln&&+p.ln.dataset.faHref,aid=p.at&&+(p.at.dataset.faAttr||p.at.dataset.faAttrPh);
+ [p.tx,p.at].forEach(function(x){x&&x.classList.add("fa-sel")});if(!p.tx&&!p.at&&p.ln)p.ln.classList.add("fa-sel");
+ if(tid!=null)h+='<label>'+E(fields[tid].label)+'</label><textarea id="st">'+E(cur(tid))+'</textarea>';
+ if(aid!=null)h+='<label>'+E(fields[aid].label)+'</label><input id="sa" value="'+E(cur(aid))+'">';
+ if(lid!=null)h+='<label>link address</label><input id="su" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" value="'+E(cur(lid))+'">';
+ h+='<div class="r"><button id="sok">Apply</button><button class="alt" id="srs">Reset</button><button class="alt" id="sx">Cancel</button></div>';
+ $("sheet").innerHTML=h;$("sheet").style.display="block";$("bar").style.display="none";
+ sel.ids={t:tid,l:lid,a:aid};
+ $("sx").onclick=closeSheet;
+ $("srs").onclick=function(){if(tid!=null)$("st").value=fields[tid].value;if(aid!=null)$("sa").value=fields[aid].value;if(lid!=null)$("su").value=fields[lid].value};
+ $("sok").onclick=function(){
+  try{
+   if(tid!=null)setVal(tid,$("st").value,p.tx);
+   if(aid!=null)setVal(aid,$("sa").value,p.at);
+   if(lid!=null)setVal(lid,$("su").value,p.ln);
+  }catch(e){return msg(e.message)}
+  closeSheet();refresh()};
+ setTimeout(function(){var t=p.tx||p.at||p.ln;try{t.scrollIntoView({block:"center"})}catch(e){}var f=$("st")||$("sa")||$("su");if(f&&!/iPhone|iPad|Android/.test(navigator.userAgent))f.focus()},30)}
+function setVal(id,v,el){
+ var f=fields[id];
+ if(f.kind==="href"){v=v.trim();if(!v)throw new Error("A link cannot be empty.");if(/^\s*(javascript|data|vbscript):/i.test(v))throw new Error("That kind of link is not allowed.")}
+ else{v=f.kind==="text"?v.replace(/\s+/g," ").trim():v.trim();if(!v)throw new Error("Text cannot be empty.")}
+ if(v===f.value)delete pending[id];else pending[id]=v;
+ if(f.kind==="href")el.setAttribute("href",v);
+ else if(f.kind==="attr")el.setAttribute(el.hasAttribute("data-fa-attr-ph")?"placeholder":"value",v);
+ else el.textContent=v;
+ el.classList.toggle("fa-ch",id in pending)}
+function closeSheet(){
+ if(sel){[sel.tx,sel.ln,sel.at].forEach(function(x){x&&x.classList.remove("fa-sel")});sel=null}
+ $("sheet").style.display="none";if(TOK&&!$("lock").textContent.startsWith("Editing is locked"))$("bar").style.display="flex"}
+function refresh(){
+ var n=Object.keys(pending).length;
+ $("cnt").textContent=n?n+" edit"+(n>1?"s":"")+" not saved yet":"tap any text, button or link to change it";
+ ["bdis","bpub","bsch"].forEach(function(i){$(i).disabled=!n})}
+function payload(){return{path:pg.file,ref:ref,sha:sha,edits:Object.keys(pending).map(function(id){return{id:+id,old:fields[id].value,new:pending[id]}})}}
+$("bdis").onclick=function(){if(confirm("Discard all unsaved edits?"))load()};
+$("bpub").onclick=function(){
+ var n=Object.keys(pending).length;
+ if(!confirm((isMain()?"Publish "+n+" edit(s) to the LIVE page "+pg.url+" now?":"Save "+n+" edit(s) to the "+label()+" version of "+pg.name+"? It is not live until that version goes live."))) return;
+ $("bpub").disabled=true;
+ api("publish",payload()).then(function(r){msg((isMain()?"Published (commit "+r.commit.slice(0,7)+"). Live in about a minute.":"Saved to "+label()+" (commit "+r.commit.slice(0,7)+")."),true);load()}).catch(function(e){msg(e.message);refresh()})};
+$("bsch").onclick=function(){
+ var w=$("when").value;if(!w)return msg("Pick a date and time first (Toronto time).");
+ var b=payload();b.kind="edit";b.when=w;$("bsch").disabled=true;
+ api("schedule",b).then(function(r){msg("Scheduled for "+r.when+" (Toronto). It lands within 5 minutes of then.",true);load()}).catch(function(e){msg(e.message);refresh()})};
+$("bjobs").onclick=function(){
+ api("scheduled").then(function(j){
+  var h='<label>scheduled edits</label><div class="jobs">'+(j.jobs.map(function(x){return '<div class="job"><span><b>'+E(x.summary)+'</b><br>'+E(x.when)+' &middot; '+E(x.status)+(x.error?" &middot; "+E(x.error):"")+'</span>'+(x.status==="pending"?'<button class="alt" data-c="'+E(x.id)+'">Cancel</button>':'')+'</div>'}).join("")||'<p style="color:var(--mute)">nothing scheduled</p>')+'</div><div class="r"><button class="alt" id="sx">Close</button></div>';
+  $("sheet").innerHTML=h;$("sheet").style.display="block";$("bar").style.display="none";$("sx").onclick=closeSheet;
+  [].forEach.call($("sheet").querySelectorAll("[data-c]"),function(b){b.onclick=function(){api("cancel",{id:b.dataset.c}).then(function(){msg("Cancelled.",true);closeSheet()}).catch(function(e){msg(e.message)})}})}).catch(function(e){msg(e.message)})};
+</script></body></html>

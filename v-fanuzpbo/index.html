@@ -1,16 +1,24 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>finnian.ca versions</title><link rel="stylesheet" href="/v-fanuzpbo/common.css?v=4"></head>
-<body><main><header><h1>finnian.ca versions</h1></header><div id="s"></div>
+<body><main><header style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1>finnian.ca versions</h1><button id="ed" style="display:none;font:700 13px var(--display);border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:99px;padding:8px 14px;cursor:pointer"></button></header><p id="em" class="nt" style="display:none;margin:0"></p><div id="s"></div>
 <section><h2>Hidden redirects</h2><div class="hids" id="h"></div></section></main>
 <script>
+(function(){var m=/[#&]t=([^&]+)/.exec(location.hash);if(m){try{localStorage.setItem("fa_token",decodeURIComponent(m[1]));localStorage.setItem("fa_edit","1")}catch(e){}history.replaceState(null,"",location.pathname+location.search);window.__unlocked=1}})();
+var HAS=false,EDIT=false;try{HAS=!!localStorage.getItem("fa_token");EDIT=HAS&&localStorage.getItem("fa_edit")==="1"}catch(e){}
 var E=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
 var live=function(u){return '<a class="live" href="https://finnian.ca'+E(u)+'" target="_blank" rel="noopener">Open live &#8599;</a>'};
 fetch("/v-fanuzpbo/pages.json").then(function(r){return r.json()}).then(function(c){
  var card=function(p){
+  if(EDIT){var eh="/v-fanuzpbo/edit/?p="+p.id+"&s="+p.thumb;if(p.thumb==="now"&&p.nowRedirect)eh=null;
+   var th2='<div class="th" style="width:156px;height:156px"><iframe sandbox="allow-scripts" src="/v-fanuzpbo/previews/'+p.thumb+'/'+p.id+'.html" title="" tabindex="-1" loading="lazy" style="width:390px;height:390px;transform:scale(.4)"></iframe></div>';
+   return '<div class="card'+(p.changes.length?' has':'')+'"><'+(eh?'a href="'+eh+'"':'div')+' class="ov"><div class="sh">'+th2+'</div><b>'+E(p.name)+'</b><code>'+E(p.url)+'</code><div class="chips"><span class="bd chg">&#9998; Edit</span></div></'+(eh?'a':'div')+'></div>'}
   var th='<div class="th" style="width:156px;height:156px"><iframe sandbox="allow-scripts" src="/v-fanuzpbo/previews/'+p.thumb+'/'+p.id+'.html" title="" tabindex="-1" loading="lazy" style="width:390px;height:390px;transform:scale(.4)"></iframe></div>';
   var inner='<div class="sh">'+th+'</div><b>'+E(p.name)+'</b><code>'+E(p.url)+'</code>';
   if(p.changes.length) return '<div class="card has"><a class="ov" href="/v-fanuzpbo/compare/?p='+p.id+'">'+inner+'<div class="chips"><span class="lb">Changes</span>'+p.changes.map(function(s){var l=c.stages[s].label,a=l.charAt(0)==="~";return '<span class="bd chg" '+(a?'title="approx"':'')+'>'+E(a?l.slice(1):l)+'</span>'}).join("")+'</div></a>'+live(p.url)+'</div>';
   return '<div class="card"><div class="ov">'+inner+'<div class="chips"><span class="bd">No changes</span></div></div>'+live(p.url)+'</div>'};
  s.innerHTML=c.types.map(function(t){var ps=c.pages.filter(function(p){return p.type===t.id}).sort(function(x,y){return (y.changes.length>0)-(x.changes.length>0)});return '<section><h2>'+E(t.label)+'</h2><div class="grid">'+ps.map(card).join("")+'</div></section>'}).join("");
  h.innerHTML=c.hidden.map(function(x){return '<div class="hid"><b>'+E(x.name)+'</b><code>'+E(x.url)+'</code><span class="bd">No changes</span>'+live(x.url)+'</div>'}).join("")});
+if(HAS){var b=document.getElementById("ed"),m=document.getElementById("em");b.style.display="inline-block";
+ var paint=function(){b.textContent=EDIT?"Edit: on":"Edit: off";b.style.background=EDIT?"var(--accent)":"transparent";b.style.color=EDIT?"#17171a":"var(--ink)";b.style.borderColor=EDIT?"var(--accent)":"var(--ink)";m.style.display=EDIT||window.__unlocked?"block":"none";m.textContent=window.__unlocked?"Editing unlocked on this device. Tap a page, then tap any text, button or link.":"Edit is on: tap a page, then tap any text, button or link."};
+ b.onclick=function(){try{localStorage.setItem("fa_edit",EDIT?"0":"1")}catch(e){}location.reload()};paint()}
 </script></body></html>
