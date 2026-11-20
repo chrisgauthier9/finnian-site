@@ -29,7 +29,7 @@ button:disabled{opacity:.5}
 <div id="stage"><div id="lock"></div></div>
 <div class="sheet" id="sheet"></div>
 <div class="bar" id="bar">
- <div class="r"><span class="n" id="cnt">tap any text, button or link to change it</span><button class="alt" id="bdis" disabled>Discard</button><button class="alt" id="bjobs">Scheduled</button></div>
+ <div class="r"><span class="n" id="cnt">tap any text, button or link to change it</span><button class="alt" id="bdis" disabled>Undo my changes</button><button class="alt" id="bjobs">Upcoming edits</button></div>
  <div class="r"><button id="bpub" disabled>Publish now</button><input type="datetime-local" id="when" aria-label="schedule time (Toronto)"><button class="alt" id="bsch" disabled>Schedule</button></div>
 </div>
 <script>
@@ -68,7 +68,7 @@ function label(){return cfg.stages[stg].label.replace(/^~/,"")}
 function load(){
  pending={};sel=null;closeSheet();doc=null;refresh();
  ref=cfg.stages[stg].ref;
- $("bpub").textContent=isMain()?"Publish now":"Save to "+label();
+ $("bpub").textContent=isMain()?"Publish now":"Save to "+label();$("when").style.display=$("bsch").style.display=isMain()?"":"none";
  var old=$("stage").querySelector("iframe");if(old)old.remove();
  $("lock").style.display="block";$("lock").textContent="loading "+pg.name+" ("+label()+")...";
  api("render?path="+encodeURIComponent(pg.file)+"&ref="+encodeURIComponent(ref)).then(function(d){
