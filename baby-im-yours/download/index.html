@@ -93,7 +93,7 @@
       <button class="gate__play" id="play" type="button" aria-label="play breakbot - baby im yours (finnian edit)"><span></span></button>
       <i class="gate__bar" id="bar"></i>
       <iframe id="sc" title="breakbot - baby im yours (finnian edit) on SoundCloud" allow="autoplay" tabindex="-1" aria-hidden="true"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/track-008-your-wish-is-my&secret_token=s-0u5QZHNvzwe&auto_play=false"></iframe>
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/finnian_music/track-008-your-wish-is-my&auto_play=false"></iframe>
     </div>
   </section>
 
@@ -133,7 +133,7 @@
       </div>
 
       <div id="s3" hidden>
-        <a class="btn btn--solid gate__cta" id="dl" href="#" target="_blank" rel="noopener">download baby im yours</a>
+        <a class="btn btn--solid gate__cta" id="dl" href="https://finnianmusictoronto.bandcamp.com/album/breakbot-baby-im-yours-finnian-edit-free-download" target="_blank" rel="noopener">download baby im yours</a>
         <a class="gate__next" id="next" href="https://finnian.ca/kidz/download/" target="_blank" rel="noopener">
           <img src="/assets/kidz.jpg" alt="" width="56" height="56">
           <span><small>up next</small><b>mgmt - kids (finnian edit)</b><em>free download</em></span>
@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/track-008-your-wish-is-my/s-0u5QZHNvzwe" target="_blank" rel="noopener">on SoundCloud</a> · <a href="/">finnian.ca</a></p>
+    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/track-008-your-wish-is-my" target="_blank" rel="noopener">on SoundCloud</a> · <a href="/">finnian.ca</a></p>
   </section>
 </main>
 
@@ -161,7 +161,7 @@
   // Per-gate settings: the only part that differs between gate pages (plus the head, cover, player and text).
   // download 'bandcamp': the button goes to Bandcamp, which asks a $0 fan for their email, so no email step.
   // download 'file': the Worker serves the file (/file?k=) and the email step comes back, since nobody else asks.
-  var T = { slug: 'baby-im-yours', download: 'file', spotify: false };
+  var T = { slug: 'baby-im-yours', download: 'bandcamp', spotify: false };
   // A Hypeddit link gate does the real Spotify follow/save in a pop-up; its destination finnian.ca/gate-done/ signals back.
   var SPOTIFY_GATE = T.spotify || 'https://hypeddit.com/finnian/yougotme-spotify';
   // Spotify step is on for every fan (Chris, 2026-10-18). If Hypeddit breaks, set this to false; ?spotify=off skips it for one visit.
