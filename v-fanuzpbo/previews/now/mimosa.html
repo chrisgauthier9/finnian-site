@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mimosa 2000 (140 rework), free download – fifthstarr x finnian</title>
+<meta name="description" content="Free download of mimosa 2000 (140 rework) by fifthstarr x finnian.">
+<meta name="robots" content="noindex">
+
+<meta property="og:title" content="mimosa 2000 (140 rework), free download – fifthstarr x finnian">
+<meta property="og:image" content="https://finnian.ca/assets/mimosa.jpg">
+<meta name="theme-color" content="#f1f1f3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=44">
+<style>
+  /* Download gate. Desktop first: cover stage left, steps panel right. Stacks under 900px. */
+  html, body { height: 100%; }
+  .gate { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(420px, 0.85fr); min-height: 100vh; }
+
+  .gate__stage { position: relative; overflow: hidden; background: var(--black); display: grid; place-items: center; padding: clamp(32px, 5vw, 80px); }
+  .gate__stage::before {
+    content: ""; position: absolute; inset: -60px;
+    background: url(/assets/mimosa.jpg) center / cover no-repeat;
+    filter: blur(48px) saturate(1.1) brightness(0.85); transform: scale(1.1);
+  }
+  .gate__cover { position: relative; width: min(100%, 62vh, 620px); aspect-ratio: 1; border: 1px solid var(--black); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+  .gate__cover img { width: 100%; height: 100%; object-fit: cover; }
+  .gate__brand { position: absolute; top: 28px; left: 32px; z-index: 1; color: var(--paper); text-decoration: none; font-family: var(--font); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.03em; }
+
+  .gate__panel { display: flex; flex-direction: column; justify-content: center; padding: clamp(24px, 4vh, 56px) clamp(32px, 4.5vw, 72px); background: var(--paper); }
+  .gate__panel .eyebrow b { color: var(--black); background: var(--yellow); padding: 2px 6px; }
+  .gate__title { font-size: clamp(2.6rem, min(4.6vw, 8vh), 4.5rem); }
+  .gate__artist { margin: var(--s2) 0 0; font-family: var(--font); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.01em; }
+
+  .gate__play { position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border: 0; border-radius: 50%;
+    background: var(--yellow); box-shadow: 0 10px 30px rgba(0,0,0,0.35); cursor: pointer; display: grid; place-items: center; transition: transform .15s; }
+  .gate__play:hover { transform: scale(1.06); }
+  .gate__play span { width: 0; height: 0; margin-left: 6px; border-style: solid; border-width: 15px 0 15px 24px; border-color: transparent transparent transparent var(--black); }
+  .gate__play.on span { margin: 0; width: 22px; height: 26px; border: 0; border-left: 7px solid var(--black); border-right: 7px solid var(--black); }
+  .gate__bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 0; background: var(--yellow); }
+  #sc { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; }
+
+  .gate__cta { display: block; width: 100%; margin-top: var(--s3); padding: 18px 22px; font-size: 0.8rem; text-align: center; }
+  .gate__go { margin-top: var(--s5); }
+  .gate [hidden] { display: none !important; }
+  .gate__sc::before { content: ""; display: inline-block; width: 22px; height: 12px; margin-right: 12px; vertical-align: -1px;
+    background: currentColor; -webkit-mask: url(/assets/soundcloud.svg) center / contain no-repeat; mask: url(/assets/soundcloud.svg) center / contain no-repeat; }
+
+  .gate__card { margin-top: var(--s4); padding: clamp(18px, 2.6vh, 28px) clamp(20px, 2.4vw, 32px); border: 1px solid var(--black); background: #fff; box-shadow: 6px 6px 0 var(--black); }
+  .gate__dots { display: flex; gap: 8px; }
+  .gate__dots i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--black); }
+  .gate__dots i.on { background: var(--black); }
+  .gate__ask { margin: var(--s3) 0 0; font-family: var(--mono); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4; }
+  .gate__field { display: grid; gap: 6px; margin-top: var(--s3); font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+  .gate__field small { text-transform: none; letter-spacing: 0; color: var(--fg-dim); font-size: 0.75rem; }
+  .gate__field input, .gate__field textarea { font: 1rem var(--font); padding: 12px 14px; border: 1px solid var(--black); background: #fff; color: var(--black); border-radius: 0; text-transform: none; letter-spacing: 0; }
+  .gate__field textarea { min-height: 52px; resize: vertical; }
+  .gate__wait { display: flex; align-items: center; gap: 12px; margin: var(--s3) 0; font-family: var(--font); }
+  .gate__spin { flex: none; width: 20px; height: 20px; border: 2.5px solid var(--black); border-top-color: transparent; border-radius: 50%; animation: gate-spin 0.8s linear infinite; }
+  @keyframes gate-spin { to { transform: rotate(360deg); } }
+  /* Up next: same type as this release (remix → remix, original → original), else On My USB. Set per gate. */
+  .gate__next { display: flex; align-items: center; gap: 14px; margin-top: var(--s3); padding: 10px 16px 10px 10px; border: 1px solid var(--black); background: #fff; color: var(--black); text-decoration: none; }
+  .gate__next:hover { background: var(--paper); }
+  .gate__next img { flex: none; width: 56px; height: 56px; object-fit: cover; }
+  .gate__next span { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  .gate__next small { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-dim); }
+  .gate__next b { font-family: var(--font); font-size: 1rem; }
+  .gate__next em { font-family: var(--font); font-style: normal; font-size: 0.8rem; color: var(--fg-dim); }
+  .gate__next i { font-style: normal; font-size: 1.2rem; }
+  .gate__fine { margin: var(--s3) 0 0; font-family: var(--font); font-size: 0.8rem; color: var(--fg-dim); }
+  .gate__err { margin-top: var(--s4); max-width: none; border: 1px solid var(--black); background: var(--yellow); padding: var(--s3); }
+  .gate__foot { margin-top: var(--s4); }
+
+  @media (max-width: 900px) {
+    .gate { grid-template-columns: 1fr; min-height: 0; }
+    .gate__stage { padding: 72px 20px 32px; }
+    .gate__cover { width: min(100%, 420px); }
+    .gate__panel { padding: 32px 20px 48px; }
+  }
+</style>
+
+</head>
+<body><div class="vbar" style="position:sticky;top:0;z-index:99;background:#e0a800;color:#17171a;font:700 12px/1.4 monospace;padding:5px 10px;text-align:center">PREVIEW, not live. Now</div><a class="vbar" href="/v-fanuzpbo/" style="position:fixed;top:34px;left:8px;z-index:100;background:#17171a;color:#fff;font:700 13px/1 monospace;padding:9px 13px;border-radius:999px;text-decoration:none;border:1px solid #fff">&larr; Back</a><script>if(top!==self){document.querySelectorAll(".vbar").forEach(function(x){x.remove()})}else{addEventListener("keydown",function(k){if(k.key==="Escape")location.href="/v-fanuzpbo/"})}</script>
+
+<main class="gate" data-tone="paper">
+  <section class="gate__stage">
+    <a class="gate__brand" href="#">finnian</a>
+    <div class="gate__cover"><img src="/assets/mimosa.jpg" alt="mimosa 2000 (140 rework) cover" width="1200" height="1200">
+      <button class="gate__play" id="play" type="button" aria-label="play mimosa 2000 (140 rework)"><span></span></button>
+      <i class="gate__bar" id="bar"></i>
+      
+    </div>
+  </section>
+
+  <section class="gate__panel">
+    <p class="eyebrow"><b>free download</b></p>
+    <h1 class="display display--stop gate__title">mimosa 2000</h1>
+    <p class="gate__artist">fifthstarr x finnian · 140 rework</p>
+
+
+
+    <button class="btn btn--solid gate__cta gate__go" id="go" type="button">download</button>
+
+    <div class="gate__card" id="card" hidden>
+      <div class="gate__dots"><i class="on"></i><i></i><i></i></div>
+      <p class="gate__ask">support finnian to unlock your download</p>
+      <p class="typed gate__err" id="err" hidden></p>
+
+      <div id="s1">
+        <label class="gate__field">leave a comment
+          <textarea id="comment" maxlength="500" placeholder="what do you think of it?"></textarea>
+        </label>
+        <button class="btn btn--solid gate__cta gate__sc" id="connect" type="button">connect</button>
+        <p class="gate__fine">Connect with SoundCloud to follow finnian and FifthStarr, like and repost mimosa 2000 (140 rework), and post your comment.</p>
+      </div>
+
+      <div id="s2" hidden>
+        <label class="gate__field">your email
+          <input type="email" id="email" autocomplete="email" placeholder="you@email.com">
+        </label>
+        <button class="btn btn--solid gate__cta" id="unlock" type="button">unlock download</button>
+        <p class="gate__fine">you join finnian's mailing list: new music and shows near you. unsubscribe anytime.</p>
+      </div>
+
+      <div id="ssp" hidden>
+        <p class="gate__wait"><i class="gate__spin" aria-hidden="true"></i>finish the Spotify step in the small window</p>
+        <button class="btn gate__cta" id="spconnect" type="button">reopen Spotify window</button>
+      </div>
+
+      <div id="s3" hidden>
+        <a class="btn btn--solid gate__cta" id="dl" href="https://finnianmusictoronto.bandcamp.com/track/mimosa-2000-140-rework-free-download" target="_blank" rel="noopener">download mimosa 2000</a>
+        <a class="gate__next" id="next" href="#" target="_blank" rel="noopener">
+          <img src="/assets/baiana.jpg" alt="" width="56" height="56">
+          <span><small>up next</small><b>baianà (speed garage edit)</b><em>free download</em></span>
+          <i aria-hidden="true">&rarr;</i>
+        </a>
+      </div>
+    </div>
+
+    <p class="typed gate__foot"><a href="https://soundcloud.com/finnian_music/fifthstarr-x-finnian-mimosa" target="_blank" rel="noopener">on SoundCloud</a> · <a href="#">finnian.ca</a></p>
+  </section>
+</main>
+
+
+</body>
+</html>

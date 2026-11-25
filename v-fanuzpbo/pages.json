@@ -1,0 +1,230 @@
+{
+ "stages": {
+  "now": {
+   "label": "Now",
+   "ref": "main"
+  },
+  "nov30": {
+   "label": "~Nov 30, 12:00 am",
+   "ref": "release/go-a-little-presave",
+   "ignore": [
+    "never-wanted-to-hurt-you/index.html"
+   ]
+  },
+  "dec1": {
+   "label": "Dec 1, 12:00 am",
+   "ref": "release-baby-im-yours"
+  },
+  "dec18": {
+   "label": "Dec 18, 12:00 am",
+   "ref": "release/go-a-little-dec18",
+   "ignore": [
+    "never-wanted-to-hurt-you/index.html"
+   ]
+  }
+ },
+ "pages": [
+  {
+   "id": "home",
+   "name": "Home",
+   "url": "/",
+   "file": "index.html",
+   "thumb": "now",
+   "changes": [
+    "nov30",
+    "dec18"
+   ],
+   "compare": [
+    "now",
+    "nov30",
+    "dec18"
+   ],
+   "type": "main"
+  },
+  {
+   "id": "links",
+   "name": "Links",
+   "url": "/links/",
+   "file": "links/index.html",
+   "thumb": "now",
+   "changes": [
+    "nov30",
+    "dec1",
+    "dec18"
+   ],
+   "compare": [
+    "now",
+    "nov30",
+    "dec1",
+    "dec18"
+   ],
+   "type": "main"
+  },
+  {
+   "id": "nwthy",
+   "name": "Never Wanted To Hurt You",
+   "url": "/never-wanted-to-hurt-you/",
+   "file": "never-wanted-to-hurt-you/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [
+    "now"
+   ],
+   "type": "release"
+  },
+  {
+   "id": "gal",
+   "name": "Go A Little (new)",
+   "url": "/go-a-little/",
+   "file": "go-a-little/index.html",
+   "thumb": "nov30",
+   "changes": [
+    "nov30",
+    "dec18"
+   ],
+   "compare": [
+    "nov30",
+    "dec18"
+   ],
+   "placeholders": {
+    "nov30": "ALL",
+    "dec18": "ALL"
+   },
+   "type": "release"
+  },
+  {
+   "id": "bim",
+   "name": "Baby I'm Yours download",
+   "url": "/baby-im-yours/download/",
+   "file": "baby-im-yours/download/index.html",
+   "thumb": "now",
+   "changes": [
+    "dec1"
+   ],
+   "compare": [
+    "now",
+    "dec1"
+   ],
+   "type": "download"
+  },
+  {
+   "id": "ygm",
+   "name": "You Got Me",
+   "url": "/you-got-me/",
+   "file": "you-got-me/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "release"
+  },
+  {
+   "id": "ygmd",
+   "name": "You Got Me download",
+   "url": "/you-got-me/download/",
+   "file": "you-got-me/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "kidz",
+   "name": "Kids download",
+   "url": "/kidz/download/",
+   "file": "kidz/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "baiana",
+   "name": "baianà download",
+   "url": "/baiana/download/",
+   "file": "baiana/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "grenade",
+   "name": "grenade download",
+   "url": "/grenade/download/",
+   "file": "grenade/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "mimosa",
+   "name": "mimosa 2000 download",
+   "url": "/mimosa/download/",
+   "file": "mimosa/download/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "download"
+  },
+  {
+   "id": "send",
+   "name": "Send music",
+   "url": "/send-music/",
+   "file": "send-music/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "main"
+  },
+  {
+   "id": "privacy",
+   "name": "Privacy",
+   "url": "/privacy/",
+   "file": "privacy/index.html",
+   "thumb": "now",
+   "changes": [],
+   "compare": [],
+   "type": "main"
+  }
+ ],
+ "hidden": [
+  {
+   "url": "/l/",
+   "name": "Pitch links"
+  },
+  {
+   "url": "/ig/",
+   "name": "Instagram bio shortcut"
+  },
+  {
+   "url": "/tt/",
+   "name": "TikTok bio shortcut"
+  },
+  {
+   "url": "/gate-done/",
+   "name": "Gate done"
+  }
+ ],
+ "types": [
+  {
+   "id": "main",
+   "label": "Main"
+  },
+  {
+   "id": "release",
+   "label": "Releases"
+  },
+  {
+   "id": "download",
+   "label": "Downloads"
+  }
+ ],
+ "ignoreWhy": "nov30 and dec18 branches carry the already-live Nov 20 NWTHY page edits (stale copy from before main moved on); not pending changes",
+ "retired": [
+  "release-kidz",
+  "release/nwthy-nov20",
+  "release/nwthy-page",
+  "release/wimc-dec1"
+ ]
+}
