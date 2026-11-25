@@ -51,7 +51,7 @@ function lock(t){$("lock").style.display="block";$("lock").textContent=t;$("bar"
 fetch("/v-fanuzpbo/pages.json").then(function(r){return r.json()}).then(function(c){
  cfg=c;pg=c.pages.filter(function(x){return x.id===q.get("p")})[0];
  if(!pg){location.href="/v-fanuzpbo/";return}
- $("t").textContent=pg.name;(function(){var td=new Date().toLocaleDateString("en-CA",{timeZone:"America/Toronto"});if(pg.release&&td<pg.release){var d=pg.release.split("-"),M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],b=document.createElement("span");b.textContent="Unreleased \u00b7 out "+M[+d[1]-1]+" "+(+d[2]);b.style.cssText="background:#c0392b;color:#fff;font:700 11px sans-serif;padding:2px 9px;border-radius:99px;margin-left:8px;white-space:nowrap";$("t").appendChild(b)}})();$("u").textContent="finnian.ca"+pg.url;
+ $("t").textContent=pg.name;(function(){var td=new Date().toLocaleDateString("en-CA",{timeZone:"America/Toronto"});if(false){var d=pg.release.split("-"),M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],b=document.createElement("span");b.textContent="Unreleased \u00b7 out "+M[+d[1]-1]+" "+(+d[2]);b.style.cssText="background:#c0392b;color:#fff;font:700 11px sans-serif;padding:2px 9px;border-radius:99px;margin-left:8px;white-space:nowrap";$("t").appendChild(b)}})();$("u").textContent="finnian.ca"+pg.url;
  var vs=(pg.compare&&pg.compare.length?pg.compare:["now"]).filter(function(s){return !(s==="now"&&pg.nowRedirect)});
  stg=vs.indexOf(q.get("s"))>=0?q.get("s"):vs[0];
  if(!TOK){lock("Editing is locked on this device. Open your private edit link once and it stays unlocked.");return}

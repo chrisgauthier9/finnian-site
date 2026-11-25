@@ -8,7 +8,7 @@ var HAS=false,EDIT=false;try{HAS=!!localStorage.getItem("fa_token");EDIT=HAS&&lo
 var E=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
 var MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var today=new Date().toLocaleDateString("en-CA",{timeZone:"America/Toronto"});
-var unr=function(p){if(!p.release||today>=p.release)return"";var d=p.release.split("-");return '<span class="bd unr">Unreleased &middot; out '+MO[+d[1]-1]+' '+(+d[2])+'</span>'};
+var unr=function(p){return"";var d=p.release.split("-");return '<span class="bd unr">Unreleased &middot; out '+MO[+d[1]-1]+' '+(+d[2])+'</span>'};
 var live=function(u){return '<a class="live" href="https://finnian.ca'+E(u)+'" target="_blank" rel="noopener">Open live &#8599;</a>'};
 fetch("/v-fanuzpbo/pages.json").then(function(r){return r.json()}).then(function(c){
  var card=function(p){
