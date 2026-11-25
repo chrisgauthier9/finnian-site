@@ -5,6 +5,7 @@ Run from anywhere: python3 scripts/check_hub.py   (exit 1 when something is off)
 - every html page a stage branch changes vs main must be a page whose `changes` and `compare` include that stage
 - every page's `changes` stage must really have that file on the stage's branch
 - every page `file` must exist on main, or have a stage
+- pages not on main, or download pages with a pending stage, must carry "release": "YYYY-MM-DD"
 - warns when a stage branch is far behind main (merging it could undo live edits)
 A stage may carry "ignore": [files] for known-stale leftovers."""
 import os, json, subprocess, sys
@@ -48,6 +49,14 @@ for p in cfg["pages"]:
         elif sid not in p["compare"]: problems.append(f"page {p['id']}: '{sid}' in changes but not compare")
     if git("rev-parse", "-q", "--verify", f"main:{p['file']}") is None and not p["changes"]:
         problems.append(f"page {p['id']}: {p['file']} is not on main and has no stage")
+import datetime
+for p in cfg["pages"]:
+    not_on_main = git("rev-parse", "-q", "--verify", f"main:{p['file']}") is None
+    if not p.get("release") and (not_on_main or (p.get("type") == "download" and p["changes"])):
+        problems.append(f"page {p['id']}: unreleased track page (not on main, or download with a pending stage) lacks \"release\": \"YYYY-MM-DD\" in pages.json")
+    if p.get("release"):
+        try: datetime.date.fromisoformat(p["release"])
+        except ValueError: problems.append(f"page {p['id']}: bad release date {p['release']}")
 for n in notes: print("NOTE", n)
 for x in problems: print("MISMATCH", x)
 print("hub matches branches" if not problems else f"{len(problems)} mismatch(es): fix v-fanuzpbo/pages.json, run tools/make_previews.py")

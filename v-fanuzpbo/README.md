@@ -9,6 +9,8 @@ Files: `pages.json` (the only thing to edit by hand; `scripts/check_hub.py` at t
 ## Rule: the hub moves with the branch (2026-11-25)
 **Any chat that creates or changes a site release branch (`release/*`, `release-*`) or adds/removes a page must update `pages.json` in the same push**: the branch under `stages` (label with the go-live time, Eastern), every changed page in `pages`, `changes` and `compare`, a new page's entry, and `retired` for a branch that has gone live or been dropped. Then run `python3 v-fanuzpbo/tools/make_previews.py` and `python3 scripts/check_hub.py` (lists branches and changed pages missing from `pages.json`, exits 1 on a mismatch) and push `main`. A release is not done until the check passes. When the stage goes live, follow "When a change goes live" below.
 
+**Every page for an unreleased track carries `"release": "YYYY-MM-DD"` in `pages.json`** (the go-live date, Eastern). The hub card and editor header show a red "Unreleased, out Dec 1" badge until that date, then it vanishes by itself; `check_hub.py` fails if a download page with a stage, or a page not yet on main, lacks it. Remove the field (or leave it) once live.
+
 ## Add a page
 1. Add an entry to `pages` in `pages.json`: `id` (short, unique), `type` (`main`, `release` or `download`: which section it sits in; pages with changes list first), `name`, `url`, `file` (path in the site repo), `thumb` (`now`),
    `changes` (`[]`), `compare` (`[]`).

@@ -74,6 +74,7 @@
   },
   {
    "id": "gal",
+   "release": "2026-12-18",
    "name": "Go A Little (new)",
    "url": "/go-a-little/",
    "file": "go-a-little/index.html",
@@ -94,6 +95,7 @@
   },
   {
    "id": "bim",
+   "release": "2026-12-01",
    "name": "Baby I'm Yours download",
    "url": "/baby-im-yours/download/",
    "file": "baby-im-yours/download/index.html",
