@@ -3,8 +3,11 @@
 Chris and Laleh's map of which pages exist on finnian.ca and what changes are scheduled. Hidden: `noindex`,
 secret path (not in `robots.txt`, which would reveal it), not in `sitemap.xml`, not linked from any page. Pushing to `main` publishes it.
 
-Files: `pages.json` (the only thing to edit by hand), `index.html` (grid), `compare/index.html` (now vs after),
+Files: `pages.json` (the only thing to edit by hand; `scripts/check_hub.py` at the repo root verifies it), `index.html` (grid), `compare/index.html` (now vs after),
 `common.css`, `previews/` (generated copies of pages), `tools/make_previews.py`.
+
+## Rule: the hub moves with the branch (2026-11-25)
+**Any chat that creates or changes a site release branch (`release/*`, `release-*`) or adds/removes a page must update `pages.json` in the same push**: the branch under `stages` (label with the go-live time, Eastern), every changed page in `pages`, `changes` and `compare`, a new page's entry, and `retired` for a branch that has gone live or been dropped. Then run `python3 v-fanuzpbo/tools/make_previews.py` and `python3 scripts/check_hub.py` (lists branches and changed pages missing from `pages.json`, exits 1 on a mismatch) and push `main`. A release is not done until the check passes. When the stage goes live, follow "When a change goes live" below.
 
 ## Add a page
 1. Add an entry to `pages` in `pages.json`: `id` (short, unique), `type` (`main`, `release` or `download`: which section it sits in; pages with changes list first), `name`, `url`, `file` (path in the site repo), `thumb` (`now`),

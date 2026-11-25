@@ -6,15 +6,21 @@
   },
   "nov30": {
    "label": "~Nov 30, 12:00 am",
-   "ref": "release/go-a-little-presave"
+   "ref": "release/go-a-little-presave",
+   "ignore": [
+    "never-wanted-to-hurt-you/index.html"
+   ]
   },
   "dec1": {
    "label": "Dec 1, 12:00 am",
-   "ref": "release/wimc-dec1"
+   "ref": "release-baby-im-yours"
   },
   "dec18": {
    "label": "Dec 18, 12:00 am",
-   "ref": "release/go-a-little-dec18"
+   "ref": "release/go-a-little-dec18",
+   "ignore": [
+    "never-wanted-to-hurt-you/index.html"
+   ]
   }
  },
  "pages": [
@@ -64,14 +70,6 @@
    "compare": [
     "now"
    ],
-   "nowRedirect": "Now: sends visitors to the Hypeddit pre-save",
-   "placeholders": {
-    "nov20": [
-     "Spotify",
-     "Apple Music",
-     "Deezer"
-    ]
-   },
    "type": "release"
   },
   {
@@ -79,34 +77,34 @@
    "name": "Go A Little (new)",
    "url": "/go-a-little/",
    "file": "go-a-little/index.html",
-   "thumb": "dec18",
+   "thumb": "nov30",
    "changes": [
     "nov30",
     "dec18"
    ],
    "compare": [
+    "nov30",
     "dec18"
    ],
    "placeholders": {
+    "nov30": "ALL",
     "dec18": "ALL"
    },
    "type": "release"
   },
   {
-   "id": "wimc",
-   "name": "Wish Is My Command download (new)",
-   "url": "/wish-is-my-command/download/",
-   "file": "wish-is-my-command/download/index.html",
-   "thumb": "dec1",
+   "id": "bim",
+   "name": "Baby I'm Yours download",
+   "url": "/baby-im-yours/download/",
+   "file": "baby-im-yours/download/index.html",
+   "thumb": "now",
    "changes": [
     "dec1"
    ],
    "compare": [
+    "now",
     "dec1"
    ],
-   "placeholders": {
-    "dec1": "ALL"
-   },
    "type": "download"
   },
   {
@@ -221,5 +219,12 @@
    "id": "download",
    "label": "Downloads"
   }
+ ],
+ "ignoreWhy": "nov30 and dec18 branches carry the already-live Nov 20 NWTHY page edits (stale copy from before main moved on); not pending changes",
+ "retired": [
+  "release-kidz",
+  "release/nwthy-nov20",
+  "release/nwthy-page",
+  "release/wimc-dec1"
  ]
 }
