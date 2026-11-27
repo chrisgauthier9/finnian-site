@@ -1,0 +1,56 @@
+# Publishes the Breakbot baby im yours release-day page (cover) and /links at 00:00 Toronto (EST) on Tue 1 Dec 2026,
+# by merging `release-baby-im-yours` into `main`. Chris asked for this on 26 Nov. Delete this file once it has run.
+#
+# GitHub's scheduler can start jobs hours late, so it is started by hand right away and backed up by
+# several crons; each run sleeps until midnight. Idempotent: once the branch is on main, the rest exit.
+name: Baby im yours release day - publish page and links at midnight
+
+on:
+  schedule:            # UTC. 05:00 UTC = 00:00 EST.
+    - cron: "30 2 1 12 *"
+    - cron: "30 3 1 12 *"
+    - cron: "30 4 1 12 *"
+    - cron: "15 5 1 12 *"
+    - cron: "0 6 1 12 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: baby-im-yours-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Wait for midnight, then merge release-baby-im-yours into main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          target=$(date -u -d '2026-12-01T05:00:00Z' +%s)
+          now=$(date -u +%s)
+          if [ "$now" -gt $((target + 2*86400)) ]; then echo "Past the release window; doing nothing."; exit 0; fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch -q origin release-baby-im-yours main
+          if git merge-base --is-ancestor origin/release-baby-im-yours origin/main; then echo "Already published."; exit 0; fi
+          if [ "$now" -lt "$target" ]; then echo "Sleeping $((target - now)) s until 00:00 Toronto."; sleep $((target - now)); fi
+          for i in 1 2 3 4 5 6; do
+            git fetch -q origin release-baby-im-yours main
+            git reset -q --hard origin/main
+            if git merge-base --is-ancestor origin/release-baby-im-yours HEAD; then echo "Already published."; exit 0; fi
+            git merge --no-edit origin/release-baby-im-yours -m "Release day: Baby im yours page, cover and links (published 00:00 Toronto)"
+            if git push origin main; then echo "Published at $(TZ=America/Toronto date)."; break; fi
+            echo "Push rejected (someone else pushed); retrying."; sleep 10
+          done
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "Pages build request failed; the push may still trigger one."
