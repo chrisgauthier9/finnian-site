@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Auto-publish dated hub stages (v-fanuzpbo/pages.json). Generic: any stage with "at" (ISO datetime with offset) and a "ref" branch.
-Stages REPLACE, they do not stack: the branch's version of every file it changed wins (hub and .github stay main's).
+Stages REPLACE, they do not stack: after the merge the whole tree outside v-fanuzpbo/ and .github/ equals the branch's (live site == hub preview).
 For each stage whose time has passed and whose branch is not yet an ancestor of main: merge it into main (oldest first) and push.
 Idempotent (merged branches are skipped). On a merge conflict: abort that merge, change nothing, exit 3 (the workflow raises an issue).
 Usage: publish_due_stages.py [--dry-run] [--now ISO] [--wait-max-min N]
@@ -38,15 +38,17 @@ if a.wait_max_min and not a.dry_run:
 
 KEEP = ("v-fanuzpbo/", ".github/")   # hub and workflows always stay main's
 def replace_merge(sid, b, at):
-    """Stages replace, never stack: merge the branch, then every file the branch changed since it forked from main
-    takes the branch's exact version (or is deleted if the branch deleted it). Files it did not touch keep main's."""
+    """Stages replace, never stack: merge the branch (-X theirs), then force the whole tree outside KEEP to the branch's."""
     r = ref(b); base = git("merge-base", "origin/main", r).stdout.strip()
     git("merge", "--no-commit", "--no-ff", "-X", "theirs", r)
-    ch = git("diff", "--name-status", "--no-renames", base, r).stdout.splitlines()
-    for line in ch:
-        st, f = line.split("\t", 1)
-        if f.startswith(KEEP): continue
-        x = git("rm", "-q", "-f", "--ignore-unmatch", "--", f) if st == "D" else git("checkout", r, "--", f)
+    # live site == exactly what the hub previews for the stage: the whole tree outside KEEP becomes the branch's
+    names = lambda t: set(f for f in git("ls-tree", "-r", "--name-only", t).stdout.splitlines() if not f.startswith(KEEP))
+    mine, theirs = names("HEAD"), names(r)
+    for f in sorted(mine - theirs):
+        x = git("rm", "-q", "-f", "--", f)
+        if x.returncode: git("merge", "--abort"); return x.stderr
+    for f in sorted(theirs):
+        x = git("checkout", r, "--", f)
         if x.returncode: git("merge", "--abort"); return x.stderr
     c = git("commit", "-q", "--no-edit", "-m", f"Auto-publish stage {sid}: {b} replaces earlier stages at {at.isoformat()}")
     if c.returncode and "nothing to commit" not in c.stdout + c.stderr: git("merge", "--abort"); return c.stdout + c.stderr
