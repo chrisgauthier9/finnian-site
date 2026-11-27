@@ -7,6 +7,7 @@ Run from anywhere: python3 scripts/check_hub.py   (exit 1 when something is off)
 - every page `file` must exist on main, or have a stage
 - pages not on main, or download pages with a pending stage, must carry "release": "YYYY-MM-DD"
 - warns when a stage branch is far behind main (merging it could undo live edits)
+Every stage needs "at" (ISO datetime with offset): .github/workflows/publish-due-stages.yml merges its branch into main then.
 A stage may carry "ignore": [files] for known-stale leftovers."""
 import os, json, subprocess, sys
 V = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "v-fanuzpbo")
@@ -57,6 +58,11 @@ for p in cfg["pages"]:
     if p.get("release"):
         try: datetime.date.fromisoformat(p["release"])
         except ValueError: problems.append(f"page {p['id']}: bad release date {p['release']}")
+for sid, st in stages.items():
+    try:
+        if datetime.datetime.fromisoformat(st["at"]).tzinfo is None: raise ValueError("no UTC offset")
+    except (KeyError, ValueError) as e:
+        problems.append(f"stage {sid}: needs \"at\": \"YYYY-MM-DDTHH:MM:SS-05:00\" (ISO with offset, Toronto); the publish workflow merges the branch at that time ({e})")
 for n in notes: print("NOTE", n)
 for x in problems: print("MISMATCH", x)
 print("hub matches branches" if not problems else f"{len(problems)} mismatch(es): fix v-fanuzpbo/pages.json, run tools/make_previews.py")

@@ -6,6 +6,7 @@
   },
   "nov30": {
    "label": "~Nov 30, 12:00 am",
+   "at": "2026-11-30T00:00:00-05:00",
    "ref": "release/go-a-little-presave",
    "ignore": [
     "never-wanted-to-hurt-you/index.html"
@@ -13,10 +14,12 @@
   },
   "dec1": {
    "label": "Dec 1, 12:00 am",
+   "at": "2026-12-01T00:00:00-05:00",
    "ref": "release-baby-im-yours"
   },
   "dec18": {
    "label": "Dec 18, 12:00 am",
+   "at": "2026-12-18T00:00:00-05:00",
    "ref": "release/go-a-little-dec18",
    "ignore": [
     "never-wanted-to-hurt-you/index.html"

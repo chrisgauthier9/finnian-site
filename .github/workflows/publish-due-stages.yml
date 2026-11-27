@@ -1,0 +1,52 @@
+# Publishes every dated hub stage on time. Reads v-fanuzpbo/pages.json: each stage with "at" (ISO datetime, offset) and "ref" (branch).
+# Once "at" has passed and the branch is not on main, it is merged into main and pushed (oldest first). Idempotent.
+# Conflict: nothing is forced, the run fails and a GitHub issue is opened (GitHub emails the repo owner).
+# Stage names do not matter: a new stage in pages.json flips with no new code. Logic: scripts/publish_due_stages.py.
+# GitHub cron can start late, so crons run every 15 min and a run starting within 25 min of a stage sleeps until it.
+name: Publish due hub stages
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  issues: write
+
+concurrency:
+  group: publish-due-stages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Merge due stages into main
+        id: merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          before=$(git rev-parse origin/main)
+          set +e
+          python3 scripts/publish_due_stages.py --wait-max-min 25 | tee out.txt
+          rc=${PIPESTATUS[0]}
+          set -e
+          git fetch -q origin main
+          if [ "$(git rev-parse origin/main)" != "$before" ]; then
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "Pages build request failed; the push may still trigger one."
+          fi
+          if [ "$rc" != "0" ]; then
+            if [ -z "$(gh issue list --state open --search 'Stage auto-publish failed in:title' --json number --jq '.[0].number')" ]; then
+              gh issue create --title "Stage auto-publish failed" --body "$(printf 'The scheduled stage publish could not run cleanly (exit %s). Nothing was forced.\n\n```\n%s\n```\nRun: %s/%s/actions/runs/%s' "$rc" "$(cat out.txt)" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+            fi
+            exit "$rc"
+          fi
